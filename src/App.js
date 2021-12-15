@@ -1,14 +1,16 @@
-import React, { useState } from "react";
-import Card from "./Card"
-import "./App.css"
+import React from "react";
+import { Routes, Route } from 'react-router-dom'
+import Home from './components/Home'
+import Todolist from './components/Todolist'
 
 const App = () => {
     return (
         <div className="app-main">
-            <Card name="bossROD" age={23} gender="Male" title="Daddy" />
-            <Card name="bossJOY" age={23} gender="Female" title="Mommy" />
-            <Card name="bossPIM" age={4} gender="Female" title="Niece" />
-            <Card name="bossEMS" age={26} gender="Male" title="Idol" />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/todolist" element={<Todolist />} />
+            </Routes>
         </div>
     )
 }
