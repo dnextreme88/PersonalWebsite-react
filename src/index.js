@@ -1,12 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 import App from './App'
-import './styles/app.scss'
+import store from './redux/store'
 
+// Wrap the App component inside a Provider to be able to use the redux inside the component
+// The Provider will be able to use redux functions and get its states so you must import store.js
+// for it to work
 ReactDOM.render(
-    <BrowserRouter>
+    <Provider store={store}>
         <App />
-    </BrowserRouter>
-    , document.getElementById('root')
-)
+    </Provider>, document.getElementById('root'))
