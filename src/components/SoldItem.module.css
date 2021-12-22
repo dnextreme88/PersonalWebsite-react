@@ -1,0 +1,57 @@
+.card {
+    width: 90%;
+    padding: 0;
+    margin: 2rem auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.timestamps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.timestamps span {
+    padding: 0;
+    margin: 0.5rem 1rem;
+    font-size: 0.8rem;
+}
+
+.timestamps span:nth-child(2) {
+    text-align: right;
+}
+
+.titleImage {
+    text-align: center;
+}
+
+.title {
+    font-size: 2rem;
+    color: black;
+}
+
+.title:hover {
+    cursor: pointer;
+}
+
+.image {
+    display: block;
+    margin: 0 auto;
+    background-color: white;
+    border: 2px solid #AAA;
+    border-radius: 8px;
+    width: 200px;
+    height: 100%;
+}
+
+.soldItemDetails {
+    display: grid;
+    margin: 1.2rem;
+    grid-template-columns: 1fr 1fr;
+    font-size: 1.2rem;
+}
+
+.soldItemDetails div:nth-child(2) {
+    text-align: right;
+}
