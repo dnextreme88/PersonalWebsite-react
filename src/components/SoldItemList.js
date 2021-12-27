@@ -1,14 +1,18 @@
 import { React, useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 import axios from "axios";
 import SoldItem from "./SoldItem";
 import classes from "./SoldItemList.module.css";
 
 function SoldItemList() {
+    const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
     const [soldItems, setSoldItems] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/soldItems')
+        axios.get('http://localhost:3001/api/soldItems', {
+            headers: { Authorization: `Bearer ${auth.bearerToken}` }
+        })
             .then((response) => {
                 setIsLoading(false);
                 setSoldItems(response.data.data);
@@ -16,7 +20,7 @@ function SoldItemList() {
             .catch((error) => {
                 console.log(error);
             });
-    }, [])
+    }, [auth.bearerToken])
     
     if (isLoading) {
         return (
