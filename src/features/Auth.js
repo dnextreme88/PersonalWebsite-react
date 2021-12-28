@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { bearerToken: '', userId: '', username: '', email: '', };
+const initialState = { bearerToken: '', userId: '', username: '', email: '' };
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -20,7 +20,7 @@ export const authSlice = createSlice({
 });
 
 // Access the actions we created
-export const { login } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 
 // Get reducers from the slice and export it so that our store.js can use it
 export default authSlice.reducer;
