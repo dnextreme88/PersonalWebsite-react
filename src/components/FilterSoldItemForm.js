@@ -1,5 +1,5 @@
 import { React, useRef, useState } from 'react';
-import classes from "./FilterSoldItem.module.css";
+import classes from "./FilterSoldItemForm.module.css";
 
 function FilterSoldItemForm(props) {    
     const monthInputRef = useRef();
