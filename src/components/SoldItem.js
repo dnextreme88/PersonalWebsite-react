@@ -1,10 +1,12 @@
 import { React, useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import moment from "moment";
 import classes from "./SoldItem.module.css";
 
 function SoldItem(props) {
+    const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
     const [soldItem, setSoldItem] = useState([]);
 
@@ -14,7 +16,9 @@ function SoldItem(props) {
     const soldItemId = params.soldItemId ? params.soldItemId : props.id;
     
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/soldItems/${soldItemId}`)
+        axios.get(`http://localhost:3001/api/soldItems/${soldItemId}`, {
+            headers: { Authorization: `Bearer ${auth.bearerToken}` }
+        })
             .then((response) => {
                 setIsLoading(false);
                 setSoldItem(response.data.data);
@@ -22,7 +26,7 @@ function SoldItem(props) {
             .catch((error) => {
                 console.log(error);
             });
-    }, [soldItemId])
+    }, [auth.bearerToken, soldItemId])
 
     function handleOnClick() {
         navigate(`/archive/${soldItemId}`);
