@@ -32,7 +32,7 @@ function SoldItemList() {
         )
     }
 
-    function handleAddSoldItem(soldItemFormData) {
+    function handleAddSoldItem(addFormData) {
         // body key must be an object in JSON format so use JSON.stringify()
         // fetch('http://localhost:3001/api/soldItems', {
         //         method: 'POST',
@@ -52,7 +52,9 @@ function SoldItemList() {
         //     console.log('err', err);
         // });
 
-        axios.post('http://localhost:3001/api/soldItems', soldItemFormData)
+        axios.post('http://localhost:3001/api/soldItems', addFormData, {
+            headers: { Authorization: `Bearer ${auth.bearerToken}` },
+        })
             .then((response) => {
                 console.log(response.data.data);
                 soldItems.push(response.data.data);
