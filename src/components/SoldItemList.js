@@ -4,6 +4,7 @@ import axios from "axios";
 import SoldItem from "./SoldItem";
 import classes from "./SoldItemList.module.css";
 import AddSoldItemForm from "./AddSoldItemForm";
+import FilterSoldItemForm from "./FilterSoldItemForm";
 
 function SoldItemList() {
     const auth = useSelector((state) => state.auth.value);
@@ -31,7 +32,7 @@ function SoldItemList() {
         )
     }
 
-    function handleAddSoldItem(soldItemFormData) {
+    function handleAddSoldItem(addFormData) {
         // body key must be an object in JSON format so use JSON.stringify()
         // fetch('http://localhost:3001/api/soldItems', {
         //         method: 'POST',
@@ -50,8 +51,18 @@ function SoldItemList() {
         // .catch((err) => {
         //     console.log('err', err);
         // });
+        const formData = new FormData();
+        for (const [key, value] of Object.entries(addFormData)) {
+            if (key === 'imageLocation') {
+                formData.append("imageFile", value);
+            } else {
+                formData.append(key, value);
+            }
+        }
 
-        axios.post('http://localhost:3001/api/soldItems', soldItemFormData)
+        axios.post('http://localhost:3001/api/soldItems', formData, {
+            headers: { Authorization: `Bearer ${auth.bearerToken}`, 'Content-Type': 'multipart/form-data' },
+        })
             .then((response) => {
                 console.log(response.data.data);
                 soldItems.push(response.data.data);
@@ -63,11 +74,26 @@ function SoldItemList() {
             });
     }
 
+    function handleFilterSoldItem(filterFormData) {
+        axios.post('http://localhost:3001/api/soldItems/filter', filterFormData, {
+            headers: { Authorization: `Bearer ${auth.bearerToken}` },
+        })
+            .then((response) => {
+                console.log(response.data.data);
+                setIsLoading(false);
+                setSoldItems(response.data.data);
+            })
+            .catch((err) => {
+                console.log('err', err);
+            });
+    }
+
     return (
         <div className={classes.list}>
             <p>A list of sold items will be shown here...</p>
             <p>Total items sold: <strong>{soldItems.length}</strong></p>
             <AddSoldItemForm onAddSoldItem={handleAddSoldItem} />
+            <FilterSoldItemForm onFilterSoldItem={handleFilterSoldItem} />
             {soldItems.length > 0 ?
                 soldItems.map((soldItem) => (
                     <SoldItem
