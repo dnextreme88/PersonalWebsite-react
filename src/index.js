@@ -5,10 +5,12 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import App from "./App";
 import authReducer from "./features/Auth";
+import modalReducer from "./features/Modal";
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
+        modal: modalReducer,
     },
 });
 
