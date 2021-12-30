@@ -6,11 +6,15 @@ function FilterSoldItemForm(props) {
     const yearInputRef = useRef();
     const brandInputRef = useRef();
     const typeInputRef = useRef();
+    const paymentMethodInputRef = useRef();
+    const sellMethodInputRef = useRef();
 
     const [monthValue, setMonth] = useState('');
     const [yearValue, setYear] = useState('');
     const [brandValue, setBrand] = useState('');
     const [typeValue, setType] = useState('');
+    const [paymentMethodValue, setPaymentMethod] = useState('');
+    const [sellMethodValue, setSellMethod] = useState('');
 
     function handleOnSubmit(event) {
         event.preventDefault(); // Prevent the browser from sending another request
@@ -22,8 +26,10 @@ function FilterSoldItemForm(props) {
         const year = yearInputRef.current.value;
         const brand = brandInputRef.current.value;
         const type = typeInputRef.current.value;
+        const paymentMethod = paymentMethodInputRef.current.value;
+        const sellMethod = sellMethodInputRef.current.value;
 
-        props.onFilterSoldItem({ month, year, brand, type });
+        props.onFilterSoldItem({ month, year, brand, type, paymentMethod, sellMethod });
     }
 
     function handleOnChange(event, name) {
@@ -31,6 +37,8 @@ function FilterSoldItemForm(props) {
         if (name === 'year') setYear(event.target.value);
         if (name === 'brand') setBrand(event.target.value);
         if (name === 'type') setType(event.target.value);
+        if (name === 'paymentMethod') setPaymentMethod(event.target.value);
+        if (name === 'sellMethod') setSellMethod(event.target.value);
     }
 
     function handleShowAllResults() {
@@ -38,13 +46,17 @@ function FilterSoldItemForm(props) {
         setYear('');
         setBrand('');
         setType('');
+        setPaymentMethod('');
+        setSellMethod('');
         // Reset value of dropdowns back
         monthInputRef.current.value = '';
         brandInputRef.current.value = '';
         yearInputRef.current.value = '';
         typeInputRef.current.value = '';
+        paymentMethodInputRef.current.value = '';
+        sellMethodInputRef.current.value = '';
 
-        props.onFilterSoldItem({ month: '', year: '', brand: '', type: '' });
+        props.onFilterSoldItem({ month: '', year: '', brand: '', type: '', paymentMethod: '', sellMethod: '' });
     }
 
     return (
@@ -96,6 +108,23 @@ function FilterSoldItemForm(props) {
                     <select id='type' ref={typeInputRef} defaultValue={typeValue} onChange={handleOnChange('type')}>
                         <option value='Pants'>Pants</option>
                         <option value='Shirt'>Shirt</option>
+                        <option value=''>SHOW ALL</option>
+                    </select>
+                </div>
+                <div className={classes.grid}>
+                    <label htmlFor='paymentMethod'>Payment method</label>
+                    <select id='paymentMethod' ref={paymentMethodInputRef} defaultValue={paymentMethodValue} onChange={handleOnChange('paymentMethod')}>
+                        <option value='cash on-hand'>Cash on-hand</option>
+                        <option value='dropping area cashout'>Dropping area cashout</option>
+                        <option value='remittance'>Remittance</option>
+                        <option value=''>SHOW ALL</option>
+                    </select>
+
+                    <label htmlFor='sellMethod'>Sell method</label>
+                    <select id='sellMethod' ref={sellMethodInputRef} defaultValue={sellMethodValue} onChange={handleOnChange('sellMethod')}>
+                        <option value='dropping'>Dropping</option>
+                        <option value='meetup'>Meetup</option>
+                        <option value='shipment'>Shipment</option>
                         <option value=''>SHOW ALL</option>
                     </select>
                 </div>

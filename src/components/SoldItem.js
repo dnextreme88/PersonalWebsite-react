@@ -66,10 +66,12 @@ function SoldItem(props) {
                 <div>
                     <p>Price: P{soldItem.price}</p>
                     <p>Condition: {soldItem.condition}</p>
+                    <p>Payment by: {soldItem.PaymentMethod ? soldItem.PaymentMethod.method : ''}</p>
                 </div>
                 <div className={classes.right}>
                     <p>Size: {soldItem.size}</p>
                     <p>Date sold: {moment(soldItem.dateSold).format("MMMM D, YYYY")}</p>
+                    <p>Sold by: {soldItem.SellMethod ? soldItem.SellMethod.method : ''}</p>
                 </div>
             </div>
             <div className={classes.actions}>
