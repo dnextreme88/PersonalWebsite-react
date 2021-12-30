@@ -9,6 +9,7 @@ import FilterSoldItemForm from "./FilterSoldItemForm";
 function SoldItemList() {
     const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSoldItemCreated, setIsSoldItemCreated] = useState(false);
     const [soldItems, setSoldItems] = useState([]);
     const [soldItemsFiltered, setSoldItemsFiltered] = useState([]);
     const [isFilter, setIsFilter] = useState(false);
@@ -20,11 +21,12 @@ function SoldItemList() {
             .then((response) => {
                 setIsLoading(false);
                 setSoldItems(response.data.data);
+                setIsSoldItemCreated(false);
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, [auth.bearerToken, soldItems])
+    }, [auth.bearerToken, isSoldItemCreated])
     
     if (isLoading) {
         return (
@@ -70,6 +72,7 @@ function SoldItemList() {
                 soldItems.push(response.data.data);
                 setIsLoading(false);
                 setSoldItems(soldItems);
+                setIsSoldItemCreated(true);
             })
             .catch((err) => {
                 console.log('err', err);
