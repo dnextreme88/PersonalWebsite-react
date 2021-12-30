@@ -7,7 +7,6 @@ function AddSoldItemForm(props) {
     const priceInputRef = useRef();
     const conditionInputRef = useRef();
     const sizeInputRef = useRef();
-    const imageLocationInputRef = useRef();
     const dateSoldInputRef = useRef();
 
     const paymentMethodInputRef = useRef();
@@ -17,6 +16,7 @@ function AddSoldItemForm(props) {
 
     const [sellMethod, setSellMethod] = useState('dropping');
     const [paymentMethod, setPaymentMethod] = useState('cash on-hand');
+    const [imageFile, setImageFile] = useState(); // Contains information on the currently picked file.
 
     function handleOnSubmit(event) {
         event.preventDefault(); // Prevent the browser from sending another request
@@ -26,7 +26,7 @@ function AddSoldItemForm(props) {
         const itemPrice = priceInputRef.current.value;
         const itemCondition = conditionInputRef.current.value;
         const itemSize = sizeInputRef.current.value;
-        const itemImageLocation = imageLocationInputRef.current.value;
+        const itemImage = imageFile;
         const itemDateSold = dateSoldInputRef.current.value;
         // Payment method
         const paymentMethodValue = paymentMethodInputRef.current.value;
@@ -40,7 +40,7 @@ function AddSoldItemForm(props) {
             price: itemPrice,
             condition: itemCondition,
             size: itemSize,
-            imageLocation: itemImageLocation,
+            imageLocation: itemImage, // imageLocation
             dateSold: itemDateSold,
             paymentMethod: paymentMethodValue,
             paymentLocation: paymentLocationValue,
@@ -50,6 +50,12 @@ function AddSoldItemForm(props) {
 
         props.onAddSoldItem(soldItemFormData);
     }
+
+    // REF: https://www.pluralsight.com/guides/uploading-files-with-reactjs
+    function handleChangeFile(event) {
+        console.log('LOG: File is chosen');
+		setImageFile(event.target.files[0]); // An object that contains the details of files selected to be uploaded in a form
+	};
 
     function handleSellMethod(event) {
         setSellMethod(event.target.value);
@@ -103,7 +109,7 @@ function AddSoldItemForm(props) {
     }
 
     return (
-        <form className={classes.form} onSubmit={handleOnSubmit}>
+        <form className={classes.form} onSubmit={handleOnSubmit} encType='multipart/form-data'>
             <div className={classes.grid}>
                 <label htmlFor='title'>Name</label>
                 <input type='text' id='name' required ref={nameInputRef} />
@@ -130,8 +136,8 @@ function AddSoldItemForm(props) {
                 </select>
             </div>
             <div className={classes.grid}>
-                <label htmlFor='imageLocation'>Image Location</label>
-                <input type='text' id='imageLocation' ref={imageLocationInputRef} placeholder="https://" />
+                <label htmlFor='imageLocation'>Image</label>
+                <input type='file' id='imageLocation' name="imageFile" onChange={handleChangeFile} />
 
                 <label htmlFor='dateSold'>Date Sold</label>
                 <input type='date' required id='dateSold' ref={dateSoldInputRef} defaultValue={today} />

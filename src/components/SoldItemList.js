@@ -51,9 +51,17 @@ function SoldItemList() {
         // .catch((err) => {
         //     console.log('err', err);
         // });
+        const formData = new FormData();
+        for (const [key, value] of Object.entries(addFormData)) {
+            if (key === 'imageLocation') {
+                formData.append("imageFile", value);
+            } else {
+                formData.append(key, value);
+            }
+        }
 
-        axios.post('http://localhost:3001/api/soldItems', addFormData, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` },
+        axios.post('http://localhost:3001/api/soldItems', formData, {
+            headers: { Authorization: `Bearer ${auth.bearerToken}`, 'Content-Type': 'multipart/form-data' },
         })
             .then((response) => {
                 console.log(response.data.data);
