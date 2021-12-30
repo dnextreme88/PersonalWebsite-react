@@ -71,18 +71,18 @@ function AddSoldItemForm(props) {
     } else if (paymentMethod === 'dropping area cashout') {
         paymentLocationInput = (
             <select id='paymentLocation' ref={paymentLocationInputRef} defaultValue='stall4'>
-                <option value='stall4'>GP Arcade Stall 4</option>
-                <option value='stall6'>GP Arcade Stall 6</option>
+                <option value='GP Arcade Stall 4'>GP Arcade Stall 4</option>
+                <option value='GP Arcade Stall 6'>GP Arcade Stall 6</option>
             </select>
         );
     } else if (paymentMethod === 'remittance') {
         paymentLocationInput = (
             <select id='paymentLocation' ref={paymentLocationInputRef} defaultValue='abest'>
-                <option value='cebuana'>Cebuana</option>
-                <option value='gcash'>GCash</option>
-                <option value='lbc'>LBC</option>
-                <option value='palawan'>Palawan Express</option>
-                <option value='western'>Western Union</option>
+                <option value='Cebuana'>Cebuana</option>
+                <option value='GCash'>GCash</option>
+                <option value='LBC'>LBC</option>
+                <option value='Palawan Express'>Palawan Express</option>
+                <option value='Western Union'>Western Union</option>
             </select>
         );
     }
@@ -93,17 +93,17 @@ function AddSoldItemForm(props) {
     } else if (sellMethod === 'dropping') {
         sellLocationInput = (
             <select id='sellLocation' ref={sellLocationInputRef} defaultValue='stall4'>
-                <option value='stall4'>GP Arcade Stall 4</option>
-                <option value='stall6'>GP Arcade Stall 6</option>
+                <option value='GP Arcade Stall 4'>GP Arcade Stall 4</option>
+                <option value='GP Arcade Stall 6'>GP Arcade Stall 6</option>
             </select>
         );
     } else if (sellMethod === 'shipment') {
         sellLocationInput = (
             <select id='sellLocation' ref={sellLocationInputRef} defaultValue='abest'>
-                <option value='abest'>ABest Express</option>
-                <option value='jrs'>JRS</option>
-                <option value='lbc'>LBC</option>
-                <option value='partas'>Partas Waybill</option>
+                <option value='ABest Express'>ABest Express</option>
+                <option value='JRS'>JRS</option>
+                <option value='LBC'>LBC</option>
+                <option value='Partas Waybill'>Partas Waybill</option>
             </select>
         );
     }
