@@ -1,12 +1,15 @@
 import { React, useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import moment from "moment";
 import classes from "./SoldItem.module.css";
+import { openModal, closeModal } from "../features/Modal";
 
 function SoldItem(props) {
+    const dispatch = useDispatch();
     const auth = useSelector((state) => state.auth.value);
+    const modal = useSelector((state) => state.modal.value);
     const [isLoading, setIsLoading] = useState(true);
     const [soldItem, setSoldItem] = useState([]);
 
@@ -31,7 +34,14 @@ function SoldItem(props) {
     function handleOnClick() {
         navigate(`/archive/${soldItemId}`);
     }
-    
+
+    function handleOnClickEdit() {
+        dispatch(openModal());
+    }
+
+    function handleOnClickDelete() {
+        dispatch(closeModal());
+    }
 
     if (isLoading) {
         return (
@@ -43,9 +53,10 @@ function SoldItem(props) {
 
     return (
         <div className={classes.card}>
+            <p>Modal value: {modal.toString()}</p>
             <div className={classes.timestamps}>
                 <span>Created: {moment(soldItem.createdAt).format("MMMM D, YYYY h:mm:ss A")}</span>
-                <span>Updated: {moment(soldItem.updatedAt).format("MMMM D, YYYY h:mm:ss A")}</span>
+                <span className={classes.right}>Updated: {moment(soldItem.updatedAt).format("MMMM D, YYYY h:mm:ss A")}</span>
             </div>
             <div className={classes.titleImage}>
                 <span className={classes.title} onClick={handleOnClick}>{soldItem.name}</span>
@@ -56,9 +67,17 @@ function SoldItem(props) {
                     <p>Price: P{soldItem.price}</p>
                     <p>Condition: {soldItem.condition}</p>
                 </div>
-                <div>
+                <div className={classes.right}>
                     <p>Size: {soldItem.size}</p>
                     <p>Date sold: {moment(soldItem.dateSold).format("MMMM D, YYYY")}</p>
+                </div>
+            </div>
+            <div className={classes.actions}>
+                <div className={classes.left}>
+                    <button className={classes.edit} onClick={handleOnClickEdit}>Edit</button>
+                </div>
+                <div className={classes.right}>
+                    <button className={classes.delete} onClick={handleOnClickDelete}>Delete</button>
                 </div>
             </div>
         </div>
