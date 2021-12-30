@@ -6,6 +6,8 @@ function FilterSoldItemForm(props) {
     const yearInputRef = useRef();
     const brandInputRef = useRef();
     const typeInputRef = useRef();
+    const conditionInputRef = useRef();
+    const sizeInputRef = useRef();
     const paymentMethodInputRef = useRef();
     const sellMethodInputRef = useRef();
 
@@ -13,6 +15,8 @@ function FilterSoldItemForm(props) {
     const [yearValue, setYear] = useState('');
     const [brandValue, setBrand] = useState('');
     const [typeValue, setType] = useState('');
+    const [conditionValue, setCondition] = useState('');
+    const [sizeValue, setSize] = useState('');
     const [paymentMethodValue, setPaymentMethod] = useState('');
     const [sellMethodValue, setSellMethod] = useState('');
 
@@ -26,10 +30,12 @@ function FilterSoldItemForm(props) {
         const year = yearInputRef.current.value;
         const brand = brandInputRef.current.value;
         const type = typeInputRef.current.value;
+        const condition = conditionInputRef.current.value;
+        const size = sizeInputRef.current.value;
         const paymentMethod = paymentMethodInputRef.current.value;
         const sellMethod = sellMethodInputRef.current.value;
 
-        props.onFilterSoldItem({ month, year, brand, type, paymentMethod, sellMethod });
+        props.onFilterSoldItem({ month, year, brand, type, condition, size, paymentMethod, sellMethod });
     }
 
     function handleOnChange(event, name) {
@@ -37,6 +43,8 @@ function FilterSoldItemForm(props) {
         if (name === 'year') setYear(event.target.value);
         if (name === 'brand') setBrand(event.target.value);
         if (name === 'type') setType(event.target.value);
+        if (name === 'condition') setCondition(event.target.value);
+        if (name === 'size') setSize(event.target.value);
         if (name === 'paymentMethod') setPaymentMethod(event.target.value);
         if (name === 'sellMethod') setSellMethod(event.target.value);
     }
@@ -46,6 +54,8 @@ function FilterSoldItemForm(props) {
         setYear('');
         setBrand('');
         setType('');
+        setCondition('');
+        setSize('');
         setPaymentMethod('');
         setSellMethod('');
         // Reset value of dropdowns back
@@ -53,10 +63,12 @@ function FilterSoldItemForm(props) {
         brandInputRef.current.value = '';
         yearInputRef.current.value = '';
         typeInputRef.current.value = '';
+        conditionInputRef.current.value = '';
+        sizeInputRef.current.value = '';
         paymentMethodInputRef.current.value = '';
         sellMethodInputRef.current.value = '';
 
-        props.onFilterSoldItem({ month: '', year: '', brand: '', type: '', paymentMethod: '', sellMethod: '' });
+        props.onFilterSoldItem({ month: '', year: '', brand: '', type: '', condition: '', size: '', paymentMethod: '', sellMethod: '' });
     }
 
     return (
@@ -108,6 +120,26 @@ function FilterSoldItemForm(props) {
                     <select id='type' ref={typeInputRef} defaultValue={typeValue} onChange={handleOnChange('type')}>
                         <option value='Pants'>Pants</option>
                         <option value='Shirt'>Shirt</option>
+                        <option value=''>SHOW ALL</option>
+                    </select>
+                </div>
+                <div className={classes.grid}>
+                    <label htmlFor='condition'>Condition</label>
+                    <select id='condition' ref={conditionInputRef} defaultValue={conditionValue} onChange={handleOnChange('condition')}>
+                        <option value='healthy'>healthy</option>
+                        <option value='new'>new</option>
+                        <option value='used'>used</option>
+                        <option value=''>SHOW ALL</option>
+                    </select>
+
+                    <label htmlFor='size'>Size</label>
+                    <select id='size' ref={sizeInputRef} defaultValue={sizeValue} onChange={handleOnChange('size')}>
+                        <option value='S'>Small</option>
+                        <option value='M'>Medium</option>
+                        <option value='L'>Large</option>
+                        <option value='XL'>XL</option>
+                        <option value='XXL'>XXL</option>
+                        <option value='N/A'>Not applicable</option>
                         <option value=''>SHOW ALL</option>
                     </select>
                 </div>
