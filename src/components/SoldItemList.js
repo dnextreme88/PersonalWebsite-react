@@ -24,7 +24,7 @@ function SoldItemList() {
             .catch((error) => {
                 console.log(error);
             });
-    }, [auth.bearerToken])
+    }, [auth.bearerToken, soldItems])
     
     if (isLoading) {
         return (
