@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import axios from "axios";
 import SoldItem from "./SoldItem";
 import classes from "./SoldItemList.module.css";
-import AddSoldItemForm from "./AddSoldItemForm";
-import FilterSoldItemForm from "./FilterSoldItemForm";
+import AddSoldItemForm from "./forms/AddSoldItemForm";
+import FilterSoldItemForm from "./forms/FilterSoldItemForm";
 
 function SoldItemList() {
     const auth = useSelector((state) => state.auth.value);
