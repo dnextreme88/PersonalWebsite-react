@@ -1,11 +1,11 @@
 import { React, useRef, useState } from 'react';
 import classes from "./FilterSoldItemForm.module.css";
 
-function FilterSoldItemForm(props) {    
-    const monthInputRef = useRef();
-    const yearInputRef = useRef();
+function FilterSoldItemForm(props) {
     const brandInputRef = useRef();
     const typeInputRef = useRef();
+    const monthInputRef = useRef();
+    const yearInputRef = useRef();
     const conditionInputRef = useRef();
     const sizeInputRef = useRef();
     const paymentMethodInputRef = useRef();
@@ -13,8 +13,6 @@ function FilterSoldItemForm(props) {
 
     const [monthValue, setMonth] = useState('');
     const [yearValue, setYear] = useState('');
-    const [brandValue, setBrand] = useState('');
-    const [typeValue, setType] = useState('');
     const [conditionValue, setCondition] = useState('');
     const [sizeValue, setSize] = useState('');
     const [paymentMethodValue, setPaymentMethod] = useState('');
@@ -26,23 +24,21 @@ function FilterSoldItemForm(props) {
 
     function handleFilterResults() {
         // Holds the actual current value
-        const month = monthInputRef.current.value;
-        const year = yearInputRef.current.value;
         const brand = brandInputRef.current.value;
         const type = typeInputRef.current.value;
+        const month = monthInputRef.current.value;
+        const year = yearInputRef.current.value;
         const condition = conditionInputRef.current.value;
         const size = sizeInputRef.current.value;
         const paymentMethod = paymentMethodInputRef.current.value;
         const sellMethod = sellMethodInputRef.current.value;
 
-        props.onFilterSoldItem({ month, year, brand, type, condition, size, paymentMethod, sellMethod });
+        props.onFilterSoldItem({ brand, type, month, year, condition, size, paymentMethod, sellMethod });
     }
 
     function handleOnChange(event, name) {
         if (name === 'month') setMonth(event.target.value);
         if (name === 'year') setYear(event.target.value);
-        if (name === 'brand') setBrand(event.target.value);
-        if (name === 'type') setType(event.target.value);
         if (name === 'condition') setCondition(event.target.value);
         if (name === 'size') setSize(event.target.value);
         if (name === 'paymentMethod') setPaymentMethod(event.target.value);
@@ -52,29 +48,34 @@ function FilterSoldItemForm(props) {
     function handleShowAllResults() {
         setMonth('');
         setYear('');
-        setBrand('');
-        setType('');
         setCondition('');
         setSize('');
         setPaymentMethod('');
         setSellMethod('');
         // Reset value of dropdowns back
-        monthInputRef.current.value = '';
         brandInputRef.current.value = '';
-        yearInputRef.current.value = '';
         typeInputRef.current.value = '';
+        monthInputRef.current.value = '';
+        yearInputRef.current.value = '';
         conditionInputRef.current.value = '';
         sizeInputRef.current.value = '';
         paymentMethodInputRef.current.value = '';
         sellMethodInputRef.current.value = '';
 
-        props.onFilterSoldItem({ month: '', year: '', brand: '', type: '', condition: '', size: '', paymentMethod: '', sellMethod: '' });
+        props.onFilterSoldItem({ brand: '', type: '', month: '', year: '', condition: '', size: '', paymentMethod: '', sellMethod: '' });
     }
 
     return (
         <div>
             <p>Filter sold items based on the following parameters:</p>
             <form className={classes.form} onSubmit={handleOnSubmit}>
+                <div className={classes.grid}>
+                    <label htmlFor='brand'>Brand</label>
+                    <input type='text' id='brand' ref={brandInputRef} />
+
+                    <label htmlFor='type'>Type</label>
+                    <input type='text' id='type' ref={typeInputRef} />
+                </div>
                 <div className={classes.grid}>
                     <label htmlFor='month'>Month</label>
                     <select id='month' ref={monthInputRef} defaultValue={monthValue} onChange={handleOnChange('month')}>
@@ -104,22 +105,6 @@ function FilterSoldItemForm(props) {
                         <option value='2020'>2020</option>
                         <option value='2021'>2021</option>
                         <option value='2022'>2022</option>
-                        <option value=''>SHOW ALL</option>
-                    </select>
-                </div>
-                <div className={classes.grid}>
-                    <label htmlFor='brand'>Brand</label>
-                    <select id='brand' ref={brandInputRef} defaultValue={brandValue} onChange={handleOnChange('brand')}>
-                        <option value='Ecko'>Ecko</option>
-                        <option value='Mossimo'>Mossimo</option>
-                        <option value='Quiksilver'>Quiksilver</option>
-                        <option value=''>SHOW ALL</option>
-                    </select>
-
-                    <label htmlFor='type'>Type</label>
-                    <select id='type' ref={typeInputRef} defaultValue={typeValue} onChange={handleOnChange('type')}>
-                        <option value='Pants'>Pants</option>
-                        <option value='Shirt'>Shirt</option>
                         <option value=''>SHOW ALL</option>
                     </select>
                 </div>
