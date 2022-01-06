@@ -1,0 +1,16 @@
+.main {
+    clear: both;
+}
+
+.left {
+    width: 75%;
+    overflow: auto;
+    clear: left;
+}
+
+.right {
+    width: 25%;
+    float: right;
+    overflow: auto;
+    clear: right;
+}

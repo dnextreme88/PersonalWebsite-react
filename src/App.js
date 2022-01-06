@@ -7,6 +7,7 @@ import Logout from "./components/Logout";
 import Profile from "./components/Profile";
 import SoldItem from "./components/SoldItem";
 import SoldItemList from "./components/SoldItemList";
+import Blog from "./pages/Blog";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/archive' element={<SoldItemList />} />
             <Route path='/archive/:soldItemId' element={<SoldItem />} />
+            <Route path='/blog' element={<Blog />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/login' element={<Login />} />
             <Route path='/logout' element={<Logout />} />
