@@ -3,13 +3,16 @@ import { useSelector } from 'react-redux';
 import axios from "axios";
 import SoldItem from "./SoldItem";
 import classes from "./SoldItemList.module.css";
-import AddSoldItemForm from "./AddSoldItemForm";
-import FilterSoldItemForm from "./FilterSoldItemForm";
+import AddSoldItemForm from "./forms/AddSoldItemForm";
+import FilterSoldItemForm from "./forms/FilterSoldItemForm";
 
 function SoldItemList() {
     const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSoldItemCreated, setIsSoldItemCreated] = useState(false);
     const [soldItems, setSoldItems] = useState([]);
+    const [soldItemsFiltered, setSoldItemsFiltered] = useState([]);
+    const [isFilter, setIsFilter] = useState(false);
 
     useEffect(() => {
         axios.get('http://localhost:3001/api/soldItems', {
@@ -18,11 +21,12 @@ function SoldItemList() {
             .then((response) => {
                 setIsLoading(false);
                 setSoldItems(response.data.data);
+                setIsSoldItemCreated(false);
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, [auth.bearerToken])
+    }, [auth.bearerToken, isSoldItemCreated])
     
     if (isLoading) {
         return (
@@ -68,6 +72,7 @@ function SoldItemList() {
                 soldItems.push(response.data.data);
                 setIsLoading(false);
                 setSoldItems(soldItems);
+                setIsSoldItemCreated(true);
             })
             .catch((err) => {
                 console.log('err', err);
@@ -75,13 +80,14 @@ function SoldItemList() {
     }
 
     function handleFilterSoldItem(filterFormData) {
+        setIsFilter(true);
         axios.post('http://localhost:3001/api/soldItems/filter', filterFormData, {
             headers: { Authorization: `Bearer ${auth.bearerToken}` },
         })
             .then((response) => {
                 console.log(response.data.data);
                 setIsLoading(false);
-                setSoldItems(response.data.data);
+                setSoldItemsFiltered(response.data.data);
             })
             .catch((err) => {
                 console.log('err', err);
@@ -93,25 +99,32 @@ function SoldItemList() {
             <p>A list of sold items will be shown here...</p>
             <p>Total items sold: <strong>{soldItems.length}</strong></p>
             <AddSoldItemForm onAddSoldItem={handleAddSoldItem} />
-            <FilterSoldItemForm onFilterSoldItem={handleFilterSoldItem} />
-            {soldItems.length > 0 ?
+            {soldItems.length > 0 || isFilter ?
+                <FilterSoldItemForm onFilterSoldItem={handleFilterSoldItem} />
+                : ''
+            }
+            {soldItems.length > 0 && soldItemsFiltered.length === 0 && !isFilter ?
                 soldItems.map((soldItem) => (
                     <SoldItem
                         key={soldItem.id}
                         id={soldItem.id}
-                        name={soldItem.name}
-                        price={soldItem.price}
-                        condition={soldItem.condition}
-                        size={soldItem.size}
-                        imageLocation={soldItem.imageLocation}
-                        dateSold={soldItem.dateSold}
-                        createdAt={soldItem.createdAt}
-                        updatedAt={soldItem.updatedAt}
                     />
                 )) :
-                <div className={classes.noSoldItems}>
-                    You have no sold items at the moment!
-                </div>
+                soldItemsFiltered.map((soldItem) => (
+                    <SoldItem
+                        key={soldItem.id}
+                        id={soldItem.id}
+                    />
+                ))
+            }
+            {/* DISPLAY ERROR MESSAGES */}
+            {soldItems.length < 1 && !isFilter ?
+                <div className={classes.noSoldItems}>You have no sold items at the moment!</div>
+                : ''
+            }
+            {soldItemsFiltered.length < 1 && isFilter ?
+                <div className={classes.noSoldItems}>Your search criteria returned nothing!</div>
+                : ''
             }
         </div>
     )

@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
-import classes from "./MainNavigation.module.css";
+import classes from "./Headers.module.css";
 
-function MainNavigation() {
+function Headers() {
     const auth = useSelector((state) => state.auth.value);
 
     return (
@@ -30,4 +30,4 @@ function MainNavigation() {
     )
 }
 
-export default MainNavigation;
+export default Headers;
