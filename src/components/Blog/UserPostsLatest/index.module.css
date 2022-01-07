@@ -8,9 +8,14 @@
     text-indent: 0.4rem;
 }
 
-.post, .userPosts {
+.post {
     margin-left: 2%;
     margin-bottom: 2%;
+}
+
+.userPosts {
+    margin-right: 2%;
+    text-align: right;
 }
 
 .userPosts a:hover {

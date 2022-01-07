@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import moment from "moment";
 import classes from "./index.module.css";
 import { Link } from "react-router-dom";
 
@@ -22,7 +23,7 @@ function UserPostsLatest(props) {
             .catch((error) => {
                 console.log(error);
             });
-    }, [auth.bearerToken, userId])
+    }, [auth.bearerToken, userId]);
 
     if (isLoading) {
         return (
@@ -36,10 +37,12 @@ function UserPostsLatest(props) {
         <div className={classes.posts}>
             <h2 className={classes.recentPosts}>Recent blog posts:</h2>
             {posts.map((post) =>
-                <div key={post.id} className={classes.post}>{post.title}</div>
+                <div key={post.id} className={classes.post}>
+                    <h4><Link to={`/blog/posts/${post.id}/${post.slug}`}>{post.title} ({moment(post.date).format("MMMM D, YYYY")})</Link></h4>
+                </div>
                 )
             }
-            <p className={classes.userPosts}><Link to={`../blog/posts/users/${userId}`}>View all posts by this user</Link></p>
+            <p className={classes.userPosts}><Link to={`../blog/posts/users/${userId}`}>&gt; View all posts by this user</Link></p>
         </div>
     )
 }
