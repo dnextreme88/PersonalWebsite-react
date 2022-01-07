@@ -3,3 +3,17 @@
     background-color: violet;
     overflow: hidden;
 }
+
+.year a, .item a {
+    color: black;
+}
+
+.item {
+    list-style: none;
+    text-indent: 1rem;
+}
+
+.year a:hover, .item a:hover {
+    color: white;
+    text-decoration: none;
+}

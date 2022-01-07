@@ -8,6 +8,8 @@ import Profile from "./components/Profile";
 import SoldItem from "./components/SoldItem";
 import SoldItemList from "./components/SoldItemList";
 import Blog from "./pages/Blog";
+import MonthYear from "./components/Blog/MonthYear";
+import Year from "./components/Blog/Year";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
             <Route path='/archive' element={<SoldItemList />} />
             <Route path='/archive/:soldItemId' element={<SoldItem />} />
             <Route path='/blog' element={<Blog />} />
+            <Route path='/blog/posts/:year/:month' element={<MonthYear />} />
+            <Route path='/blog/posts/:year' element={<Year />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/login' element={<Login />} />
             <Route path='/logout' element={<Logout />} />
