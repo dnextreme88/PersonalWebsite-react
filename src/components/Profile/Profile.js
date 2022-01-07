@@ -13,8 +13,6 @@ function Profile() {
 
     return (
         <div className={classes.main}>
-            <h1>Profile Page</h1>
-            <hr></hr>
             <p>User ID: {auth.userId}</p>
             <p>Username: {auth.username}</p>
             <p>Email: {auth.email}</p>

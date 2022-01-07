@@ -1,0 +1,18 @@
+.posts {
+    background-color: #CCC;
+    border: 1px solid white;
+    border-radius: 12px;
+}
+
+.recentPosts {
+    text-indent: 0.4rem;
+}
+
+.post, .userPosts {
+    margin-left: 2%;
+    margin-bottom: 2%;
+}
+
+.userPosts a:hover {
+    text-decoration: none;
+}
