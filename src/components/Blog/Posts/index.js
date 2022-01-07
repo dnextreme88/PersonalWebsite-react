@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
+import { Link } from "react-router-dom";
 import axios from "axios";
 import classes from "./index.module.css";
 
@@ -34,8 +35,10 @@ function Posts() {
             {posts.map((post) =>
                 <div key={post.id} className={classes.post}>
                     <div className={classes.postHeader}>
-                        <span className={classes.left}>{post.title}</span>
-                        <span className={classes.right}>{post.date}</span>
+                        <Link to={`/blog/posts/${post.id}/${post.slug}`}>
+                            <span className={classes.left}>{post.title}</span>
+                            <span className={classes.right}>{post.date}</span>
+                        </Link>
                     </div>
                     <div className={classes.postContent}>
                         <p>{post.content}</p>
