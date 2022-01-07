@@ -1,28 +1,40 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import classes from "./index.module.css";
+import Posts from "../components/Blog/Posts";
 
-function UserPosts(props) {
+function UserPostsPage(props) {
     const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
+    const [user, setUser] = useState('');
     const [posts, setPosts] = useState([]);
 
     const params = useParams();
     const userId = params.userId ? params.userId : props.userId;
 
     useEffect(() => {
+        axios.get(`http://localhost:3001/api/users/${userId}`, {
+            headers: { Authorization: `Bearer ${auth.bearerToken}` }
+        })
+            .then((response) => {
+                setUser(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
         axios.get(`http://localhost:3001/api/blog/posts/users/${userId}`, {
             headers: { Authorization: `Bearer ${auth.bearerToken}` }
         })
             .then((response) => {
-                setIsLoading(false);
                 setPosts(response.data.data);
             })
             .catch((error) => {
                 console.log(error);
             });
+
+        setIsLoading(false);
     }, [auth.bearerToken, userId]);
 
     if (isLoading) {
@@ -34,23 +46,11 @@ function UserPosts(props) {
     }
 
     return (
-        <div className={classes.main}>
-            {posts.map((post) =>
-                <div key={post.id} className={classes.post}>
-                    <div className={classes.postHeader}>
-                        <Link to={`/blog/posts/${post.id}/${post.slug}`}>
-                            <span className={classes.left}>{post.title}</span>
-                            <span className={classes.right}>{post.date}</span>
-                        </Link>
-                    </div>
-                    <div className={classes.postContent}>
-                        <p>{post.content}</p>
-                    </div>
-                </div>
-                )
-            }
+        <div>
+            <h1>Viewing all posts of: {user.username} ({user.email})</h1>
+            <Posts posts={posts} />
         </div>
     )
 }
 
-export default UserPosts;
+export default UserPostsPage;

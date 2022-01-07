@@ -10,7 +10,7 @@ import SoldItemList from "./components/SoldItemList";
 import Blog from "./pages/Blog";
 import MonthYear from "./components/Blog/MonthYear";
 import Year from "./components/Blog/Year";
-import UserPosts from "./components/Blog/UserPosts";
+import UserPosts from "./pages/UserPosts";
 import Post from "./components/Blog/Post";
 
 function App() {
