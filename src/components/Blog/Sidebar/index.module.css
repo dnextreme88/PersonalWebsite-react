@@ -1,7 +1,13 @@
 .main {
+    position: fixed;
+    padding-right: 8%;
     border-left: 4px solid black;
-    background-color: violet;
+    background-color: #CCC;
     overflow: hidden;
+}
+
+.browse {
+    text-indent: 0.5rem;
 }
 
 .year a, .item a {

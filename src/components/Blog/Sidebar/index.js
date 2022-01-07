@@ -50,7 +50,7 @@ function Sidebar() {
 
     return (
         <div className={classes.main}>
-            <h2>Browse...</h2>
+            <h2 className={classes.browse}>Browse...</h2>
             <nav>
                 <ul>
                     {monthsYears.map((monthYear, index) =>
