@@ -11,16 +11,20 @@
     text-indent: 0.5rem;
 }
 
-.year a, .item a {
-    color: black;
-}
-
 .item {
     list-style: none;
     text-indent: 1rem;
 }
 
-.year a:hover, .item a:hover {
+.categories {
+    list-style: none;
+}
+
+.year a, .item a, .categories a {
+    color: black;
+}
+
+.year a:hover, .item a:hover, .categories a:hover {
     color: white;
     text-decoration: none;
 }
