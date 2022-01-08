@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Posts from "../components/Blog/Posts";
+import classes from "./PostsByUser.module.css";
 
-function UserPostsPage(props) {
+function PostsByUserPage(props) {
     const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState('');
@@ -47,10 +48,16 @@ function UserPostsPage(props) {
 
     return (
         <div>
-            <h1>Viewing all posts of: {user.username} ({user.email})</h1>
-            <Posts posts={posts} />
+            {posts.length > 0 ?
+                <>
+                <h1>Viewing all posts of: {user.username} ({user.email})</h1>
+                <Posts posts={posts} />
+                </>
+                :
+                <div className={classes.noPosts}><strong>{user.username}</strong> currently has no posts!</div>
+            }
         </div>
     )
 }
 
-export default UserPostsPage;
+export default PostsByUserPage;

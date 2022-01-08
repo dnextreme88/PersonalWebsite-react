@@ -5,7 +5,7 @@ import moment from "moment";
 import classes from "./index.module.css";
 import { Link } from "react-router-dom";
 
-function UserPostsLatest(props) {
+function PostsByUserLatest(props) {
     const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState([]);
@@ -36,15 +36,21 @@ function UserPostsLatest(props) {
     return (
         <div className={classes.posts}>
             <h2 className={classes.recentPosts}>Recent blog posts:</h2>
-            {posts.map((post) =>
-                <div key={post.id} className={classes.post}>
-                    <h4><Link to={`/blog/posts/${post.id}/${post.slug}`}>{post.title} ({moment(post.date).format("MMMM D, YYYY")})</Link></h4>
-                </div>
-                )
+            {posts.length > 0 ?
+                <>
+                {posts.map((post) =>
+                    <div key={post.id} className={classes.post}>
+                        <h4><Link to={`/blog/posts/${post.id}/${post.slug}`}>{post.title} ({moment(post.date).format("MMMM D, YYYY")})</Link></h4>
+                    </div>
+                    )
+                }
+                <p className={classes.userPosts}><Link to={`../blog/posts/users/${userId}`}>&gt; View all posts by this user</Link></p>
+                </>
+                :
+                <div className={classes.noPosts}>This user currently has no recent posts!</div>
             }
-            <p className={classes.userPosts}><Link to={`../blog/posts/users/${userId}`}>&gt; View all posts by this user</Link></p>
         </div>
     )
 }
 
-export default UserPostsLatest;
+export default PostsByUserLatest;
