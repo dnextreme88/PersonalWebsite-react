@@ -69,7 +69,7 @@ function Post(props) {
                 <h1 className={classes.title}>{post.title}</h1>
             </div>
             <div className={classes.body}>
-                <div>{post.content}</div>
+                <div dangerouslySetInnerHTML={{ __html: post.content }} />
             </div>
 
             <span className={classes.toggle} onClick={handleShowPostInfo}>{togglePostInfoMsg}</span>

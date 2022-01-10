@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { stripHtmlTag } from "../../../helpers/Format";
 import classes from "./index.module.css";
 
 function Posts(props) {
@@ -31,12 +32,16 @@ function Posts(props) {
                         </Link>
                     </div>
                     <div className={classes.postContent}>
+                        <p>
                         {
-                            post.content.length >= 100 ?
-                            <p>{post.content.substring(0, 100)}... <Link to={`/blog/posts/${post.id}/${post.slug}`}>Read More</Link></p>
+                            stripHtmlTag(post.content).length >= 100 ?
+                            <>
+                            <span dangerouslySetInnerHTML={{ __html: post.content.substring(0, 100) }} />... <Link to={`/blog/posts/${post.id}/${post.slug}`}>Read More</Link>
+                            </>
                             :
-                            <p>{post.content}</p>
+                            <span dangerouslySetInnerHTML={{ __html: post.content }} />
                         }
+                        </p>
                     </div>
                 </div>
                 )
