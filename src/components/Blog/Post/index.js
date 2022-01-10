@@ -72,7 +72,7 @@ function Post(props) {
                 <div>{post.content}</div>
             </div>
 
-            <p className={classes.toggle} onClick={handleShowPostInfo}>{togglePostInfoMsg}</p>
+            <span className={classes.toggle} onClick={handleShowPostInfo}>{togglePostInfoMsg}</span>
             <div className={togglePostInfo}>
                 <h2>Post Information</h2>
                 <p>Posted by: <strong>{username} ({email})</strong></p>
