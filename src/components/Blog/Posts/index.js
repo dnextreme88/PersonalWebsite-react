@@ -31,7 +31,12 @@ function Posts(props) {
                         </Link>
                     </div>
                     <div className={classes.postContent}>
-                        <p>{post.content}</p>
+                        {
+                            post.content.length >= 100 ?
+                            <p>{post.content.substring(0, 100)}... <Link to={`/blog/posts/${post.id}/${post.slug}`}>Read More</Link></p>
+                            :
+                            <p>{post.content}</p>
+                        }
                     </div>
                 </div>
                 )
