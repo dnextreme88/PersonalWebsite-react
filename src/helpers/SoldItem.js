@@ -5,14 +5,14 @@ export const displayPaymentMethodLocation = (paymentMethod, paymentLocationInput
         paymentLocationInput = <input type='text' id='location' ref={paymentLocationInputRef} />;
     } else if (paymentMethod === 'dropping area cashout') {
         paymentLocationInput = (
-            <select id='paymentLocation' ref={paymentLocationInputRef} defaultValue='stall4'>
+            <select id='paymentLocation' ref={paymentLocationInputRef} defaultValue='GP Arcade Stall 4'>
                 <option value='GP Arcade Stall 4'>GP Arcade Stall 4</option>
                 <option value='GP Arcade Stall 6'>GP Arcade Stall 6</option>
             </select>
         );
     } else if (paymentMethod === 'remittance') {
         paymentLocationInput = (
-            <select id='paymentLocation' ref={paymentLocationInputRef} defaultValue='abest'>
+            <select id='paymentLocation' ref={paymentLocationInputRef} defaultValue='Cebuana'>
                 <option value='Cebuana'>Cebuana</option>
                 <option value='GCash'>GCash</option>
                 <option value='LBC'>LBC</option>
@@ -30,14 +30,14 @@ export const displaySellMethodLocation = (sellMethod, sellLocationInputRef) => {
         sellLocationInput = <input type='text' id='location' ref={sellLocationInputRef} />;
     } else if (sellMethod === 'dropping') {
         sellLocationInput = (
-            <select id='sellLocation' ref={sellLocationInputRef} defaultValue='stall4'>
+            <select id='sellLocation' ref={sellLocationInputRef} defaultValue='GP Arcade Stall 4'>
                 <option value='GP Arcade Stall 4'>GP Arcade Stall 4</option>
                 <option value='GP Arcade Stall 6'>GP Arcade Stall 6</option>
             </select>
         );
     } else if (sellMethod === 'shipment') {
         sellLocationInput = (
-            <select id='sellLocation' ref={sellLocationInputRef} defaultValue='abest'>
+            <select id='sellLocation' ref={sellLocationInputRef} defaultValue='ABest Express'>
                 <option value='ABest Express'>ABest Express</option>
                 <option value='JRS'>JRS</option>
                 <option value='LBC'>LBC</option>
