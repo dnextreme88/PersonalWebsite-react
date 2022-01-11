@@ -1,3 +1,5 @@
+import { displayDroppingAreas, displayRemittanceCenters, displayShipmentCenters } from "./PopulateContent";
+
 export const displayPaymentMethodLocation = (paymentMethod, paymentLocationInputRef) => {
     let paymentLocationInput = '';
 
@@ -6,18 +8,13 @@ export const displayPaymentMethodLocation = (paymentMethod, paymentLocationInput
     } else if (paymentMethod === 'dropping area cashout') {
         paymentLocationInput = (
             <select id='paymentLocation' ref={paymentLocationInputRef} defaultValue='GP Arcade Stall 4'>
-                <option value='GP Arcade Stall 4'>GP Arcade Stall 4</option>
-                <option value='GP Arcade Stall 6'>GP Arcade Stall 6</option>
+                {displayDroppingAreas()}
             </select>
         );
     } else if (paymentMethod === 'remittance') {
         paymentLocationInput = (
             <select id='paymentLocation' ref={paymentLocationInputRef} defaultValue='Cebuana'>
-                <option value='Cebuana'>Cebuana</option>
-                <option value='GCash'>GCash</option>
-                <option value='LBC'>LBC</option>
-                <option value='Palawan Express'>Palawan Express</option>
-                <option value='Western Union'>Western Union</option>
+                {displayRemittanceCenters()}
             </select>
         );
     }
@@ -31,17 +28,13 @@ export const displaySellMethodLocation = (sellMethod, sellLocationInputRef) => {
     } else if (sellMethod === 'dropping') {
         sellLocationInput = (
             <select id='sellLocation' ref={sellLocationInputRef} defaultValue='GP Arcade Stall 4'>
-                <option value='GP Arcade Stall 4'>GP Arcade Stall 4</option>
-                <option value='GP Arcade Stall 6'>GP Arcade Stall 6</option>
+                {displayDroppingAreas()}
             </select>
         );
     } else if (sellMethod === 'shipment') {
         sellLocationInput = (
             <select id='sellLocation' ref={sellLocationInputRef} defaultValue='ABest Express'>
-                <option value='ABest Express'>ABest Express</option>
-                <option value='JRS'>JRS</option>
-                <option value='LBC'>LBC</option>
-                <option value='Partas Waybill'>Partas Waybill</option>
+                {displayShipmentCenters()}
             </select>
         );
     }

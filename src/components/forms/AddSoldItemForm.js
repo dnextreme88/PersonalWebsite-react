@@ -1,4 +1,10 @@
 import { useRef, useState } from 'react';
+import {
+    displayConditions,
+    displaySizes,
+    displayPaymentMethods,
+    displaySellMethods,
+} from "../../helpers/PopulateContent";
 import { displayPaymentMethodLocation, displaySellMethodLocation } from "../../helpers/SoldItem";
 import classes from './AddSoldItemForm.module.css';
 
@@ -78,19 +84,12 @@ function AddSoldItemForm(props) {
             <div className={classes.grid}>
                 <label htmlFor='condition'>Condition</label>
                 <select id='condition' ref={conditionInputRef} defaultValue='new'>
-                    <option value='healthy'>healthy</option>
-                    <option value='new'>new</option>
-                    <option value='used'>used</option>
+                    {displayConditions()}
                 </select>
 
                 <label htmlFor='size'>Size</label>
                 <select id='size' ref={sizeInputRef} defaultValue='N/A'>
-                    <option value='S'>Small</option>
-                    <option value='M'>Medium</option>
-                    <option value='L'>Large</option>
-                    <option value='XL'>XL</option>
-                    <option value='XXL'>XXL</option>
-                    <option value='N/A'>Not applicable</option>
+                    {displaySizes()}
                 </select>
             </div>
             <div className={classes.grid}>
@@ -103,9 +102,7 @@ function AddSoldItemForm(props) {
             <div className={classes.grid}>
                 <label htmlFor='paymentMethod'>Payment method</label>
                 <select id='paymentMethod' ref={paymentMethodInputRef} defaultValue='cash on-hand' onChange={handlePaymentMethod}>
-                    <option value='cash on-hand'>Cash on-hand</option>
-                    <option value='dropping area cashout'>Dropping area cashout</option>
-                    <option value='remittance'>Remittance</option>
+                    {displayPaymentMethods()}
                 </select>
 
                 <label htmlFor='paymentLocation'>Payment location</label>
@@ -114,9 +111,7 @@ function AddSoldItemForm(props) {
             <div className={classes.grid}>
                 <label htmlFor='sellMethod'>Sell method</label>
                 <select id='sellMethod' ref={sellMethodInputRef} defaultValue='dropping' onChange={handleSellMethod}>
-                    <option value='dropping'>Dropping</option>
-                    <option value='meetup'>Meetup</option>
-                    <option value='shipment'>Shipment</option>
+                    {displaySellMethods()}
                 </select>
 
                 <label htmlFor='sellLocation'>Sell Location</label>
