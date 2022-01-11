@@ -16,7 +16,7 @@ function Headers() {
                     {auth.bearerToken.length > 0
                         ?
                         <>
-                        <li><Link to="/profile">Profile</Link></li>
+                        <li>Hi, <Link to="/profile">{auth.username}</Link>!</li>
                         <li><Link to="/logout">Logout</Link></li>
                         </>
                         :

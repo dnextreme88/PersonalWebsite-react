@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import classes from "./Profile.module.css";
+import classes from "./index.module.css";
 
-function Profile() {
+function UserInfo() {
     const auth = useSelector((state) => state.auth.value);
 
     if (auth.bearerToken.length < 1) {
@@ -20,4 +20,4 @@ function Profile() {
     );
 }
 
-export default Profile;
+export default UserInfo;
