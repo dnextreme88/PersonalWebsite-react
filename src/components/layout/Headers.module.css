@@ -4,14 +4,13 @@
     background-color: green;
     display: flex;
     align-items: center;
-    padding-left: 1rem;
 }
 
 .logo {
     font-size: 2rem;
     color: white;
     font-weight: bold;
-    padding-right: 1.5rem;
+    padding: 0 1rem;
 }
 
 .logo a {

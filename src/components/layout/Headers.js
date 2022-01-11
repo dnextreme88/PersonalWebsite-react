@@ -12,6 +12,7 @@ function Headers() {
                 <ul className={classes.list}>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/archive">Archives</Link></li>
+                    <li><Link to="/blog">Blog</Link></li>
                     {auth.bearerToken.length > 0
                         ?
                         <>
