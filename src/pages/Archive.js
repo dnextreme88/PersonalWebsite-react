@@ -1,15 +1,16 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import axios from "axios";
-import SoldItem from "./SoldItem";
-import classes from "./SoldItemList.module.css";
-import AddSoldItemForm from "./forms/AddSoldItemForm";
-import FilterSoldItemForm from "./forms/FilterSoldItemForm";
+import AddSoldItemForm from "../components/forms/AddSoldItemForm";
+import FilterSoldItemForm from "../components/forms/FilterSoldItemForm";
+import classes from "./Archive.module.css";
+import SoldItems from "../components/Archive/SoldItems";
 
-function SoldItemList() {
+function Archive() {
     const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
     const [isSoldItemCreated, setIsSoldItemCreated] = useState(false);
+    const [isSoldItemDeleted, setIsSoldItemDeleted] = useState(false);
     const [soldItems, setSoldItems] = useState([]);
     const [soldItemsFiltered, setSoldItemsFiltered] = useState([]);
     const [isFilter, setIsFilter] = useState(false);
@@ -21,40 +22,16 @@ function SoldItemList() {
             .then((response) => {
                 setIsLoading(false);
                 setSoldItems(response.data.data);
+                // Reset default state so that the page re-renders when a sold item is created or deleted
                 setIsSoldItemCreated(false);
+                setIsSoldItemDeleted(false);
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, [auth.bearerToken, isSoldItemCreated])
-    
-    if (isLoading) {
-        return (
-            <div className={classes.list}>
-                <p>Loading...</p>
-            </div>
-        )
-    }
+    }, [auth.bearerToken, isSoldItemCreated, isSoldItemDeleted]);
 
     function handleAddSoldItem(addFormData) {
-        // body key must be an object in JSON format so use JSON.stringify()
-        // fetch('http://localhost:3001/api/soldItems', {
-        //         method: 'POST',
-        //         body: JSON.stringify(soldItemFormData),
-        //         headers: { 'Content-Type': 'application/json' }
-        // })
-        //     .then((response) => {
-        //         console.log('response from api:', response);
-        //         return response.json();
-        //     })
-        //     .then((data) => {
-        //         soldItems.push(data.data);
-        //         setIsLoading(false);
-        //         setSoldItems(soldItems);
-        //     })
-        // .catch((err) => {
-        //     console.log('err', err);
-        // });
         const formData = new FormData();
         for (const [key, value] of Object.entries(addFormData)) {
             if (key === 'imageLocation') {
@@ -79,6 +56,14 @@ function SoldItemList() {
             });
     }
 
+    function handleDeleteSoldItem(soldItemId) {
+        setIsSoldItemDeleted(true);
+
+        // Explicitly remove filter data
+        setSoldItemsFiltered([]);
+        setIsFilter(false);
+    }
+
     function handleFilterSoldItem(filterFormData) {
         setIsFilter(true);
         axios.post('http://localhost:3001/api/soldItems/filter', filterFormData, {
@@ -93,30 +78,36 @@ function SoldItemList() {
                 console.log('err', err);
             });
     }
+        
+    if (isLoading) {
+        return (
+            <div className={classes.list}>
+                <p>Loading...</p>
+            </div>
+        )
+    }
 
     return (
         <div className={classes.list}>
             <p>A list of sold items will be shown here...</p>
             <p>Total items sold: <strong>{soldItems.length}</strong></p>
+
             <AddSoldItemForm onAddSoldItem={handleAddSoldItem} />
+
             {soldItems.length > 0 || isFilter ?
                 <FilterSoldItemForm onFilterSoldItem={handleFilterSoldItem} />
                 : ''
             }
-            {soldItems.length > 0 && soldItemsFiltered.length === 0 && !isFilter ?
-                soldItems.map((soldItem) => (
-                    <SoldItem
-                        key={soldItem.id}
-                        id={soldItem.id}
-                    />
-                )) :
-                soldItemsFiltered.map((soldItem) => (
-                    <SoldItem
-                        key={soldItem.id}
-                        id={soldItem.id}
-                    />
-                ))
+            {soldItemsFiltered.length > 0 && isFilter ?
+                <div className={classes.filteredSoldItems}>Your search criteria returned <strong>{soldItemsFiltered.length}</strong> results</div>
+                : ''
             }
+
+            {soldItems.length > 0 && soldItemsFiltered.length === 0 && !isFilter ?
+                <SoldItems soldItems={soldItems} onHandleDeleteSoldItem={handleDeleteSoldItem} /> :
+                <SoldItems soldItems={soldItemsFiltered} onHandleDeleteSoldItem={handleDeleteSoldItem} />
+            }
+
             {/* DISPLAY ERROR MESSAGES */}
             {soldItems.length < 1 && !isFilter ?
                 <div className={classes.noSoldItems}>You have no sold items at the moment!</div>
@@ -130,4 +121,4 @@ function SoldItemList() {
     )
 }
 
-export default SoldItemList;
+export default Archive;
