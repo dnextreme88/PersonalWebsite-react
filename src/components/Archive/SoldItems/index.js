@@ -29,15 +29,7 @@ function SoldItems() {
             .catch((error) => {
                 console.log(error);
             });
-    }, [auth.bearerToken, isSoldItemCreated, isSoldItemDeleted])
-    
-    if (isLoading) {
-        return (
-            <div className={classes.list}>
-                <p>Loading...</p>
-            </div>
-        )
-    }
+    }, [auth.bearerToken, isSoldItemCreated, isSoldItemDeleted]);
 
     function handleAddSoldItem(addFormData) {
         // body key must be an object in JSON format so use JSON.stringify()
@@ -83,6 +75,10 @@ function SoldItems() {
     }
 
     function handleDeleteSoldItem(soldItemId) {
+        // Explicitly remove filter data
+        setSoldItemsFiltered([]);
+        setIsFilter(false);
+
         setIsSoldItemDeleted(true);
     }
 
@@ -99,6 +95,14 @@ function SoldItems() {
             .catch((err) => {
                 console.log('err', err);
             });
+    }
+
+    if (isLoading) {
+        return (
+            <div className={classes.list}>
+                <p>Loading...</p>
+            </div>
+        )
     }
 
     return (
@@ -122,6 +126,7 @@ function SoldItems() {
                     <SoldItem
                         key={soldItem.id}
                         id={soldItem.id}
+                        onHandleDeleteSoldItem={handleDeleteSoldItem}
                     />
                 ))
             }
