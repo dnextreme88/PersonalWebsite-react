@@ -1,12 +1,12 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import axios from "axios";
-import SoldItem from "./SoldItem";
-import AddSoldItemForm from "./forms/AddSoldItemForm";
-import FilterSoldItemForm from "./forms/FilterSoldItemForm";
-import classes from "./SoldItemList.module.css";
+import SoldItem from "../SoldItem";
+import AddSoldItemForm from "../../forms/AddSoldItemForm";
+import FilterSoldItemForm from "../../forms/FilterSoldItemForm";
+import classes from "./index.module.css";
 
-function SoldItemList() {
+function SoldItems() {
     const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
     const [isSoldItemCreated, setIsSoldItemCreated] = useState(false);
@@ -138,4 +138,4 @@ function SoldItemList() {
     )
 }
 
-export default SoldItemList;
+export default SoldItems;

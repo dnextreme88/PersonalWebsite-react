@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import moment from "moment";
-import DeleteSoldItemModal from "./Modals/DeleteSoldItemModal";
-import classes from "./SoldItem.module.css";
+import DeleteSoldItemModal from "../../Modals/DeleteSoldItemModal";
+import classes from "./index.module.css";
 
 function SoldItem(props) {
     const auth = useSelector((state) => state.auth.value);

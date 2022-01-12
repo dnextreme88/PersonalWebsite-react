@@ -5,8 +5,8 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Profile from "./pages/Profile";
-import SoldItem from "./components/SoldItem";
-import SoldItemList from "./components/SoldItemList";
+import SoldItem from "./components/Archive/SoldItem";
+import SoldItems from "./components/Archive/SoldItems";
 import Blog from "./pages/Blog";
 import MonthYear from "./components/Blog/MonthYear";
 import Year from "./components/Blog/Year";
@@ -21,7 +21,7 @@ function App() {
     <Layout>
         <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/archive' element={<SoldItemList />} />
+            <Route path='/archive' element={<SoldItems />} />
             <Route path='/archive/:soldItemId' element={<SoldItem />} />
             <Route path='/archive/:soldItemId/update' element={<EditSoldItemForm />} />
             <Route path='/blog' element={<Blog />} />
