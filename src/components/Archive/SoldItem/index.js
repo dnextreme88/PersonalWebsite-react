@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 import moment from "moment";
 import DeleteSoldItemModal from "../../Modals/DeleteSoldItemModal";
@@ -10,8 +10,6 @@ function SoldItem(props) {
     const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
     const [soldItem, setSoldItem] = useState([]);
-
-    const navigate = useNavigate();
 
     const params = useParams();
     const soldItemId = params.soldItemId ? params.soldItemId : props.id;
@@ -28,10 +26,6 @@ function SoldItem(props) {
                 console.log(error);
             });
     }, [auth.bearerToken, soldItemId]);
-
-    function handleOnClick() {
-        navigate(`/archive/${soldItemId}`);
-    }
 
     function handleDeleteSoldItem(id) {
         axios.post(`http://localhost:3001/api/soldItems/${id}/delete`, null, {
@@ -62,7 +56,7 @@ function SoldItem(props) {
                 <span className={classes.right}>Updated: {moment(soldItem.updatedAt).format("MMMM D, YYYY h:mm:ss A")}</span>
             </div>
             <div className={classes.titleImage}>
-                <span className={classes.title} onClick={handleOnClick}>{soldItem.name}</span>
+                <span className={classes.title}><Link to={`/archive/${soldItemId}`}>{soldItem.name}</Link></span>
                 <img className={classes.image} src={soldItem.imageLocation} alt={soldItem.name} />
             </div>
             <div className={classes.soldItemDetails}>

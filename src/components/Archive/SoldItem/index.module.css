@@ -28,11 +28,19 @@
 
 .title {
     font-size: 2rem;
-    color: black;
 }
 
 .title:hover {
     cursor: pointer;
+}
+
+.title a {
+    text-decoration: none;
+    color: black;
+}
+
+.title a:hover {
+    color: #465d9e;
 }
 
 .image {
