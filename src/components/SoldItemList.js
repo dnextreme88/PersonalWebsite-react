@@ -2,14 +2,15 @@ import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import axios from "axios";
 import SoldItem from "./SoldItem";
-import classes from "./SoldItemList.module.css";
 import AddSoldItemForm from "./forms/AddSoldItemForm";
 import FilterSoldItemForm from "./forms/FilterSoldItemForm";
+import classes from "./SoldItemList.module.css";
 
 function SoldItemList() {
     const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
     const [isSoldItemCreated, setIsSoldItemCreated] = useState(false);
+    const [isSoldItemDeleted, setIsSoldItemDeleted] = useState(false);
     const [soldItems, setSoldItems] = useState([]);
     const [soldItemsFiltered, setSoldItemsFiltered] = useState([]);
     const [isFilter, setIsFilter] = useState(false);
@@ -21,12 +22,14 @@ function SoldItemList() {
             .then((response) => {
                 setIsLoading(false);
                 setSoldItems(response.data.data);
+                // Reset default state so that the page re-renders when a sold item is created or deleted
                 setIsSoldItemCreated(false);
+                setIsSoldItemDeleted(false);
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, [auth.bearerToken, isSoldItemCreated])
+    }, [auth.bearerToken, isSoldItemCreated, isSoldItemDeleted])
     
     if (isLoading) {
         return (
@@ -79,6 +82,10 @@ function SoldItemList() {
             });
     }
 
+    function handleDeleteSoldItem(soldItemId) {
+        setIsSoldItemDeleted(true);
+    }
+
     function handleFilterSoldItem(filterFormData) {
         setIsFilter(true);
         axios.post('http://localhost:3001/api/soldItems/filter', filterFormData, {
@@ -108,6 +115,7 @@ function SoldItemList() {
                     <SoldItem
                         key={soldItem.id}
                         id={soldItem.id}
+                        onHandleDeleteSoldItem={handleDeleteSoldItem}
                     />
                 )) :
                 soldItemsFiltered.map((soldItem) => (

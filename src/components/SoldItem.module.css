@@ -87,13 +87,3 @@
     background-color: #465d9e;
     border-color: #465d9e;
 }
-
-.actions .delete {
-    background-color: #e92020;
-    border: 1px solid #e92020;
-}
-
-.actions .delete:hover, .actions .delete:active {
-    background-color: #bd5858;
-    border-color: #bd5858;
-}

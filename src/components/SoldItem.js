@@ -1,15 +1,13 @@
 import { React, useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import moment from "moment";
+import DeleteSoldItemModal from "./Modals/DeleteSoldItemModal";
 import classes from "./SoldItem.module.css";
-import { closeModal } from "../features/Modal";
 
 function SoldItem(props) {
-    const dispatch = useDispatch();
     const auth = useSelector((state) => state.auth.value);
-    const modal = useSelector((state) => state.modal.value);
     const [isLoading, setIsLoading] = useState(true);
     const [soldItem, setSoldItem] = useState([]);
 
@@ -29,14 +27,24 @@ function SoldItem(props) {
             .catch((error) => {
                 console.log(error);
             });
-    }, [auth.bearerToken, soldItemId])
+    }, [auth.bearerToken, soldItemId]);
 
     function handleOnClick() {
         navigate(`/archive/${soldItemId}`);
     }
 
-    function handleOnClickDelete() {
-        dispatch(closeModal());
+    function handleDeleteSoldItem(id) {
+        axios.post(`http://localhost:3001/api/soldItems/${id}/delete`, null, {
+            headers: { Authorization: `Bearer ${auth.bearerToken}` }
+        })
+            .then((response) => {
+                console.log('LOG: Sold item deleted');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+        props.onHandleDeleteSoldItem(id);
     }
 
     if (isLoading) {
@@ -49,7 +57,6 @@ function SoldItem(props) {
 
     return (
         <div className={classes.card}>
-            <p>Modal value: {modal.toString()}</p>
             <div className={classes.timestamps}>
                 <span>Created: {moment(soldItem.createdAt).format("MMMM D, YYYY h:mm:ss A")}</span>
                 <span className={classes.right}>Updated: {moment(soldItem.updatedAt).format("MMMM D, YYYY h:mm:ss A")}</span>
@@ -75,7 +82,7 @@ function SoldItem(props) {
                     <Link to={`/archive/${soldItemId}/update`}><button className={classes.edit}>Edit</button></Link>
                 </div>
                 <div className={classes.right}>
-                    <button className={classes.delete} onClick={handleOnClickDelete}>Delete</button>
+                    <DeleteSoldItemModal soldItemId={soldItemId} onDeleteSoldItem={handleDeleteSoldItem} />
                 </div>
             </div>
         </div>
