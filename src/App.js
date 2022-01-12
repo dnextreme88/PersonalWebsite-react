@@ -15,13 +15,14 @@ import Categories from "./pages/Categories";
 import PostsByCategory from "./pages/PostsByCategory";
 import PostsByUser from "./pages/PostsByUser";
 import EditSoldItemForm from "./components/forms/EditSoldItemForm";
+import Archive from "./pages/Archive";
 
 function App() {
   return (
     <Layout>
         <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/archive' element={<SoldItems />} />
+            <Route path='/archive' element={<Archive />} />
             <Route path='/archive/:soldItemId' element={<SoldItem />} />
             <Route path='/archive/:soldItemId/update' element={<EditSoldItemForm />} />
             <Route path='/blog' element={<Blog />} />

@@ -1,0 +1,29 @@
+.list {
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    align-items: center;
+}
+
+.list p {
+    font-size: 1.2rem;
+    margin-left: 2%;
+}
+
+.filteredSoldItems, .noSoldItems {
+    font-size: 1.2rem;
+    margin: 2%;
+    padding: 1rem;
+    border-radius: 8px;
+    color: white;
+}
+
+.filteredSoldItems {
+    background-color: #5bb367;
+    border: 2px solid #5bb367;
+}
+
+.noSoldItems {
+    background-color: #df4759;
+    border: 2px solid #f8d7da;
+}
