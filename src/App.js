@@ -14,6 +14,7 @@ import Post from "./components/Blog/Post";
 import Categories from "./pages/Categories";
 import PostsByCategory from "./pages/PostsByCategory";
 import PostsByUser from "./pages/PostsByUser";
+import EditSoldItemForm from "./components/forms/EditSoldItemForm";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/archive' element={<SoldItemList />} />
             <Route path='/archive/:soldItemId' element={<SoldItem />} />
+            <Route path='/archive/:soldItemId/update' element={<EditSoldItemForm />} />
             <Route path='/blog' element={<Blog />} />
             <Route path='/blog/categories' element={<Categories />} />
             <Route path='/blog/posts/:postId/:slug' element={<Post />} />

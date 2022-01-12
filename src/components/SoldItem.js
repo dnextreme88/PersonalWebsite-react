@@ -1,10 +1,10 @@
 import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import moment from "moment";
 import classes from "./SoldItem.module.css";
-import { openModal, closeModal } from "../features/Modal";
+import { closeModal } from "../features/Modal";
 
 function SoldItem(props) {
     const dispatch = useDispatch();
@@ -33,10 +33,6 @@ function SoldItem(props) {
 
     function handleOnClick() {
         navigate(`/archive/${soldItemId}`);
-    }
-
-    function handleOnClickEdit() {
-        dispatch(openModal());
     }
 
     function handleOnClickDelete() {
@@ -76,7 +72,7 @@ function SoldItem(props) {
             </div>
             <div className={classes.actions}>
                 <div className={classes.left}>
-                    <button className={classes.edit} onClick={handleOnClickEdit}>Edit</button>
+                    <Link to={`/archive/${soldItemId}/update`}><button className={classes.edit}>Edit</button></Link>
                 </div>
                 <div className={classes.right}>
                     <button className={classes.delete} onClick={handleOnClickDelete}>Delete</button>
