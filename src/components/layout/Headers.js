@@ -13,6 +13,7 @@ function Headers() {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/archive">Archives</Link></li>
                     <li><Link to="/blog">Blog</Link></li>
+                    <li><Link to="/guides">FAQs</Link></li>
                     {auth.bearerToken.length > 0
                         ?
                         <>
