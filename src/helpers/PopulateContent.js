@@ -73,6 +73,53 @@ export const displayShipmentCenters = () => {
     )
 }
 
+export const displayTypes = () => {
+    return (
+        <>
+        <option value='Boss FAQ'>Boss FAQ</option>
+        <option value='Collectibles FAQ'>Collectibles FAQ</option>
+        <option value='Game Script'>Game Script</option>
+        <option value='General FAQ'>General FAQ</option>
+        <option value='In-Depth FAQ'>In-Depth FAQ</option>
+        <option value='Secret FAQ'>Secret FAQ</option>
+        </>
+    )
+}
+
+export const displayPlatforms = () => {
+    return (
+        <>
+        <option value="Android">Android</option>
+        <option value="Browser/Online">Browser / Online</option>
+        <option value="GB">Game Boy</option>
+        <option value="GBA">Game Boy Advance</option>
+        <option value="GBC">Game Boy Color</option>
+        <option value="GC">GameCube</option>
+        <option value="IOS">iOS (iPhone/iPad)</option>
+        <option value="Linux/Mac">Linux / Macintosh</option>
+        <option value="NES">NES</option>
+        <option value="Nintendo 3DS">Nintendo 3DS</option>
+        <option value="Nintendo 64">Nintendo 64</option>
+        <option value="Nintendo DS">Nintendo DS</option>
+        <option value="Nintendo Switch">Nintendo Switch</option>
+        <option value="Wii">Nintendo Wii</option>
+        <option value="Wii U">Nintendo Wii U</option>
+        <option value="PC">PC</option>
+        <option value="PS1">PlayStation 1</option>
+        <option value="PS2">PlayStation 2</option>
+        <option value="PS3">PlayStation 3</option>
+        <option value="PS4">PlayStation 4</option>
+        <option value="PS5">PlayStation 5</option>
+        <option value="PSP">PlayStation Portable</option>
+        <option value="PS Vita">PlayStation Vita</option>
+        <option value="Xbox">Xbox</option>
+        <option value="Xbox 360">Xbox 360</option>
+        <option value="Xbox One">Xbox One</option>
+        <option value="Xbox Series X">Xbox Series X</option>
+        </>
+    )
+}
+
 const populateContentHelpers = {
     displayConditions,
     displaySizes,
@@ -80,7 +127,9 @@ const populateContentHelpers = {
     displaySellMethods,
     displayDroppingAreas,
     displayRemittanceCenters,
-    displayShipmentCenters
+    displayShipmentCenters,
+    displayTypes,
+    displayPlatforms,
 };
 
 export default populateContentHelpers;
