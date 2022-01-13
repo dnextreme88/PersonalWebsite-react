@@ -120,6 +120,18 @@ export const displayPlatforms = () => {
     )
 }
 
+export const displayOps = () => {
+    return (
+        <>
+        <option value='>'>Greater than (&gt;)</option>
+        <option value='>='>Greater than or equal to (&ge;)</option>
+        <option value='='>Equal to (=)</option>
+        <option value='<'>Less than (&lt;)</option>
+        <option value='<='>Less than or equal to (&le;)</option>
+        </>
+    )
+}
+
 const populateContentHelpers = {
     displayConditions,
     displaySizes,
@@ -130,6 +142,7 @@ const populateContentHelpers = {
     displayShipmentCenters,
     displayTypes,
     displayPlatforms,
+    displayOps,
 };
 
 export default populateContentHelpers;
