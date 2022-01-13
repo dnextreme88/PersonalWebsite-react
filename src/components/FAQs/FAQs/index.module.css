@@ -1,0 +1,24 @@
+.actions {
+    width: 100%;
+    display: inline-block;
+    overflow: auto;
+}
+
+.actions button {
+    font: inherit;
+    cursor: pointer;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.actions .edit {
+    background-color: #6e93f8;
+    border: 1px solid #6e93f8;
+}
+
+.actions .edit:hover, .actions .edit:active {
+    background-color: #465d9e;
+    border-color: #465d9e;
+}

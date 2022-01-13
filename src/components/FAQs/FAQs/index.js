@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import moment from "moment";
+import DeleteGuideModal from "../../Modals/DeleteGuideModal";
 import classes from "./index.module.css";
 
 function FAQs(props) {
@@ -11,6 +13,10 @@ function FAQs(props) {
         setIsLoading(false);
         setFaqs(props.faqs);
     }, [props.faqs]);
+
+    function handleDeleteGuide(guideId) {
+        props.onDeleteGuide(guideId);
+    }
 
     if (isLoading) {
         return (
@@ -32,6 +38,7 @@ function FAQs(props) {
                         <th>Date Created</th>
                         <th>Date Modified</th>
                         <th>URL</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +51,14 @@ function FAQs(props) {
                                 <td>{moment(faq.dateCreated).format("MMMM D, YYYY")}</td>
                                 <td>{moment(faq.dateModified).format("MMMM D, YYYY")}</td>
                                 <td><a href={faq.url} target={"_blank"} rel="noreferrer">{faq.url}</a></td>
+                                <td className={classes.actions}>
+                                    {
+                                        <Link to={`/guides/${faq.id}/update`}><button className={classes.edit}>Edit</button></Link>
+                                    }
+                                    {
+                                        <DeleteGuideModal guideId={faq.id} onDeleteGuide={handleDeleteGuide} />
+                                    }
+                                </td>
                             </tr>
                         )
                     }
