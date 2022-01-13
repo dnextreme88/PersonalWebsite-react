@@ -52,9 +52,9 @@ function Sidebar() {
                 <ul>
                     {monthsYears.map((monthYear, index) =>
                             years.includes(monthYear.text) ?
-                                <li key={index} className={classes.year} onClick={() => handleOnClick(monthYear.year)}><Link to={`/blog/posts/${monthYear.text}`}>{monthYear.text}</Link> ({monthYear.count})</li>
+                                <li key={index} className={classes.year} onClick={() => handleOnClick(monthYear.year)}><Link to={`/blog/posts/year/${monthYear.text}`}>{monthYear.text}</Link> ({monthYear.count})</li>
                                 :
-                                <li key={index} className={classes.item} onClick={() => handleOnClick(monthYear.year, monthYear.month)}><Link to={`/blog/posts/${monthYear.year}/${monthYear.month}`}>{monthYear.text}</Link> ({monthYear.count})</li>
+                                <li key={index} className={classes.item} onClick={() => handleOnClick(monthYear.year, monthYear.month)}><Link to={`/blog/posts/year/${monthYear.year}/month/${monthYear.month}`}>{monthYear.text}</Link> ({monthYear.count})</li>
                         )
                     }
                     <li className={classes.categories}><Link to='/blog/categories'>Categories</Link></li>
