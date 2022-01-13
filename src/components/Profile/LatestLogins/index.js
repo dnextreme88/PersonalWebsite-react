@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
-import axios from "axios";
 import moment from "moment";
 import Loading from "../../Spinners/Loading";
+import { SendGetRequest } from "../../../helpers/SendApiRequest";
 import classes from "./index.module.css";
 
 function LatestLogins(props) {
@@ -11,16 +11,12 @@ function LatestLogins(props) {
     const [latestLogins, setLatestLogins] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/users/${auth.userId}/login/latest`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setIsLoading(false);
-                setLatestLogins(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, `api/users/${auth.userId}/login/latest`);
+            setLatestLogins(response);
+            
+            setIsLoading(false);
+        })();
     }, [auth.bearerToken, auth.userId]);
 
     if (isLoading) {

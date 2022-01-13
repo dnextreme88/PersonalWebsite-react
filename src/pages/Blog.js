@@ -1,10 +1,10 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import Posts from "../components/Blog/Posts";
 import Sidebar from "../components/Blog/Sidebar";
-import classes from "./Blog.module.css";
 import Loading from "../components/Spinners/Loading";
+import { SendGetRequest } from "../helpers/SendApiRequest";
+import classes from "./Blog.module.css";
 
 function BlogPage() {
     const auth = useSelector((state) => state.auth.value);
@@ -12,16 +12,12 @@ function BlogPage() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/blog/posts', {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setIsLoading(false);
-                setPosts(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, 'api/blog/posts');
+            setPosts(response);
+            
+            setIsLoading(false);
+        })();
     }, [auth.bearerToken]);
 
     if (isLoading) {
@@ -30,9 +26,7 @@ function BlogPage() {
 
     return (
         <div className={classes.main}>
-            <div className={classes.right}>
-                <Sidebar />
-            </div>
+            <div className={classes.right}><Sidebar /></div>
             <div className={classes.left}><Posts posts={posts} /></div>
         </div>
     )

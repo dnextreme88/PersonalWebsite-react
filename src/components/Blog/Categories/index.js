@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
-import axios from "axios";
 import Loading from "../../Spinners/Loading";
+import { SendGetRequest } from "../../../helpers/SendApiRequest";
 import classes from "./index.module.css";
 
 function Categories() {
@@ -10,16 +10,12 @@ function Categories() {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/blog/categories', {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setIsLoading(false);
-                setCategories(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, 'api/blog/categories');
+
+            setIsLoading(false);
+            setCategories(response);
+        })();
     }, [auth.bearerToken]);
     
     if (isLoading) {

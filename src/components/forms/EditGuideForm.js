@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import Loading from "../Spinners/Loading";
+import { SendGetRequest, SendPostRequest } from '../../helpers/SendApiRequest';
 import { displayTypes, displayPlatforms } from "../../helpers/PopulateContent";
 import classes from './EditGuideForm.module.css';
 
@@ -27,22 +27,19 @@ function EditGuideForm(props) {
     const guideId = params.guideId ? params.guideId : props.id;
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/guides/${guideId}`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setIsLoading(false);
-                setGuide(response.data.data);
-                // Set default values of dropdowns based on sold item data
-                setType(response.data.data.type);
-                setSelectedPlatforms(response.data.data.platforms.split(', ')); // Transforms string into an array
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, `api/guides/${guideId}`);
+            setGuide(response);
+
+            // Set default values of dropdowns based on sold item data
+            setType(response.type);
+            setSelectedPlatforms(response.platforms.split(', ')); // Transforms string into an array
+            
+            setIsLoading(false);
+        })();
     }, [auth.bearerToken, guideId]);
 
-    function handleOnSubmit(event) {
+    async function handleOnSubmit(event) {
         event.preventDefault(); // Prevent the browser from sending another request
 
         // Holds the actual current value
@@ -63,16 +60,10 @@ function EditGuideForm(props) {
             url: faqUrl,
         };
 
-        axios.post(`http://localhost:3001/api/guides/${guideId}/update`, guideData, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` },
-        })
-            .then((response) => {
-                console.log(response.data.data);
-                navigate('/guides');
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
+        const response = await SendPostRequest(auth.bearerToken, `api/guides/${guideId}/update`, guideData);
+        console.log('LOG: Guide updated', response);
+
+        navigate('/guides');
     }
 
     function handleOnChange(event, name) {

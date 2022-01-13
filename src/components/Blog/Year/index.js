@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
-import axios from "axios";
 import Loading from "../../Spinners/Loading";
+import { SendGetRequest } from "../../../helpers/SendApiRequest";
 
 function Year(props) {
     const auth = useSelector((state) => state.auth.value);
@@ -13,16 +13,12 @@ function Year(props) {
     const year = params.year ? params.year : props.year;
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/blog/posts/year/${year}`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setIsLoading(false);
-                setPosts(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, `api/blog/posts/year/${year}`);
+            setPosts(response);
+
+            setIsLoading(false);
+        })();
     }, [auth.bearerToken, year]);
 
     if (isLoading) {

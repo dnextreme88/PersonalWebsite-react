@@ -1,10 +1,10 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import axios from "axios";
 import moment from "moment";
 import DeleteSoldItemModal from "../../Modals/DeleteSoldItemModal";
 import Loading from "../../Spinners/Loading";
+import { SendGetRequest, SendPostRequest } from "../../../helpers/SendApiRequest";
 import classes from "./index.module.css";
 
 function SoldItem(props) {
@@ -16,30 +16,19 @@ function SoldItem(props) {
     const soldItemId = params.soldItemId ? params.soldItemId : props.id;
     
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/soldItems/${soldItemId}`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setIsLoading(false);
-                setSoldItem(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, `api/soldItems/${soldItemId}`);
+            setSoldItem(response);
+
+            setIsLoading(false);
+        })();
     }, [auth.bearerToken, soldItemId]);
 
-    function handleDeleteSoldItem(id) {
-        axios.post(`http://localhost:3001/api/soldItems/${id}/delete`, null, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                console.log('LOG: Sold item deleted');
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    async function handleDeleteSoldItem(soldItemid) {
+        await SendPostRequest(auth.bearerToken, `api/soldItems/${soldItemid}/delete`);
+        console.log('LOG: Sold item deleted');
 
-        props.onHandleDeleteSoldItem(id);
+        props.onHandleDeleteSoldItem(soldItemid);
     }
 
     if (isLoading) {

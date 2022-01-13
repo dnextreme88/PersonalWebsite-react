@@ -1,10 +1,10 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import Loading from "../../Spinners/Loading";
 import MonthYear from "../MonthYear";
 import Year from "../Year";
+import { SendGetRequest } from "../../../helpers/SendApiRequest";
 import classes from "./index.module.css";
 
 function Sidebar() {
@@ -15,27 +15,15 @@ function Sidebar() {
     const years = [];
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/blog/posts/monthsAndYears`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setMonthsYears(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        (async function fetchData() {
+            const responseA = await SendGetRequest(auth.bearerToken, 'api/blog/posts/monthsAndYears');
+            setMonthsYears(responseA);
 
-        axios.get(`http://localhost:3001/api/blog/categories`, {
-                headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setCategories(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            const responseB = await SendGetRequest(auth.bearerToken, 'api/blog/categories');
+            setCategories(responseB);
 
-        setIsLoading(false);
+            setIsLoading(false);
+        })();
     }, [auth.bearerToken]);
 
     for (let i = 2011; i <= 2022; i++) {

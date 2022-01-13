@@ -1,9 +1,9 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import Loading from "../components/Spinners/Loading";
 import Posts from "../components/Blog/Posts";
+import { SendGetRequest } from "../helpers/SendApiRequest";
 import classes from "./PostsByUser.module.css";
 
 function PostsByUserPage(props) {
@@ -16,27 +16,15 @@ function PostsByUserPage(props) {
     const userId = params.userId ? params.userId : props.userId;
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/users/${userId}`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setUser(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        (async function fetchData() {
+            const responseA = await SendGetRequest(auth.bearerToken, `api/users/${userId}`);
+            setUser(responseA);
 
-        axios.get(`http://localhost:3001/api/blog/posts/users/${userId}`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setPosts(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-        setIsLoading(false);
+            const responseB = await SendGetRequest(auth.bearerToken, `api/blog/posts/users/${userId}`);
+            setPosts(responseB);
+            
+            setIsLoading(false);
+        })();
     }, [auth.bearerToken, userId]);
 
     if (isLoading) {

@@ -1,9 +1,9 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import moment from "moment";
 import Loading from "../../Spinners/Loading";
+import { SendGetRequest } from "../../../helpers/SendApiRequest";
 import classes from "./index.module.css";
 
 function PostsByUserLatest(props) {
@@ -14,16 +14,12 @@ function PostsByUserLatest(props) {
     const userId = auth.userId ? auth.userId : props.userId;
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/blog/posts/users/${userId}/latest`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setIsLoading(false);
-                setPosts(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, `api/blog/posts/users/${userId}/latest`);
+            setPosts(response);
+
+            setIsLoading(false);
+        })();
     }, [auth.bearerToken, userId]);
 
     if (isLoading) {
