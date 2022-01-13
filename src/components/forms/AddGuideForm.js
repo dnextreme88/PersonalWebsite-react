@@ -3,7 +3,7 @@ import { displayTypes, displayPlatforms } from "../../helpers/PopulateContent";
 import classes from './AddGuideForm.module.css';
 
 function AddGuideForm(props) {
-    const today = new Date().toISOString().split('T')[0]; // eg. 2021-12-29
+    const today = new Date().toISOString().split('T')[0]; // eg. 2022-01-13
     const nameInputRef = useRef();
     const gameInputRef = useRef();
     const typeInputRef = useRef();
@@ -11,7 +11,7 @@ function AddGuideForm(props) {
     const dateModifiedInputRef = useRef();
     const urlInputRef = useRef();
 
-    const [selectedPlatforms, setSelectedPlatforms] = useState([]);
+    const [selectedPlatforms, setSelectedPlatforms] = useState(['Android']);
 
     function handleOnSubmit(event) {
         event.preventDefault(); // Prevent the browser from sending another request
@@ -27,7 +27,7 @@ function AddGuideForm(props) {
         const addGuideFormData = {
             name: faqName,
             game: faqGame,
-            platforms: selectedPlatforms.join(", "), // transforms array to string
+            platforms: selectedPlatforms.join(", "), // Transforms array to string
             type: faqType,
             dateCreated: faqDateCreated,
             dateModified: faqDateModified,
@@ -77,7 +77,7 @@ function AddGuideForm(props) {
             </div>
             <div className={classes.grid}>
                 <label htmlFor='platforms'>Platforms</label>
-                <select className={classes.multiplePlatforms} id='platforms' defaultValue='Android' onChange={handleChangePlatforms} multiple>
+                <select className={classes.multiplePlatforms} id='platforms' defaultValue={selectedPlatforms} onChange={handleChangePlatforms} multiple>
                     {displayPlatforms()}
                 </select>
             </div>
