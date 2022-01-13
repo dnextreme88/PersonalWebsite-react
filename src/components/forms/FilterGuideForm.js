@@ -1,18 +1,25 @@
 import { React, useRef, useState } from 'react';
-import { displayPlatforms, displayTypes } from "../../helpers/PopulateContent";
+import { displayPlatforms, displayTypes, displayOps } from "../../helpers/PopulateContent";
 import classes from "./FilterGuideForm.module.css";
 
 function FilterGuideForm(props) {
-    const today = new Date().toISOString().split('T')[0]; // eg. 2022-01-13
     const nameInputRef = useRef();
     const gameInputRef = useRef();
     const platformsInputRef = useRef();
     const typeInputRef = useRef();
     const dateCreatedInputRef = useRef();
+    const dateCreatedOpInputRef = useRef();
     const dateModifiedInputRef = useRef();
+    const dateModifiedOpInputRef = useRef();
 
     const [platformsValue, setPlatforms] = useState('');
     const [typeValue, setType] = useState('');
+    const [dateCreatedValue, setDateCreated] = useState('');
+    const [toggleDateCreatedOp, setToggleDateCreatedOp] = useState(classes.hidden);
+    const [dateCreatedOpValue, setDateCreatedOp] = useState('=');
+    const [dateModifiedValue, setDateModified] = useState('');
+    const [toggleDateModifiedOp, setToggleDateModifiedOp] = useState(classes.hidden);
+    const [dateModifiedOpValue, setDateModifiedOp] = useState('=');
 
     function handleOnSubmit(event) {
         event.preventDefault(); // Prevent the browser from sending another request
@@ -25,24 +32,47 @@ function FilterGuideForm(props) {
         const platforms = platformsInputRef.current.value;
         const type = typeInputRef.current.value;
         const dateCreated = dateCreatedInputRef.current.value;
+        const dateCreatedOp = dateCreatedOpInputRef.current.value;
         const dateModified = dateModifiedInputRef.current.value;
+        const dateModifiedOp = dateModifiedOpInputRef.current.value;
 
-        props.onFilterGuide({ name, game, type, platforms, dateCreated, dateModified });
+        props.onFilterGuide({ name, game, type, platforms, dateCreated, dateCreatedOp, dateModified, dateModifiedOp });
     }
 
     function handleShowAllResults() {
         setPlatforms('');
         setType('');
+        setDateCreated('');
+        setToggleDateCreatedOp(classes.hidden);
+        setDateCreatedOp('');
+        setDateModified('');
+        setToggleDateModifiedOp(classes.hidden);
+        setDateModifiedOp('');
 
-        // Reset value of dropdowns back
+        // Reset value of dropdowns and date inputs back
         nameInputRef.current.value = '';
         gameInputRef.current.value = '';
         platformsInputRef.current.value = '';
         typeInputRef.current.value = '';
-        dateCreatedInputRef.current.value = today;
-        dateModifiedInputRef.current.value = today;
+        dateCreatedInputRef.current.value = '';
+        dateCreatedOpInputRef.current.value = '=';
+        dateModifiedInputRef.current.value = '';
+        dateModifiedOpInputRef.current.value = '=';
 
-        props.onFilterGuide({ name: '', game: '', platforms: '', type: '', dateCreated: '', dateModified: '' });
+        props.onFilterGuide({ name: '', game: '', platforms: '', type: '', dateCreated: '', dateCreatedOp: '', dateModified: '', dateModifiedOp: '' });
+    }
+
+    function handleOnChangeDate(event, name) {
+        if (name === 'dateCreated') {
+            if (event.target.value.length > 0) {
+                setToggleDateCreatedOp(classes.show);
+            }
+        }
+        if (name === 'dateModified') {
+            if (event.target.value.length > 0) {
+                setToggleDateModifiedOp(classes.show);
+            }
+        }
     }
 
     return (
@@ -71,10 +101,21 @@ function FilterGuideForm(props) {
                 </div>
                 <div className={classes.grid}>
                     <label htmlFor='dateCreated'>Date Created</label>
-                    <input type='date' id='dateCreated' ref={dateCreatedInputRef} defaultValue={today} />
+                    <input type='date' id='dateCreated' ref={dateCreatedInputRef} defaultValue={dateCreatedValue} onChange={(e) => handleOnChangeDate(e, 'dateCreated')} />
 
+                    <label htmlFor='dateModified' className={toggleDateCreatedOp}>Date Created (operation)</label>
+                    <select id='type' className={toggleDateCreatedOp} ref={dateCreatedOpInputRef} defaultValue={dateCreatedOpValue}>
+                        {displayOps()}
+                    </select>
+                </div>
+                <div className={classes.grid}>
                     <label htmlFor='dateModified'>Date Modified</label>
-                    <input type='date' id='dateModified' ref={dateModifiedInputRef} defaultValue={today} />
+                    <input type='date' id='dateModified' ref={dateModifiedInputRef} defaultValue={dateModifiedValue} onChange={(e) => handleOnChangeDate(e, 'dateModified')} />
+
+                    <label htmlFor='dateModified' className={toggleDateModifiedOp}>Date Modified (operation)</label>
+                    <select id='type' className={toggleDateModifiedOp} ref={dateModifiedOpInputRef} defaultValue={dateModifiedOpValue}>
+                        {displayOps()}
+                    </select>
                 </div>
                 <div className={classes.actions}>
                     <button className={classes.filter} onClick={handleFilterResults}>Filter Results</button>
