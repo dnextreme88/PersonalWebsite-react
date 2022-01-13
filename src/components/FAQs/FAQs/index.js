@@ -3,6 +3,7 @@ import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import DeleteGuideModal from "../../Modals/DeleteGuideModal";
+import Loading from "../../Spinners/Loading";
 import classes from "./index.module.css";
 
 function FAQs(props) {
@@ -19,11 +20,7 @@ function FAQs(props) {
     }
 
     if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (

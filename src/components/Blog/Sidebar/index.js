@@ -2,9 +2,10 @@ import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import classes from "./index.module.css";
+import Loading from "../../Spinners/Loading";
 import MonthYear from "../MonthYear";
 import Year from "../Year";
+import classes from "./index.module.css";
 
 function Sidebar() {
     const auth = useSelector((state) => state.auth.value);
@@ -53,11 +54,7 @@ function Sidebar() {
     }
 
     if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (

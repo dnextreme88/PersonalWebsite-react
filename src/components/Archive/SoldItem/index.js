@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 import moment from "moment";
 import DeleteSoldItemModal from "../../Modals/DeleteSoldItemModal";
+import Loading from "../../Spinners/Loading";
 import classes from "./index.module.css";
 
 function SoldItem(props) {
@@ -42,11 +43,7 @@ function SoldItem(props) {
     }
 
     if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (

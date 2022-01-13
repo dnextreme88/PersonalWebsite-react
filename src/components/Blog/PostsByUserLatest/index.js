@@ -1,9 +1,10 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import Loading from "../../Spinners/Loading";
 import classes from "./index.module.css";
-import { Link } from "react-router-dom";
 
 function PostsByUserLatest(props) {
     const auth = useSelector((state) => state.auth.value);
@@ -26,11 +27,7 @@ function PostsByUserLatest(props) {
     }, [auth.bearerToken, userId]);
 
     if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (

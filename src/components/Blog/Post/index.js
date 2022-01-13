@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 import moment from "moment";
-import classes from "./index.module.css";
+import Loading from "../../Spinners/Loading";
 import { openModal, closeModal } from "../../../features/Modal";
+import classes from "./index.module.css";
 
 function Post(props) {
     const dispatch = useDispatch();
@@ -50,11 +51,7 @@ function Post(props) {
     }
 
     if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     const username = post.user ? post.user.username : '';

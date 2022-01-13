@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import axios from "axios";
 import FAQs from "../components/FAQs/FAQs";
 import AddGuideForm from "../components/forms/AddGuideForm";
+import Loading from "../components/Spinners/Loading";
 import classes from "./Guides.module.css";
 
 function Guides(props) {
@@ -57,11 +58,7 @@ function Guides(props) {
     }
 
     if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (

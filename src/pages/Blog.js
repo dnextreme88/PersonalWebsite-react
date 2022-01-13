@@ -4,6 +4,7 @@ import axios from "axios";
 import Posts from "../components/Blog/Posts";
 import Sidebar from "../components/Blog/Sidebar";
 import classes from "./Blog.module.css";
+import Loading from "../components/Spinners/Loading";
 
 function BlogPage() {
     const auth = useSelector((state) => state.auth.value);
@@ -24,11 +25,7 @@ function BlogPage() {
     }, [auth.bearerToken]);
 
     if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (

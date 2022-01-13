@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
+import Loading from "../../Spinners/Loading";
 
 function MonthYear(props) {
     const auth = useSelector((state) => state.auth.value);
@@ -26,11 +27,7 @@ function MonthYear(props) {
     }, [auth.bearerToken, month, year]);
 
     if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (

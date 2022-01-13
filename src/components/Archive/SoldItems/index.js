@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import SoldItem from "../SoldItem";
+import Loading from "../../Spinners/Loading";
 import classes from "./index.module.css";
 
 function SoldItems(props) {
@@ -16,11 +17,7 @@ function SoldItems(props) {
     }
 
     if (isLoading) {
-        return (
-            <div className={classes.list}>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (

@@ -1,10 +1,11 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import axios from "axios";
+import Loading from "../components/Spinners/Loading";
 import AddSoldItemForm from "../components/forms/AddSoldItemForm";
 import FilterSoldItemForm from "../components/forms/FilterSoldItemForm";
-import classes from "./Archive.module.css";
 import SoldItems from "../components/Archive/SoldItems";
+import classes from "./Archive.module.css";
 
 function Archive() {
     const auth = useSelector((state) => state.auth.value);
@@ -80,11 +81,7 @@ function Archive() {
     }
         
     if (isLoading) {
-        return (
-            <div className={classes.list}>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (

@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Loading from "../components/Spinners/Loading";
 import Posts from "../components/Blog/Posts";
 import classes from "./PostsByCategory.module.css";
 
@@ -39,11 +40,7 @@ function PostsByCategoryPage(props) {
     }, [auth.bearerToken, categoryId]);
 
     if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (
