@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Unauthorized from "../../ui/Alerts/Unauthorized";
 import Loading from "../../Spinners/Loading";
 import MonthYear from "../MonthYear";
 import Year from "../Year";
@@ -9,6 +10,7 @@ import classes from "./index.module.css";
 
 function Sidebar() {
     const auth = useSelector((state) => state.auth.value);
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [monthsYears, setMonthsYears] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -17,11 +19,12 @@ function Sidebar() {
     useEffect(() => {
         (async function fetchData() {
             const responseA = await SendGetRequest(auth.bearerToken, 'api/blog/posts/monthsAndYears');
-            setMonthsYears(responseA);
+            if (!responseA.error) setMonthsYears(responseA);
 
             const responseB = await SendGetRequest(auth.bearerToken, 'api/blog/categories');
-            setCategories(responseB);
+            if (!responseB.error) setCategories(responseB);
 
+            setIsAuth(true);
             setIsLoading(false);
         })();
     }, [auth.bearerToken]);
@@ -41,9 +44,8 @@ function Sidebar() {
         }
     }
 
-    if (isLoading) {
-        return <Loading />
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <div className={classes.main}>

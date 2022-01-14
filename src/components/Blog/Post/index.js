@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import moment from "moment";
+import Unauthorized from "../../ui/Alerts/Unauthorized";
 import Loading from "../../Spinners/Loading";
 import { openModal, closeModal } from "../../../features/Modal";
 import { SendGetRequest } from "../../../helpers/SendApiRequest";
@@ -11,6 +12,7 @@ function Post(props) {
     const dispatch = useDispatch();
     const auth = useSelector((state) => state.auth.value);
     const modal = useSelector((state) => state.modal.value);
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [post, setPost] = useState([]);
     const [togglePostInfo, setTogglePostInfo] = useState(classes.hidden);
@@ -22,9 +24,12 @@ function Post(props) {
     useEffect(() => {
         (async function fetchData() {
             const response = await SendGetRequest(auth.bearerToken, `api/blog/posts/${postId}`);
-            setPost(response);
+            if (!response.error) {
+                setPost(response);
 
-            setIsLoading(false);
+                setIsAuth(true);
+                setIsLoading(false);
+            }
         })();
     }, [auth.bearerToken, postId]);
 
@@ -46,9 +51,8 @@ function Post(props) {
         }
     }
 
-    if (isLoading) {
-        return <Loading />
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     const username = post.user ? post.user.username : '';
     const email = post.user ? post.user.email : '';

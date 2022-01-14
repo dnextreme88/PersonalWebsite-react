@@ -1,27 +1,31 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import moment from "moment";
+import Unauthorized from "../../ui/Alerts/Unauthorized";
 import Loading from "../../Spinners/Loading";
 import { SendGetRequest } from "../../../helpers/SendApiRequest";
 import classes from "./index.module.css";
 
 function LatestLogins(props) {
     const auth = useSelector((state) => state.auth.value);
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [latestLogins, setLatestLogins] = useState([]);
 
     useEffect(() => {
         (async function fetchData() {
             const response = await SendGetRequest(auth.bearerToken, `api/users/${auth.userId}/login/latest`);
-            setLatestLogins(response);
-            
-            setIsLoading(false);
+            if (!response.error) {
+                setLatestLogins(response);
+
+                setIsAuth(true);
+                setIsLoading(false);
+            }
         })();
     }, [auth.bearerToken, auth.userId]);
 
-    if (isLoading) {
-        return <Loading />
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <div className={classes.latestLogins}>

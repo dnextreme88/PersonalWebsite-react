@@ -2,12 +2,14 @@ import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import Unauthorized from "../../ui/Alerts/Unauthorized";
 import Loading from "../../Spinners/Loading";
 import { SendGetRequest } from "../../../helpers/SendApiRequest";
 import classes from "./index.module.css";
 
 function PostsByUserLatest(props) {
     const auth = useSelector((state) => state.auth.value);
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState([]);
 
@@ -16,15 +18,17 @@ function PostsByUserLatest(props) {
     useEffect(() => {
         (async function fetchData() {
             const response = await SendGetRequest(auth.bearerToken, `api/blog/posts/users/${userId}/latest`);
-            setPosts(response);
+            if (!response.error) {
+                setPosts(response);
 
-            setIsLoading(false);
+                setIsAuth(true);
+                setIsLoading(false);
+            }
         })();
     }, [auth.bearerToken, userId]);
 
-    if (isLoading) {
-        return <Loading />
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <div className={classes.posts}>

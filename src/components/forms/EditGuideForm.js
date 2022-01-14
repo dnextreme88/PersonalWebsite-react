@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import Unauthorized from '../ui/Alerts/Unauthorized';
 import Loading from "../Spinners/Loading";
 import { SendGetRequest, SendPostRequest } from '../../helpers/SendApiRequest';
 import { displayTypes, displayPlatforms } from "../../helpers/PopulateContent";
@@ -16,6 +17,7 @@ function EditGuideForm(props) {
     const dateModifiedInputRef = useRef();
     const urlInputRef = useRef();
 
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [guide, setGuide] = useState([]);
     const [type, setType] = useState();
@@ -29,13 +31,16 @@ function EditGuideForm(props) {
     useEffect(() => {
         (async function fetchData() {
             const response = await SendGetRequest(auth.bearerToken, `api/guides/${guideId}`);
-            setGuide(response);
+            if (!response.error) {
+                setGuide(response);
 
-            // Set default values of dropdowns based on sold item data
-            setType(response.type);
-            setSelectedPlatforms(response.platforms.split(', ')); // Transforms string into an array
-            
-            setIsLoading(false);
+                // Set default values of dropdowns based on sold item data
+                setType(response.type);
+                setSelectedPlatforms(response.platforms.split(', ')); // Transforms string into an array
+
+                setIsAuth(true);
+                setIsLoading(false);
+            }
         })();
     }, [auth.bearerToken, guideId]);
 
@@ -83,9 +88,8 @@ function EditGuideForm(props) {
         setSelectedPlatforms(selectedValues);
     }
 
-    if (isLoading) {
-        return <Loading />
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <form className={classes.form} onSubmit={handleOnSubmit}>

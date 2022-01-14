@@ -8,10 +8,15 @@ export const SendGetRequest = (bearerToken, apiUrl) => {
             return response.data.data;
         })
         .catch((error) => {
-            console.log(error);
+            console.log('error: ', error.response.data.message);
+            return { errorData: error.response.data, error: true };
         });
 
-    return response;
+    if (response.error) {
+        return { error: true, message: response.errorData.message, status: response.errorData.statusCode };
+    } else {
+        return response;
+    }
 }
 
 export const SendPostRequest = (bearerToken, apiUrl, data = null) => {

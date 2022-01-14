@@ -3,12 +3,14 @@ import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import moment from "moment";
 import DeleteSoldItemModal from "../../Modals/DeleteSoldItemModal";
+import Unauthorized from "../../ui/Alerts/Unauthorized";
 import Loading from "../../Spinners/Loading";
 import { SendGetRequest, SendPostRequest } from "../../../helpers/SendApiRequest";
 import classes from "./index.module.css";
 
 function SoldItem(props) {
     const auth = useSelector((state) => state.auth.value);
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [soldItem, setSoldItem] = useState([]);
 
@@ -18,9 +20,12 @@ function SoldItem(props) {
     useEffect(() => {
         (async function fetchData() {
             const response = await SendGetRequest(auth.bearerToken, `api/soldItems/${soldItemId}`);
-            setSoldItem(response);
+            if (!response.error) {
+                setSoldItem(response);
 
-            setIsLoading(false);
+                setIsAuth(true);
+                setIsLoading(false);
+            }
         })();
     }, [auth.bearerToken, soldItemId]);
 
@@ -31,9 +36,8 @@ function SoldItem(props) {
         props.onHandleDeleteSoldItem(soldItemid);
     }
 
-    if (isLoading) {
-        return <Loading />
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <div className={classes.card}>

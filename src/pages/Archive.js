@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
+import Unauthorized from "../components/ui/Alerts/Unauthorized";
 import Loading from "../components/Spinners/Loading";
 import AddSoldItemForm from "../components/forms/AddSoldItemForm";
 import FilterSoldItemForm from "../components/forms/FilterSoldItemForm";
@@ -9,6 +10,7 @@ import classes from "./Archive.module.css";
 
 function Archive() {
     const auth = useSelector((state) => state.auth.value);
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isSoldItemCreated, setIsSoldItemCreated] = useState(false);
     const [isSoldItemDeleted, setIsSoldItemDeleted] = useState(false);
@@ -19,13 +21,16 @@ function Archive() {
     useEffect(() => {
         (async function fetchData() {
             const response = await SendGetRequest(auth.bearerToken, 'api/soldItems');
-            setSoldItems(response);
+            if (!response.error) {
+                setSoldItems(response);
 
-            // Reset default state so that the page re-renders when a sold item is created or deleted
-            setIsSoldItemCreated(false);
-            setIsSoldItemDeleted(false);
-            
-            setIsLoading(false);
+                // Reset default state so that the page re-renders when a sold item is created or deleted
+                setIsSoldItemCreated(false);
+                setIsSoldItemDeleted(false);
+
+                setIsAuth(true);
+                setIsLoading(false);
+            }
         })();
     }, [auth.bearerToken, isSoldItemCreated, isSoldItemDeleted]);
 
@@ -71,9 +76,8 @@ function Archive() {
         setIsLoading(false);
     }
         
-    if (isLoading) {
-        return <Loading />
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <div className={classes.list}>

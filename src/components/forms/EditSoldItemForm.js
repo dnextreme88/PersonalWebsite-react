@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import Unauthorized from '../ui/Alerts/Unauthorized';
 import Loading from "../Spinners/Loading";
 import { SendGetRequest, SendPostMultipartRequest } from '../../helpers/SendApiRequest';
 import {
@@ -28,6 +29,7 @@ function EditSoldItemForm(props) {
     const sellMethodInputRef = useRef();
     const sellLocationInputRef = useRef();
 
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [soldItem, setSoldItem] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState();
@@ -46,17 +48,20 @@ function EditSoldItemForm(props) {
     useEffect(() => {
         (async function fetchData() {
             const response = await SendGetRequest(auth.bearerToken, `api/soldItems/${soldItemId}`);
-            setSoldItem(response);
+            if (!response.error) {
+                setSoldItem(response);
 
-            // Set default values of dropdowns based on sold item data
-            setCondition(response.condition);
-            setSize(response.size);
-            setPaymentMethod(response.PaymentMethod.method);
-            setPaymentLocation(response.PaymentMethod.remittanceLocation);
-            setSellMethod(response.SellMethod.method);
-            setSellLocation(response.SellMethod.location);
-            
-            setIsLoading(false);
+                // Set default values of dropdowns based on sold item data
+                setCondition(response.condition);
+                setSize(response.size);
+                setPaymentMethod(response.PaymentMethod.method);
+                setPaymentLocation(response.PaymentMethod.remittanceLocation);
+                setSellMethod(response.SellMethod.method);
+                setSellLocation(response.SellMethod.location);
+
+                setIsAuth(true);
+                setIsLoading(false);
+            }
         })();
     }, [auth.bearerToken, soldItemId]);
 
@@ -175,9 +180,8 @@ function EditSoldItemForm(props) {
         return sellLocationInput;
     }
 
-    if (isLoading) {
-        return <Loading />
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <form className={classes.form} onSubmit={handleOnSubmit} encType='multipart/form-data'>
