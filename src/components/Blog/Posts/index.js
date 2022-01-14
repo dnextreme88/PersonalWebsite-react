@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import Loading from "../../Spinners/Loading";
 import { stripHtmlTag } from "../../../helpers/Format";
 import classes from "./index.module.css";
 
@@ -14,11 +15,7 @@ function Posts(props) {
     }, [props.posts]);
 
     if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
+        return <Loading />
     }
 
     return (

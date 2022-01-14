@@ -1,40 +1,32 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import classes from "./index.module.css";
+import Unauthorized from "../../ui/Alerts/Unauthorized";
+import Loading from "../../Spinners/Loading";
 import MonthYear from "../MonthYear";
 import Year from "../Year";
+import { SendGetRequest } from "../../../helpers/SendApiRequest";
+import classes from "./index.module.css";
 
 function Sidebar() {
     const auth = useSelector((state) => state.auth.value);
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [monthsYears, setMonthsYears] = useState([]);
     const [categories, setCategories] = useState([]);
     const years = [];
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/blog/posts/monthsAndYears`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setMonthsYears(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        (async function fetchData() {
+            const responseA = await SendGetRequest(auth.bearerToken, 'api/blog/posts/monthsAndYears');
+            if (!responseA.error) setMonthsYears(responseA);
 
-        axios.get(`http://localhost:3001/api/blog/categories`, {
-                headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setCategories(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            const responseB = await SendGetRequest(auth.bearerToken, 'api/blog/categories');
+            if (!responseB.error) setCategories(responseB);
 
-        setIsLoading(false);
+            setIsAuth(true);
+            setIsLoading(false);
+        })();
     }, [auth.bearerToken]);
 
     for (let i = 2011; i <= 2022; i++) {
@@ -52,13 +44,8 @@ function Sidebar() {
         }
     }
 
-    if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <div className={classes.main}>
@@ -67,9 +54,9 @@ function Sidebar() {
                 <ul>
                     {monthsYears.map((monthYear, index) =>
                             years.includes(monthYear.text) ?
-                                <li key={index} className={classes.year} onClick={() => handleOnClick(monthYear.year)}><Link to={`/blog/posts/${monthYear.text}`}>{monthYear.text}</Link> ({monthYear.count})</li>
+                                <li key={index} className={classes.year} onClick={() => handleOnClick(monthYear.year)}><Link to={`/blog/posts/year/${monthYear.text}`}>{monthYear.text}</Link> ({monthYear.count})</li>
                                 :
-                                <li key={index} className={classes.item} onClick={() => handleOnClick(monthYear.year, monthYear.month)}><Link to={`/blog/posts/${monthYear.year}/${monthYear.month}`}>{monthYear.text}</Link> ({monthYear.count})</li>
+                                <li key={index} className={classes.item} onClick={() => handleOnClick(monthYear.year, monthYear.month)}><Link to={`/blog/posts/year/${monthYear.year}/month/${monthYear.month}`}>{monthYear.text}</Link> ({monthYear.count})</li>
                         )
                     }
                     <li className={classes.categories}><Link to='/blog/categories'>Categories</Link></li>

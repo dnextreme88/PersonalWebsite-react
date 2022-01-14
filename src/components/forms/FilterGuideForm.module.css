@@ -1,0 +1,65 @@
+.form {
+    padding: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 15% 1fr 15% 1fr;
+    margin-bottom: 1rem;
+}
+
+.grid label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.grid select, .grid input {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 2%;
+    padding: 0.25rem;
+}
+
+.actions {
+    margin-top: 1rem;
+    text-align: center;
+    display: block;
+}
+
+.actions button {
+    font: inherit;
+    cursor: pointer;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    margin: 0 0.5rem;
+}
+
+.filter {
+    background-color: #6e93f8;
+    border: 1px solid #6e93f8;
+}
+
+.filter:hover, .filter:active {
+    background-color: #465d9e;
+    border-color: #465d9e;
+}
+
+.showAll {
+    background-color: #20e92a;
+    border: 1px solid #20e92a;
+}
+
+.showAll:hover, .showAll:active {
+    background-color: #5bb367;
+    border-color: #5bb367;
+}
+
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+}

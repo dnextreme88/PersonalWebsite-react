@@ -1,13 +1,16 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import axios from "axios";
 import moment from "moment";
 import DeleteSoldItemModal from "../../Modals/DeleteSoldItemModal";
+import Unauthorized from "../../ui/Alerts/Unauthorized";
+import Loading from "../../Spinners/Loading";
+import { SendGetRequest, SendPostRequest } from "../../../helpers/SendApiRequest";
 import classes from "./index.module.css";
 
 function SoldItem(props) {
     const auth = useSelector((state) => state.auth.value);
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [soldItem, setSoldItem] = useState([]);
 
@@ -15,39 +18,26 @@ function SoldItem(props) {
     const soldItemId = params.soldItemId ? params.soldItemId : props.id;
     
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/soldItems/${soldItemId}`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, `api/soldItems/${soldItemId}`);
+            if (!response.error) {
+                setSoldItem(response);
+
+                setIsAuth(true);
                 setIsLoading(false);
-                setSoldItem(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            }
+        })();
     }, [auth.bearerToken, soldItemId]);
 
-    function handleDeleteSoldItem(id) {
-        axios.post(`http://localhost:3001/api/soldItems/${id}/delete`, null, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                console.log('LOG: Sold item deleted');
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    async function handleDeleteSoldItem(soldItemid) {
+        await SendPostRequest(auth.bearerToken, `api/soldItems/${soldItemid}/delete`);
+        console.log('LOG: Sold item deleted');
 
-        props.onHandleDeleteSoldItem(id);
+        props.onHandleDeleteSoldItem(soldItemid);
     }
 
-    if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <div className={classes.card}>

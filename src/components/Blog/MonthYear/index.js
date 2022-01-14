@@ -1,10 +1,13 @@
 import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from 'react-router-dom';
-import axios from "axios";
+import { useParams } from "react-router-dom";
+import Unauthorized from "../../ui/Alerts/Unauthorized";
+import Loading from "../../Spinners/Loading";
+import { SendGetRequest } from "../../../helpers/SendApiRequest";
 
 function MonthYear(props) {
     const auth = useSelector((state) => state.auth.value);
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState([]);
 
@@ -13,25 +16,19 @@ function MonthYear(props) {
     const month = params.month ? params.month : props.month;
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/blog/posts/year/${year}/month/${month}`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, `api/blog/posts/year/${year}/month/${month}`);
+            if (!response.error) {
+                setPosts(response);
+
+                setIsAuth(true);
                 setIsLoading(false);
-                setPosts(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            }
+        })();
     }, [auth.bearerToken, month, year]);
 
-    if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <div>

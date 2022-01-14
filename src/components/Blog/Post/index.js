@@ -1,15 +1,18 @@
 import { React, useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import moment from "moment";
-import classes from "./index.module.css";
+import Unauthorized from "../../ui/Alerts/Unauthorized";
+import Loading from "../../Spinners/Loading";
 import { openModal, closeModal } from "../../../features/Modal";
+import { SendGetRequest } from "../../../helpers/SendApiRequest";
+import classes from "./index.module.css";
 
 function Post(props) {
     const dispatch = useDispatch();
     const auth = useSelector((state) => state.auth.value);
     const modal = useSelector((state) => state.modal.value);
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [post, setPost] = useState([]);
     const [togglePostInfo, setTogglePostInfo] = useState(classes.hidden);
@@ -19,16 +22,15 @@ function Post(props) {
     const postId = params.postId ? params.postId : props.id;
     
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/blog/posts/${postId}`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, `api/blog/posts/${postId}`);
+            if (!response.error) {
+                setPost(response);
+
+                setIsAuth(true);
                 setIsLoading(false);
-                setPost(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            }
+        })();
     }, [auth.bearerToken, postId]);
 
     function handleOnClickEdit() {
@@ -49,13 +51,8 @@ function Post(props) {
         }
     }
 
-    if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     const username = post.user ? post.user.username : '';
     const email = post.user ? post.user.email : '';

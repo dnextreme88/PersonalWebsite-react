@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import Unauthorized from '../ui/Alerts/Unauthorized';
+import Loading from "../Spinners/Loading";
+import { SendGetRequest, SendPostMultipartRequest } from '../../helpers/SendApiRequest';
 import {
     displayConditions,
     displaySizes,
@@ -27,6 +29,7 @@ function EditSoldItemForm(props) {
     const sellMethodInputRef = useRef();
     const sellLocationInputRef = useRef();
 
+    const [isAuth, setIsAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [soldItem, setSoldItem] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState();
@@ -43,26 +46,26 @@ function EditSoldItemForm(props) {
     const soldItemId = params.soldItemId ? params.soldItemId : props.id;
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/soldItems/${soldItemId}`, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}` }
-        })
-            .then((response) => {
-                setIsLoading(false);
-                setSoldItem(response.data.data);
+        (async function fetchData() {
+            const response = await SendGetRequest(auth.bearerToken, `api/soldItems/${soldItemId}`);
+            if (!response.error) {
+                setSoldItem(response);
+
                 // Set default values of dropdowns based on sold item data
-                setCondition(response.data.data.condition);
-                setSize(response.data.data.size);
-                setPaymentMethod(response.data.data.PaymentMethod.method);
-                setPaymentLocation(response.data.data.PaymentMethod.remittanceLocation);
-                setSellMethod(response.data.data.SellMethod.method);
-                setSellLocation(response.data.data.SellMethod.location);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+                setCondition(response.condition);
+                setSize(response.size);
+                setPaymentMethod(response.PaymentMethod.method);
+                setPaymentLocation(response.PaymentMethod.remittanceLocation);
+                setSellMethod(response.SellMethod.method);
+                setSellLocation(response.SellMethod.location);
+
+                setIsAuth(true);
+                setIsLoading(false);
+            }
+        })();
     }, [auth.bearerToken, soldItemId]);
 
-    function handleOnSubmit(event) {
+    async function handleOnSubmit(event) {
         event.preventDefault(); // Prevent the browser from sending another request
 
         // Holds the actual current value
@@ -101,16 +104,10 @@ function EditSoldItemForm(props) {
             }
         }
 
-        axios.post(`http://localhost:3001/api/soldItems/${soldItemId}/update`, formData, {
-            headers: { Authorization: `Bearer ${auth.bearerToken}`, 'Content-Type': 'multipart/form-data' },
-        })
-            .then((response) => {
-                console.log(response.data.data);
-                navigate('/archive');
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
+        const response = await SendPostMultipartRequest(auth.bearerToken, `api/soldItems/${soldItemId}/update`, formData);
+        console.log('LOG: Sold item updated', response);
+
+        navigate('/archive');
     }
 
     // REF: https://www.pluralsight.com/guides/uploading-files-with-reactjs
@@ -183,13 +180,8 @@ function EditSoldItemForm(props) {
         return sellLocationInput;
     }
 
-    if (isLoading) {
-        return (
-            <div>
-                <p>Loading...</p>
-            </div>
-        )
-    }
+    if (isLoading && isAuth) return <Loading />
+    else if (!isAuth) return <Unauthorized />
 
     return (
         <form className={classes.form} onSubmit={handleOnSubmit} encType='multipart/form-data'>
