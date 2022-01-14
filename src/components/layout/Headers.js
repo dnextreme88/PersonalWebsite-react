@@ -1,9 +1,10 @@
-import { useSelector } from 'react-redux';
-import { Link } from "react-router-dom";
-import classes from "./Headers.module.css";
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import classes from './Headers.module.css'
 
 function Headers() {
-    const auth = useSelector((state) => state.auth.value);
+    const auth = useSelector((state) => state.auth.value)
 
     return (
         <header className={classes.header}>
@@ -32,4 +33,4 @@ function Headers() {
     )
 }
 
-export default Headers;
+export default Headers

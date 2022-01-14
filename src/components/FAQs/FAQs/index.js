@@ -1,22 +1,22 @@
-import { React, useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import DeleteGuideModal from "../../Modals/DeleteGuideModal";
-import Loading from "../../Spinners/Loading";
-import classes from "./index.module.css";
+import { React, useEffect, useState } from 'react'
+import { Table } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import moment from 'moment'
+import DeleteGuideModal from '../../Modals/DeleteGuideModal'
+import Loading from '../../Spinners/Loading'
+import classes from './index.module.css'
 
 function FAQs(props) {
-    const [isLoading, setIsLoading] = useState(true);
-    const [faqs, setFaqs] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
+    const [faqs, setFaqs] = useState([])
 
     useEffect(() => {
-        setIsLoading(false);
-        setFaqs(props.faqs);
-    }, [props.faqs]);
+        setIsLoading(false)
+        setFaqs(props.faqs)
+    }, [props.faqs])
 
     function handleDeleteGuide(guideId) {
-        props.onDeleteGuide(guideId);
+        props.onDeleteGuide(guideId)
     }
 
     if (isLoading) {
@@ -45,9 +45,9 @@ function FAQs(props) {
                                 <td>{faq.game}</td>
                                 <td>{faq.platforms}</td>
                                 <td>{faq.type}</td>
-                                <td>{moment(faq.dateCreated).format("MMMM D, YYYY")}</td>
-                                <td>{moment(faq.dateModified).format("MMMM D, YYYY")}</td>
-                                <td><a href={faq.url} target={"_blank"} rel="noreferrer">{faq.url}</a></td>
+                                <td>{moment(faq.dateCreated).format('MMMM D, YYYY')}</td>
+                                <td>{moment(faq.dateModified).format('MMMM D, YYYY')}</td>
+                                <td><a href={faq.url} target={'_blank'} rel="noreferrer">{faq.url}</a></td>
                                 <td className={classes.actions}>
                                     {
                                         <Link to={`/guides/${faq.id}/update`}><button className={classes.edit}>Edit</button></Link>
@@ -65,4 +65,4 @@ function FAQs(props) {
     )
 }
 
-export default FAQs;
+export default FAQs

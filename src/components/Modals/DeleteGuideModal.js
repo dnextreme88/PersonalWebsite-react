@@ -1,21 +1,21 @@
-import { React, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { React, useState } from 'react'
+import { Button, Modal } from 'react-bootstrap'
 
 function DeleteGuideModal(props) {
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false)
 
     function handleClose() {
-        setShow(false);
+        setShow(false)
     }
 
     function handleShow() {
-        setShow(true);
+        setShow(true)
     }
 
     function handleDeleteGuide() {
-        setShow(false);
+        setShow(false)
 
-        props.onDeleteGuide(props.guideId);
+        props.onDeleteGuide(props.guideId)
     }
 
     return (
@@ -36,4 +36,4 @@ function DeleteGuideModal(props) {
     )
 }
 
-export default DeleteGuideModal;
+export default DeleteGuideModal

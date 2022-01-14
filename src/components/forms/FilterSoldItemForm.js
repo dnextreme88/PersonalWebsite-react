@@ -1,74 +1,74 @@
-import { React, useRef, useState } from 'react';
+import { React, useRef, useState } from 'react'
 import {
     displayConditions,
     displaySizes,
     displayPaymentMethods,
     displaySellMethods,
-} from "../../helpers/PopulateContent";
-import classes from "./FilterSoldItemForm.module.css";
+} from '../../helpers/PopulateContent'
+import classes from './FilterSoldItemForm.module.css'
 
 function FilterSoldItemForm(props) {
-    const brandInputRef = useRef();
-    const typeInputRef = useRef();
-    const monthInputRef = useRef();
-    const yearInputRef = useRef();
-    const conditionInputRef = useRef();
-    const sizeInputRef = useRef();
-    const paymentMethodInputRef = useRef();
-    const sellMethodInputRef = useRef();
+    const brandInputRef = useRef()
+    const typeInputRef = useRef()
+    const monthInputRef = useRef()
+    const yearInputRef = useRef()
+    const conditionInputRef = useRef()
+    const sizeInputRef = useRef()
+    const paymentMethodInputRef = useRef()
+    const sellMethodInputRef = useRef()
 
-    const [monthValue, setMonth] = useState('');
-    const [yearValue, setYear] = useState('');
-    const [conditionValue, setCondition] = useState('');
-    const [sizeValue, setSize] = useState('');
-    const [paymentMethodValue, setPaymentMethod] = useState('');
-    const [sellMethodValue, setSellMethod] = useState('');
+    const [monthValue, setMonth] = useState('')
+    const [yearValue, setYear] = useState('')
+    const [conditionValue, setCondition] = useState('')
+    const [sizeValue, setSize] = useState('')
+    const [paymentMethodValue, setPaymentMethod] = useState('')
+    const [sellMethodValue, setSellMethod] = useState('')
 
     function handleOnSubmit(event) {
-        event.preventDefault(); // Prevent the browser from sending another request
+        event.preventDefault() // Prevent the browser from sending another request
     }
 
     function handleFilterResults() {
         // Holds the actual current value
-        const brand = brandInputRef.current.value;
-        const type = typeInputRef.current.value;
-        const month = monthInputRef.current.value;
-        const year = yearInputRef.current.value;
-        const condition = conditionInputRef.current.value;
-        const size = sizeInputRef.current.value;
-        const paymentMethod = paymentMethodInputRef.current.value;
-        const sellMethod = sellMethodInputRef.current.value;
+        const brand = brandInputRef.current.value
+        const type = typeInputRef.current.value
+        const month = monthInputRef.current.value
+        const year = yearInputRef.current.value
+        const condition = conditionInputRef.current.value
+        const size = sizeInputRef.current.value
+        const paymentMethod = paymentMethodInputRef.current.value
+        const sellMethod = sellMethodInputRef.current.value
 
-        props.onFilterSoldItem({ brand, type, month, year, condition, size, paymentMethod, sellMethod });
+        props.onFilterSoldItem({ brand, type, month, year, condition, size, paymentMethod, sellMethod })
     }
 
     function handleOnChange(event, name) {
-        if (name === 'month') setMonth(event.target.value);
-        if (name === 'year') setYear(event.target.value);
-        if (name === 'condition') setCondition(event.target.value);
-        if (name === 'size') setSize(event.target.value);
-        if (name === 'paymentMethod') setPaymentMethod(event.target.value);
-        if (name === 'sellMethod') setSellMethod(event.target.value);
+        if (name === 'month') setMonth(event.target.value)
+        if (name === 'year') setYear(event.target.value)
+        if (name === 'condition') setCondition(event.target.value)
+        if (name === 'size') setSize(event.target.value)
+        if (name === 'paymentMethod') setPaymentMethod(event.target.value)
+        if (name === 'sellMethod') setSellMethod(event.target.value)
     }
 
     function handleShowAllResults() {
-        setMonth('');
-        setYear('');
-        setCondition('');
-        setSize('');
-        setPaymentMethod('');
-        setSellMethod('');
+        setMonth('')
+        setYear('')
+        setCondition('')
+        setSize('')
+        setPaymentMethod('')
+        setSellMethod('')
         // Reset value of dropdowns back
-        brandInputRef.current.value = '';
-        typeInputRef.current.value = '';
-        monthInputRef.current.value = '';
-        yearInputRef.current.value = '';
-        conditionInputRef.current.value = '';
-        sizeInputRef.current.value = '';
-        paymentMethodInputRef.current.value = '';
-        sellMethodInputRef.current.value = '';
+        brandInputRef.current.value = ''
+        typeInputRef.current.value = ''
+        monthInputRef.current.value = ''
+        yearInputRef.current.value = ''
+        conditionInputRef.current.value = ''
+        sizeInputRef.current.value = ''
+        paymentMethodInputRef.current.value = ''
+        sellMethodInputRef.current.value = ''
 
-        props.onFilterSoldItem({ brand: '', type: '', month: '', year: '', condition: '', size: '', paymentMethod: '', sellMethod: '' });
+        props.onFilterSoldItem({ brand: '', type: '', month: '', year: '', condition: '', size: '', paymentMethod: '', sellMethod: '' })
     }
 
     return (
@@ -146,7 +146,7 @@ function FilterSoldItemForm(props) {
                 </div>
             </form>
         </div>
-    );
+    )
 }
 
-export default FilterSoldItemForm;
+export default FilterSoldItemForm

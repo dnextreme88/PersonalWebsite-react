@@ -1,91 +1,91 @@
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import Unauthorized from '../ui/Alerts/Unauthorized';
-import Loading from "../Spinners/Loading";
-import { SendGetRequest, SendPostRequest } from '../../helpers/SendApiRequest';
-import { displayTypes, displayPlatforms } from "../../helpers/PopulateContent";
-import classes from './EditGuideForm.module.css';
+import { React, useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import Unauthorized from '../ui/Alerts/Unauthorized'
+import Loading from '../Spinners/Loading'
+import { SendGetRequest, SendPostRequest } from '../../helpers/SendApiRequest'
+import { displayTypes, displayPlatforms } from '../../helpers/PopulateContent'
+import classes from './EditGuideForm.module.css'
 
 function EditGuideForm(props) {
-    const auth = useSelector((state) => state.auth.value);
+    const auth = useSelector((state) => state.auth.value)
 
-    const nameInputRef = useRef();
-    const gameInputRef = useRef();
-    const typeInputRef = useRef();
-    const dateCreatedInputRef = useRef();
-    const dateModifiedInputRef = useRef();
-    const urlInputRef = useRef();
+    const nameInputRef = useRef()
+    const gameInputRef = useRef()
+    const typeInputRef = useRef()
+    const dateCreatedInputRef = useRef()
+    const dateModifiedInputRef = useRef()
+    const urlInputRef = useRef()
 
-    const [isAuth, setIsAuth] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [guide, setGuide] = useState([]);
-    const [type, setType] = useState();
-    const [selectedPlatforms, setSelectedPlatforms] = useState(['Android']);
+    const [isAuth, setIsAuth] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [guide, setGuide] = useState([])
+    const [type, setType] = useState()
+    const [selectedPlatforms, setSelectedPlatforms] = useState(['Android'])
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
-    const params = useParams();
-    const guideId = params.guideId ? params.guideId : props.id;
+    const params = useParams()
+    const guideId = params.guideId ? params.guideId : props.id
 
     useEffect(() => {
         (async function fetchData() {
-            const response = await SendGetRequest(auth.bearerToken, `api/guides/${guideId}`);
+            const response = await SendGetRequest(auth.bearerToken, `api/guides/${guideId}`)
             if (!response.error) {
-                setGuide(response);
+                setGuide(response)
 
                 // Set default values of dropdowns based on sold item data
-                setType(response.type);
-                setSelectedPlatforms(response.platforms.split(', ')); // Transforms string into an array
+                setType(response.type)
+                setSelectedPlatforms(response.platforms.split(', ')) // Transforms string into an array
 
-                setIsAuth(true);
-                setIsLoading(false);
+                setIsAuth(true)
+                setIsLoading(false)
             }
-        })();
-    }, [auth.bearerToken, guideId]);
+        })()
+    }, [auth.bearerToken, guideId])
 
     async function handleOnSubmit(event) {
-        event.preventDefault(); // Prevent the browser from sending another request
+        event.preventDefault() // Prevent the browser from sending another request
 
         // Holds the actual current value
-        const faqName = nameInputRef.current.value;
-        const faqGame = gameInputRef.current.value;
-        const faqType = typeInputRef.current.value;
-        const faqDateCreated = dateCreatedInputRef.current.value;
-        const faqDateModified = dateModifiedInputRef.current.value;
-        const faqUrl = urlInputRef.current.value;
+        const faqName = nameInputRef.current.value
+        const faqGame = gameInputRef.current.value
+        const faqType = typeInputRef.current.value
+        const faqDateCreated = dateCreatedInputRef.current.value
+        const faqDateModified = dateModifiedInputRef.current.value
+        const faqUrl = urlInputRef.current.value
 
         const guideData = {
             name: faqName,
             game: faqGame,
-            platforms: selectedPlatforms.join(", "), // Transforms array to string
+            platforms: selectedPlatforms.join(', '), // Transforms array to string
             type: faqType,
             dateCreated: faqDateCreated,
             dateModified: faqDateModified,
             url: faqUrl,
-        };
+        }
 
-        const response = await SendPostRequest(auth.bearerToken, `api/guides/${guideId}/update`, guideData);
-        console.log('LOG: Guide updated', response);
+        const response = await SendPostRequest(auth.bearerToken, `api/guides/${guideId}/update`, guideData)
+        console.log('LOG: Guide updated', response)
 
-        navigate('/guides');
+        navigate('/guides')
     }
 
     function handleOnChange(event, name) {
-        if (name === 'type') setType(event.target.value);
+        if (name === 'type') setType(event.target.value)
     }
 
     // REF: https://stackoverflow.com/a/28625477/2106309
     function handleChangePlatforms(event) {
-        const selectedValues = [];
-        const options = event.target.options;
+        const selectedValues = []
+        const options = event.target.options
         for (var i = 0; i < options.length; i++) {
             if (options[i].selected) {
-                selectedValues.push(options[i].value);
+                selectedValues.push(options[i].value)
             }
         }
 
-        setSelectedPlatforms(selectedValues);
+        setSelectedPlatforms(selectedValues)
     }
 
     if (isLoading && isAuth) return <Loading />
@@ -127,7 +127,7 @@ function EditGuideForm(props) {
                 <button>Edit Guide</button>
             </div>
         </form>
-    );
+    )
 }
 
-export default EditGuideForm;
+export default EditGuideForm

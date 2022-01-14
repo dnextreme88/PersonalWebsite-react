@@ -1,100 +1,99 @@
-import { React, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import Unauthorized from '../components/ui/Alerts/Unauthorized';
-import Loading from "../components/Spinners/Loading";
-import NoResults from '../components/ui/Alerts/NoResults';
-import Success from '../components/ui/Alerts/Success';
-import ValidationErrors from '../components/ui/Alerts/ValidationErrors';
-import FAQs from "../components/FAQs/FAQs";
-import AddGuideForm from "../components/forms/AddGuideForm";
-import FilterGuideForm from '../components/forms/FilterGuideForm';
-import { SendGetRequest, SendPostRequest } from "../helpers/SendApiRequest";
-import classes from "./Guides.module.css";
+import { React, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import Unauthorized from '../components/ui/Alerts/Unauthorized'
+import Loading from '../components/Spinners/Loading'
+import NoResults from '../components/ui/Alerts/NoResults'
+import Success from '../components/ui/Alerts/Success'
+import ValidationErrors from '../components/ui/Alerts/ValidationErrors'
+import FAQs from '../components/FAQs/FAQs'
+import AddGuideForm from '../components/forms/AddGuideForm'
+import FilterGuideForm from '../components/forms/FilterGuideForm'
+import { SendGetRequest, SendPostRequest } from '../helpers/SendApiRequest'
 
 function Guides() {
-    const auth = useSelector((state) => state.auth.value);
-    const [isAuth, setIsAuth] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [errorList, setErrorList] = useState([]);
-    const [isGuideCreated, setIsGuideCreated] = useState(false);
-    const [isGuideDeleted, setIsGuideDeleted] = useState(false);
-    const [guides, setGuides] = useState([]);
-    const [guidesFiltered, setGuidesFiltered] = useState([]);
-    const [isFilter, setIsFilter] = useState(false);
+    const auth = useSelector((state) => state.auth.value)
+    const [isAuth, setIsAuth] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isSuccess, setIsSuccess] = useState(false)
+    const [isError, setIsError] = useState(false)
+    const [errorList, setErrorList] = useState([])
+    const [isGuideCreated, setIsGuideCreated] = useState(false)
+    const [isGuideDeleted, setIsGuideDeleted] = useState(false)
+    const [guides, setGuides] = useState([])
+    const [guidesFiltered, setGuidesFiltered] = useState([])
+    const [isFilter, setIsFilter] = useState(false)
 
     useEffect(() => {
         (async function fetchData() {
-            const response = await SendGetRequest(auth.bearerToken, 'api/guides');
+            const response = await SendGetRequest(auth.bearerToken, 'api/guides')
             if (!response.error) {
-                setGuides(response);
+                setGuides(response)
 
                 // Reset default state so that the page re-renders when a guide is created or deleted
-                setIsGuideCreated(false);
-                setIsGuideDeleted(false);
+                setIsGuideCreated(false)
+                setIsGuideDeleted(false)
 
-                setIsAuth(true);
-                setIsLoading(false);
+                setIsAuth(true)
+                setIsLoading(false)
             }
-        })();
-    }, [auth.bearerToken, isGuideCreated, isGuideDeleted]);
+        })()
+    }, [auth.bearerToken, isGuideCreated, isGuideDeleted])
 
     async function handleAddGuide(guideData) {
-        const response = await SendPostRequest(auth.bearerToken, 'api/guides', guideData);
+        const response = await SendPostRequest(auth.bearerToken, 'api/guides', guideData)
 
         if (response.error) {
-            const errors = [];
+            const errors = []
             for (const [key, value] of Object.entries(response.errorList.errors)) {
-                errors.push(`${key} - ${value}`);
+                errors.push(`${key} - ${value}`)
             }
-            setErrorList(errors);
+            setErrorList(errors)
 
-            setIsSuccess(false);
-            setIsError(true);
+            setIsSuccess(false)
+            setIsError(true)
         } else {
-            console.log('LOG: Guide created', response);
-            guides.push(response);
-            setGuides(guides);
+            console.log('LOG: Guide created', response)
+            guides.push(response)
+            setGuides(guides)
     
-            setIsGuideCreated(true);
+            setIsGuideCreated(true)
     
             // Explicitly remove filter data
-            setGuidesFiltered([]);
-            setIsFilter(false);
+            setGuidesFiltered([])
+            setIsFilter(false)
     
-            setIsSuccess(true);
-            setIsError(false);
+            setIsSuccess(true)
+            setIsError(false)
 
-            setIsLoading(false);
+            setIsLoading(false)
         }
     }
 
     async function handleDeleteGuide(guideId) {
-        await SendPostRequest(auth.bearerToken, `api/guides/${guideId}/delete`);
-        console.log('LOG: Guide deleted');
+        await SendPostRequest(auth.bearerToken, `api/guides/${guideId}/delete`)
+        console.log('LOG: Guide deleted')
 
-        setIsGuideDeleted(true);
+        setIsGuideDeleted(true)
 
         // Explicitly remove filter data
-        setGuidesFiltered([]);
-        setIsFilter(false);
+        setGuidesFiltered([])
+        setIsFilter(false)
 
-        setIsSuccess(false);
-        setIsError(false);
+        setIsSuccess(false)
+        setIsError(false)
     }
 
     async function handleFilterGuide(filterFormData) {
-        const response = await SendPostRequest(auth.bearerToken, 'api/guides/filter', filterFormData);
-        console.log('LOG: Guides filtered', response);
+        const response = await SendPostRequest(auth.bearerToken, 'api/guides/filter', filterFormData)
+        console.log('LOG: Guides filtered', response)
 
-        setGuidesFiltered(response);
-        setIsFilter(true);
+        setGuidesFiltered(response)
+        setIsFilter(true)
 
-        setIsSuccess(false);
-        setIsError(false);
+        setIsSuccess(false)
+        setIsError(false)
 
-        setIsLoading(false);
+        setIsLoading(false)
     }
 
     if (isLoading && isAuth) return <Loading />
@@ -142,4 +141,4 @@ function Guides() {
     )
 }
 
-export default Guides;
+export default Guides

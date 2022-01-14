@@ -1,8 +1,8 @@
-import { React } from "react";
-import UserInfo from "../components/Profile/UserInfo";
-import PostsByUserLatest from "../components/Blog/PostsByUserLatest";
-import LatestLogins from "../components/Profile/LatestLogins";
-import classes from "./Profile.module.css";
+import React from 'react'
+import UserInfo from '../components/Profile/UserInfo'
+import PostsByUserLatest from '../components/Blog/PostsByUserLatest'
+import LatestLogins from '../components/Profile/LatestLogins'
+import classes from './Profile.module.css'
 
 function ProfilePage() {
     return (
@@ -16,4 +16,4 @@ function ProfilePage() {
     )
 }
 
-export default ProfilePage;
+export default ProfilePage

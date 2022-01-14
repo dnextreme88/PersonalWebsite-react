@@ -1,19 +1,19 @@
-import { React, useEffect, useState } from "react";
-import SoldItem from "../SoldItem";
-import Loading from "../../Spinners/Loading";
-import classes from "./index.module.css";
+import { React, useEffect, useState } from 'react'
+import SoldItem from '../SoldItem'
+import Loading from '../../Spinners/Loading'
+import classes from './index.module.css'
 
 function SoldItems(props) {
-    const [isLoading, setIsLoading] = useState(true);
-    const [soldItems, setSoldItems] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
+    const [soldItems, setSoldItems] = useState([])
 
     useEffect(() => {
-        setIsLoading(false);
-        setSoldItems(props.soldItems);
-    }, [props.soldItems]);
+        setIsLoading(false)
+        setSoldItems(props.soldItems)
+    }, [props.soldItems])
 
     function handleDeleteSoldItem(soldItemId) {
-        props.onHandleDeleteSoldItem(soldItemId);
+        props.onHandleDeleteSoldItem(soldItemId)
     }
 
     if (isLoading) {
@@ -34,4 +34,4 @@ function SoldItems(props) {
     )
 }
 
-export default SoldItems;
+export default SoldItems

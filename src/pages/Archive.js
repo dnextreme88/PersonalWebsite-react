@@ -1,79 +1,79 @@
-import { React, useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
-import Unauthorized from "../components/ui/Alerts/Unauthorized";
-import Loading from "../components/Spinners/Loading";
-import AddSoldItemForm from "../components/forms/AddSoldItemForm";
-import FilterSoldItemForm from "../components/forms/FilterSoldItemForm";
-import SoldItems from "../components/Archive/SoldItems";
-import { SendGetRequest, SendPostRequest, SendPostMultipartRequest } from "../helpers/SendApiRequest";
-import classes from "./Archive.module.css";
+import { React, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import Unauthorized from '../components/ui/Alerts/Unauthorized'
+import Loading from '../components/Spinners/Loading'
+import AddSoldItemForm from '../components/forms/AddSoldItemForm'
+import FilterSoldItemForm from '../components/forms/FilterSoldItemForm'
+import SoldItems from '../components/Archive/SoldItems'
+import { SendGetRequest, SendPostRequest, SendPostMultipartRequest } from '../helpers/SendApiRequest'
+import classes from './Archive.module.css'
 
 function Archive() {
-    const auth = useSelector((state) => state.auth.value);
-    const [isAuth, setIsAuth] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isSoldItemCreated, setIsSoldItemCreated] = useState(false);
-    const [isSoldItemDeleted, setIsSoldItemDeleted] = useState(false);
-    const [soldItems, setSoldItems] = useState([]);
-    const [soldItemsFiltered, setSoldItemsFiltered] = useState([]);
-    const [isFilter, setIsFilter] = useState(false);
+    const auth = useSelector((state) => state.auth.value)
+    const [isAuth, setIsAuth] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isSoldItemCreated, setIsSoldItemCreated] = useState(false)
+    const [isSoldItemDeleted, setIsSoldItemDeleted] = useState(false)
+    const [soldItems, setSoldItems] = useState([])
+    const [soldItemsFiltered, setSoldItemsFiltered] = useState([])
+    const [isFilter, setIsFilter] = useState(false)
 
     useEffect(() => {
         (async function fetchData() {
-            const response = await SendGetRequest(auth.bearerToken, 'api/soldItems');
+            const response = await SendGetRequest(auth.bearerToken, 'api/soldItems')
             if (!response.error) {
-                setSoldItems(response);
+                setSoldItems(response)
 
                 // Reset default state so that the page re-renders when a sold item is created or deleted
-                setIsSoldItemCreated(false);
-                setIsSoldItemDeleted(false);
+                setIsSoldItemCreated(false)
+                setIsSoldItemDeleted(false)
 
-                setIsAuth(true);
-                setIsLoading(false);
+                setIsAuth(true)
+                setIsLoading(false)
             }
-        })();
-    }, [auth.bearerToken, isSoldItemCreated, isSoldItemDeleted]);
+        })()
+    }, [auth.bearerToken, isSoldItemCreated, isSoldItemDeleted])
 
     async function handleAddSoldItem(addFormData) {
-        const formData = new FormData();
+        const formData = new FormData()
         for (const [key, value] of Object.entries(addFormData)) {
             if (key === 'imageLocation') {
-                formData.append("imageFile", value);
+                formData.append('imageFile', value)
             } else {
-                formData.append(key, value);
+                formData.append(key, value)
             }
         }
 
-        const response = await SendPostMultipartRequest(auth.bearerToken, 'api/soldItems', formData);
-        console.log('LOG: Sold item created', response);
-        soldItems.push(response);
-        setSoldItems(soldItems);
+        const response = await SendPostMultipartRequest(auth.bearerToken, 'api/soldItems', formData)
+        console.log('LOG: Sold item created', response)
+        soldItems.push(response)
+        setSoldItems(soldItems)
 
-        setIsSoldItemCreated(true);
+        setIsSoldItemCreated(true)
 
         // Explicitly remove filter data
-        setSoldItemsFiltered([]);
-        setIsFilter(false);
+        setSoldItemsFiltered([])
+        setIsFilter(false)
 
-        setIsLoading(false);
+        setIsLoading(false)
     }
 
-    function handleDeleteSoldItem(soldItemId) {
-        setIsSoldItemDeleted(true);
+    function handleDeleteSoldItem() {
+        setIsSoldItemDeleted(true)
 
         // Explicitly remove filter data
-        setSoldItemsFiltered([]);
-        setIsFilter(false);
+        setSoldItemsFiltered([])
+        setIsFilter(false)
     }
 
     async function handleFilterSoldItem(filterFormData) {
-        const response = await SendPostRequest(auth.bearerToken, 'api/soldItems/filter', filterFormData);
-        console.log('LOG: Sold items filtered', response);
+        const response = await SendPostRequest(auth.bearerToken, 'api/soldItems/filter', filterFormData)
+        console.log('LOG: Sold items filtered', response)
 
-        setSoldItemsFiltered(response);
-        setIsFilter(true);
+        setSoldItemsFiltered(response)
+        setIsFilter(true)
 
-        setIsLoading(false);
+        setIsLoading(false)
     }
         
     if (isLoading && isAuth) return <Loading />
@@ -113,4 +113,4 @@ function Archive() {
     )
 }
 
-export default Archive;
+export default Archive

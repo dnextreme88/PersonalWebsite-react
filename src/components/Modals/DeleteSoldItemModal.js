@@ -1,21 +1,21 @@
-import { React, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { React, useState } from 'react'
+import { Button, Modal } from 'react-bootstrap'
 
 function DeleteSoldItemModal(props) {
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false)
 
     function handleClose() {
-        setShow(false);
+        setShow(false)
     }
 
     function handleShow() {
-        setShow(true);
+        setShow(true)
     }
 
     function handleDeleteSoldItem() {
-        setShow(false);
+        setShow(false)
 
-        props.onDeleteSoldItem(props.soldItemId);
+        props.onDeleteSoldItem(props.soldItemId)
     }
 
     return (
@@ -36,4 +36,4 @@ function DeleteSoldItemModal(props) {
     )
 }
 
-export default DeleteSoldItemModal;
+export default DeleteSoldItemModal

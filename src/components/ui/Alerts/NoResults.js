@@ -1,4 +1,5 @@
-import { Alert } from "react-bootstrap";
+import React from 'react'
+import { Alert } from 'react-bootstrap'
 
 function NoResults(props) {
     return (
@@ -12,4 +13,4 @@ function NoResults(props) {
     )
 }
 
-export default NoResults;
+export default NoResults

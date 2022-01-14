@@ -1,25 +1,25 @@
-import { React, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from 'react-router-dom';
-import axios from "axios";
-import classes from "./Login.module.css";
-import { login } from "../features/Auth";
+import { React, useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import classes from './Login.module.css'
+import { login } from '../features/Auth'
 
 function Login() {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
-    const emailInputRef = useRef();
-    const passwordInputRef = useRef();
+    const emailInputRef = useRef()
+    const passwordInputRef = useRef()
 
-    const [bearerToken, setBearerToken] = useState('');
-    const [userId, setUserId] = useState('');
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
+    const [bearerToken, setBearerToken] = useState('')
+    const [userId, setUserId] = useState('')
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
 
     function handleOnSubmit(event) {
-        event.preventDefault();
+        event.preventDefault()
 
         axios.post('http://localhost:3001/passport/auth/user/signin', {
             email: emailInputRef.current.value,
@@ -27,16 +27,16 @@ function Login() {
         })
             .then((response) => {
                 // Set the states
-                setBearerToken(response.data.data.token);
-                setUserId(response.data.data.user.id);
-                setUsername(response.data.data.user.username);
-                setEmail(response.data.data.user.email);
+                setBearerToken(response.data.data.token)
+                setUserId(response.data.data.user.id)
+                setUsername(response.data.data.user.username)
+                setEmail(response.data.data.user.email)
 
-                navigate('/profile', { replace: true });
+                navigate('/profile', { replace: true })
             })
             .catch((error) => {
-                console.log(error);
-            });
+                console.log(error)
+            })
     }
 
     useEffect(() => {
@@ -47,7 +47,7 @@ function Login() {
                 username: username,
                 email: email,
             })
-        );
+        )
     }, [bearerToken, userId, username, email, dispatch])
 
     return (
@@ -68,7 +68,7 @@ function Login() {
                 </div>
             </form>
         </div>
-    );
+    )
 }
 
-export default Login;
+export default Login

@@ -1,4 +1,5 @@
-import Categories from "../components/Blog/Categories";
+import React from 'react'
+import Categories from '../components/Blog/Categories'
 
 function CategoriesPage() {
     return (
@@ -6,4 +7,4 @@ function CategoriesPage() {
     )
 }
 
-export default CategoriesPage;
+export default CategoriesPage

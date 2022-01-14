@@ -1,12 +1,13 @@
-import classes from "./Footers.module.css";
+import React from 'react'
+import classes from './Footers.module.css'
 
 function Footers() {
     function goToGitHubHandler() {
-        window.open('https://github.com/dnextreme88?tab=repositories');
+        window.open('https://github.com/dnextreme88?tab=repositories')
     }
 
     function goToYouTubeHandler() {
-        window.open('https://www.youtube.com/channel/UCwUQOUOoEDZTWk4sN8VAxtg');
+        window.open('https://www.youtube.com/channel/UCwUQOUOoEDZTWk4sN8VAxtg')
     }
 
     return (
@@ -26,4 +27,4 @@ function Footers() {
     )
 }
 
-export default Footers;
+export default Footers

@@ -1,31 +1,31 @@
-import { React, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import Unauthorized from "../../ui/Alerts/Unauthorized";
-import Loading from "../../Spinners/Loading";
-import { SendGetRequest } from "../../../helpers/SendApiRequest";
+import { React, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import Unauthorized from '../../ui/Alerts/Unauthorized'
+import Loading from '../../Spinners/Loading'
+import { SendGetRequest } from '../../../helpers/SendApiRequest'
 
 function MonthYear(props) {
-    const auth = useSelector((state) => state.auth.value);
-    const [isAuth, setIsAuth] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [posts, setPosts] = useState([]);
+    const auth = useSelector((state) => state.auth.value)
+    const [isAuth, setIsAuth] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [posts, setPosts] = useState([])
 
-    const params = useParams();
-    const year = params.year ? params.year : props.year;
-    const month = params.month ? params.month : props.month;
+    const params = useParams()
+    const year = params.year ? params.year : props.year
+    const month = params.month ? params.month : props.month
 
     useEffect(() => {
         (async function fetchData() {
-            const response = await SendGetRequest(auth.bearerToken, `api/blog/posts/year/${year}/month/${month}`);
+            const response = await SendGetRequest(auth.bearerToken, `api/blog/posts/year/${year}/month/${month}`)
             if (!response.error) {
-                setPosts(response);
+                setPosts(response)
 
-                setIsAuth(true);
-                setIsLoading(false);
+                setIsAuth(true)
+                setIsLoading(false)
             }
-        })();
-    }, [auth.bearerToken, month, year]);
+        })()
+    }, [auth.bearerToken, month, year])
 
     if (isLoading && isAuth) return <Loading />
     else if (!isAuth) return <Unauthorized />
@@ -44,4 +44,4 @@ function MonthYear(props) {
     )
 }
 
-export default MonthYear;
+export default MonthYear
