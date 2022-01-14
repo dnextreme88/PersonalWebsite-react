@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import Unauthorized from '../../ui/Alerts/Unauthorized'
-import Loading from '../../Spinners/Loading'
+import Loading from '../../ui/Spinners/Loading'
 import { SendGetRequest } from '../../../helpers/SendApiRequest'
 
 function MonthYear(props) {

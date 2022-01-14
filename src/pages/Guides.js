@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Unauthorized from '../components/ui/Alerts/Unauthorized'
-import Loading from '../components/Spinners/Loading'
+import Loading from '../components/ui/Spinners/Loading'
 import NoResults from '../components/ui/Alerts/NoResults'
 import Success from '../components/ui/Alerts/Success'
 import ValidationErrors from '../components/ui/Alerts/ValidationErrors'

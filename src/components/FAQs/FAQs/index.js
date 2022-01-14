@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import DeleteGuideModal from '../../ui/Modals/DeleteGuideModal'
-import Loading from '../../Spinners/Loading'
+import Loading from '../../ui/Spinners/Loading'
 import classes from './index.module.css'
 
 function FAQs(props) {

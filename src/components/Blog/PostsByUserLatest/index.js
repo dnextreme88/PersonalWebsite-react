@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import Unauthorized from '../../ui/Alerts/Unauthorized'
-import Loading from '../../Spinners/Loading'
+import Loading from '../../ui/Spinners/Loading'
 import { SendGetRequest } from '../../../helpers/SendApiRequest'
 import classes from './index.module.css'
 

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import Posts from '../components/Blog/Posts'
 import Sidebar from '../components/Blog/Sidebar'
 import Unauthorized from '../components/ui/Alerts/Unauthorized'
-import Loading from '../components/Spinners/Loading'
+import Loading from '../components/ui/Spinners/Loading'
 import { SendGetRequest } from '../helpers/SendApiRequest'
 import classes from './Blog.module.css'
 

@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
-import Loading from '../../Spinners/Loading'
+import Loading from '../../ui/Spinners/Loading'
 import { stripHtmlTag } from '../../../helpers/Format'
 import classes from './index.module.css'
 

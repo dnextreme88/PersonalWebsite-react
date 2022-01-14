@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import Unauthorized from '../../ui/Alerts/Unauthorized'
-import Loading from '../../Spinners/Loading'
+import Loading from '../../ui/Spinners/Loading'
 import { SendGetRequest } from '../../../helpers/SendApiRequest'
 import classes from './index.module.css'
 

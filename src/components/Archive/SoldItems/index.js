@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import SoldItem from '../SoldItem'
-import Loading from '../../Spinners/Loading'
+import Loading from '../../ui/Spinners/Loading'
 import classes from './index.module.css'
 
 function SoldItems(props) {

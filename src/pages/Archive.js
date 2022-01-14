@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Unauthorized from '../components/ui/Alerts/Unauthorized'
-import Loading from '../components/Spinners/Loading'
+import Loading from '../components/ui/Spinners/Loading'
 import AddSoldItemForm from '../components/forms/AddSoldItemForm'
 import FilterSoldItemForm from '../components/forms/FilterSoldItemForm'
 import SoldItems from '../components/Archive/SoldItems'
