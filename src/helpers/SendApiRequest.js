@@ -22,7 +22,8 @@ export const SendPostRequest = (bearerToken, apiUrl, data = null) => {
             return response.data.data;
         })
         .catch((error) => {
-            console.log(error);
+            console.log(error.response.data);
+            return { errorList: error.response.data, error: true };
         });
 
     return response;
@@ -36,7 +37,8 @@ export const SendPostMultipartRequest = (bearerToken, apiUrl, data = null) => {
             return response.data.data;
         })
         .catch((error) => {
-            console.log(error);
+            console.log(error.response.data);
+            return { errorList: error.response.data, error: true };
         });
 
     return response;
