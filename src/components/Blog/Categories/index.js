@@ -1,27 +1,26 @@
-import { React, useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
-import Unauthorized from "../../ui/Alerts/Unauthorized";
-import Loading from "../../Spinners/Loading";
-import { SendGetRequest } from "../../../helpers/SendApiRequest";
-import classes from "./index.module.css";
+import { React, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import Unauthorized from '../../ui/Alerts/Unauthorized'
+import Loading from '../../ui/Spinners/Loading'
+import { SendGetRequest } from '../../../helpers/SendApiRequest'
 
 function Categories() {
-    const auth = useSelector((state) => state.auth.value);
-    const [isAuth, setIsAuth] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [categories, setCategories] = useState([]);
+    const auth = useSelector((state) => state.auth.value)
+    const [isAuth, setIsAuth] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
         (async function fetchData() {
-            const response = await SendGetRequest(auth.bearerToken, 'api/blog/categories');
+            const response = await SendGetRequest(auth.bearerToken, 'api/blog/categories')
             if (!response.error) {
-                setCategories(response);
+                setCategories(response)
 
-                setIsAuth(true);
-                setIsLoading(false);
+                setIsAuth(true)
+                setIsLoading(false)
             }
-        })();
-    }, [auth.bearerToken]);
+        })()
+    }, [auth.bearerToken])
     
     if (isLoading && isAuth) return <Loading />
     else if (!isAuth) return <Unauthorized />
@@ -36,4 +35,4 @@ function Categories() {
     )
 }
 
-export default Categories;
+export default Categories

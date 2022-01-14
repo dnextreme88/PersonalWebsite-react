@@ -1,4 +1,5 @@
-import { Alert } from "react-bootstrap";
+import React from 'react'
+import { Alert } from 'react-bootstrap'
 
 function Success(props) {
     return (
@@ -12,4 +13,4 @@ function Success(props) {
     )
 }
 
-export default Success;
+export default Success

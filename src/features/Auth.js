@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = { bearerToken: '', userId: '', username: '', email: '' };
+const initialState = { bearerToken: '', userId: '', username: '', email: '' }
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -11,16 +11,16 @@ export const authSlice = createSlice({
             // we pass to this login() action when dispatch(login({ payload })) is called. It's
             // always best practice to name the keys of the payload object to those contained in
             // the initialState
-            state.value = action.payload;
+            state.value = action.payload
         },
-        logout: (state, action) => {
-            state.value = initialState;
+        logout: (state) => {
+            state.value = initialState
         },
     },
-});
+})
 
 // Access the actions we created
-export const { login, logout } = authSlice.actions;
+export const { login, logout } = authSlice.actions
 
 // Get reducers from the slice and export it so that our store.js can use it
-export default authSlice.reducer;
+export default authSlice.reducer

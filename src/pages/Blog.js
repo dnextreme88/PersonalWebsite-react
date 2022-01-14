@@ -1,29 +1,29 @@
-import { React, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import Posts from "../components/Blog/Posts";
-import Sidebar from "../components/Blog/Sidebar";
-import Unauthorized from "../components/ui/Alerts/Unauthorized";
-import Loading from "../components/Spinners/Loading";
-import { SendGetRequest } from "../helpers/SendApiRequest";
-import classes from "./Blog.module.css";
+import { React, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import Posts from '../components/Blog/Posts'
+import Sidebar from '../components/Blog/Sidebar'
+import Unauthorized from '../components/ui/Alerts/Unauthorized'
+import Loading from '../components/ui/Spinners/Loading'
+import { SendGetRequest } from '../helpers/SendApiRequest'
+import classes from './Blog.module.css'
 
 function BlogPage() {
-    const auth = useSelector((state) => state.auth.value);
-    const [isAuth, setIsAuth] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [posts, setPosts] = useState([]);
+    const auth = useSelector((state) => state.auth.value)
+    const [isAuth, setIsAuth] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [posts, setPosts] = useState([])
 
     useEffect(() => {
         (async function fetchData() {
-            const response = await SendGetRequest(auth.bearerToken, 'api/blog/posts');
+            const response = await SendGetRequest(auth.bearerToken, 'api/blog/posts')
             if (!response.error) {
-                setPosts(response);
+                setPosts(response)
 
-                setIsAuth(true);
-                setIsLoading(false);
+                setIsAuth(true)
+                setIsLoading(false)
             }
-        })();
-    }, [auth.bearerToken]);
+        })()
+    }, [auth.bearerToken])
 
     if (isLoading && isAuth) return <Loading />
     else if (!isAuth) return <Unauthorized />
@@ -36,4 +36,4 @@ function BlogPage() {
     )
 }
 
-export default BlogPage;
+export default BlogPage

@@ -1,6 +1,7 @@
-import Headers from "./Headers";
-import Footers from "./Footers";
-import classes from './Layout.module.css';
+import React from 'react'
+import Headers from './Headers'
+import Footers from './Footers'
+import classes from './Layout.module.css'
 
 function Layout(props) {
     return (
@@ -9,7 +10,7 @@ function Layout(props) {
             <main className={classes.main}>{props.children}</main>
             <Footers />
         </div>
-    );
+    )
 }
 
-export default Layout;
+export default Layout

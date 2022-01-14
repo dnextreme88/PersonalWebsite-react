@@ -1,76 +1,76 @@
-import { React, useRef, useState } from 'react';
-import { displayPlatforms, displayTypes, displayOps } from "../../helpers/PopulateContent";
-import classes from "./FilterGuideForm.module.css";
+import { React, useRef, useState } from 'react'
+import { displayPlatforms, displayTypes, displayOps } from '../../helpers/PopulateContent'
+import classes from './FilterGuideForm.module.css'
 
 function FilterGuideForm(props) {
-    const nameInputRef = useRef();
-    const gameInputRef = useRef();
-    const platformsInputRef = useRef();
-    const typeInputRef = useRef();
-    const dateCreatedInputRef = useRef();
-    const dateCreatedOpInputRef = useRef();
-    const dateModifiedInputRef = useRef();
-    const dateModifiedOpInputRef = useRef();
+    const nameInputRef = useRef()
+    const gameInputRef = useRef()
+    const platformsInputRef = useRef()
+    const typeInputRef = useRef()
+    const dateCreatedInputRef = useRef()
+    const dateCreatedOpInputRef = useRef()
+    const dateModifiedInputRef = useRef()
+    const dateModifiedOpInputRef = useRef()
 
-    const [platformsValue, setPlatforms] = useState('');
-    const [typeValue, setType] = useState('');
-    const [dateCreatedValue, setDateCreated] = useState('');
-    const [toggleDateCreatedOp, setToggleDateCreatedOp] = useState(classes.hidden);
-    const [dateCreatedOpValue, setDateCreatedOp] = useState('=');
-    const [dateModifiedValue, setDateModified] = useState('');
-    const [toggleDateModifiedOp, setToggleDateModifiedOp] = useState(classes.hidden);
-    const [dateModifiedOpValue, setDateModifiedOp] = useState('=');
+    const [platformsValue, setPlatforms] = useState('')
+    const [typeValue, setType] = useState('')
+    const [dateCreatedValue, setDateCreated] = useState('')
+    const [toggleDateCreatedOp, setToggleDateCreatedOp] = useState(classes.hidden)
+    const [dateCreatedOpValue, setDateCreatedOp] = useState('=')
+    const [dateModifiedValue, setDateModified] = useState('')
+    const [toggleDateModifiedOp, setToggleDateModifiedOp] = useState(classes.hidden)
+    const [dateModifiedOpValue, setDateModifiedOp] = useState('=')
 
     function handleOnSubmit(event) {
-        event.preventDefault(); // Prevent the browser from sending another request
+        event.preventDefault() // Prevent the browser from sending another request
     }
 
     function handleFilterResults() {
         // Holds the actual current value
-        const name = nameInputRef.current.value;
-        const game = gameInputRef.current.value;
-        const platforms = platformsInputRef.current.value;
-        const type = typeInputRef.current.value;
-        const dateCreated = dateCreatedInputRef.current.value;
-        const dateCreatedOp = dateCreatedOpInputRef.current.value;
-        const dateModified = dateModifiedInputRef.current.value;
-        const dateModifiedOp = dateModifiedOpInputRef.current.value;
+        const name = nameInputRef.current.value
+        const game = gameInputRef.current.value
+        const platforms = platformsInputRef.current.value
+        const type = typeInputRef.current.value
+        const dateCreated = dateCreatedInputRef.current.value
+        const dateCreatedOp = dateCreatedOpInputRef.current.value
+        const dateModified = dateModifiedInputRef.current.value
+        const dateModifiedOp = dateModifiedOpInputRef.current.value
 
-        props.onFilterGuide({ name, game, type, platforms, dateCreated, dateCreatedOp, dateModified, dateModifiedOp });
+        props.onFilterGuide({ name, game, type, platforms, dateCreated, dateCreatedOp, dateModified, dateModifiedOp })
     }
 
     function handleShowAllResults() {
-        setPlatforms('');
-        setType('');
-        setDateCreated('');
-        setToggleDateCreatedOp(classes.hidden);
-        setDateCreatedOp('');
-        setDateModified('');
-        setToggleDateModifiedOp(classes.hidden);
-        setDateModifiedOp('');
+        setPlatforms('')
+        setType('')
+        setDateCreated('')
+        setToggleDateCreatedOp(classes.hidden)
+        setDateCreatedOp('')
+        setDateModified('')
+        setToggleDateModifiedOp(classes.hidden)
+        setDateModifiedOp('')
 
         // Reset value of dropdowns and date inputs back
-        nameInputRef.current.value = '';
-        gameInputRef.current.value = '';
-        platformsInputRef.current.value = '';
-        typeInputRef.current.value = '';
-        dateCreatedInputRef.current.value = '';
-        dateCreatedOpInputRef.current.value = '=';
-        dateModifiedInputRef.current.value = '';
-        dateModifiedOpInputRef.current.value = '=';
+        nameInputRef.current.value = ''
+        gameInputRef.current.value = ''
+        platformsInputRef.current.value = ''
+        typeInputRef.current.value = ''
+        dateCreatedInputRef.current.value = ''
+        dateCreatedOpInputRef.current.value = '='
+        dateModifiedInputRef.current.value = ''
+        dateModifiedOpInputRef.current.value = '='
 
-        props.onFilterGuide({ name: '', game: '', platforms: '', type: '', dateCreated: '', dateCreatedOp: '', dateModified: '', dateModifiedOp: '' });
+        props.onFilterGuide({ name: '', game: '', platforms: '', type: '', dateCreated: '', dateCreatedOp: '', dateModified: '', dateModifiedOp: '' })
     }
 
     function handleOnChangeDate(event, name) {
         if (name === 'dateCreated') {
             if (event.target.value.length > 0) {
-                setToggleDateCreatedOp(classes.show);
+                setToggleDateCreatedOp(classes.show)
             }
         }
         if (name === 'dateModified') {
             if (event.target.value.length > 0) {
-                setToggleDateModifiedOp(classes.show);
+                setToggleDateModifiedOp(classes.show)
             }
         }
     }
@@ -123,7 +123,7 @@ function FilterGuideForm(props) {
                 </div>
             </form>
         </div>
-    );
+    )
 }
 
-export default FilterGuideForm;
+export default FilterGuideForm

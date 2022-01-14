@@ -1,18 +1,18 @@
-import { React, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import Loading from "../../Spinners/Loading";
-import { stripHtmlTag } from "../../../helpers/Format";
-import classes from "./index.module.css";
+import { React, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import moment from 'moment'
+import Loading from '../../ui/Spinners/Loading'
+import { stripHtmlTag } from '../../../helpers/Format'
+import classes from './index.module.css'
 
 function Posts(props) {
-    const [isLoading, setIsLoading] = useState(true);
-    const [posts, setPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
+    const [posts, setPosts] = useState([])
 
     useEffect(() => {
-        setIsLoading(false);
-        setPosts(props.posts);
-    }, [props.posts]);
+        setIsLoading(false)
+        setPosts(props.posts)
+    }, [props.posts])
 
     if (isLoading) {
         return <Loading />
@@ -25,7 +25,7 @@ function Posts(props) {
                     <div className={classes.postHeader}>
                         <Link to={`/blog/posts/${post.id}/${post.slug}`}>
                             <span className={classes.left}>{post.title}</span>
-                            <span className={classes.right}>{moment(post.date).format("MMMM D, YYYY")}</span>
+                            <span className={classes.right}>{moment(post.date).format('MMMM D, YYYY')}</span>
                         </Link>
                     </div>
                     <div className={classes.postContent}>
@@ -47,4 +47,4 @@ function Posts(props) {
     )
 }
 
-export default Posts;
+export default Posts

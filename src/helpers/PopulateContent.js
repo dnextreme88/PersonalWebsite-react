@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const displayConditions = () => {
     return (
         <>
@@ -143,6 +145,6 @@ const populateContentHelpers = {
     displayTypes,
     displayPlatforms,
     displayOps,
-};
+}
 
-export default populateContentHelpers;
+export default populateContentHelpers

@@ -1,25 +1,28 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Layout from "./components/layout/Layout";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Logout from "./components/Logout";
-import Profile from "./pages/Profile";
+/* Core */
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Layout from './components/layout/Layout'
+/* Auth */
+import Login from './components/Login'
+import Logout from './components/Logout'
 /* Archive */
-import Archive from "./pages/Archive";
-import SoldItem from "./components/Archive/SoldItem";
-import EditSoldItemForm from "./components/forms/EditSoldItemForm";
+import Archive from './pages/Archive'
+import SoldItem from './components/Archive/SoldItem'
+import EditSoldItemForm from './components/forms/EditSoldItemForm'
 /* Blog */
-import Blog from "./pages/Blog";
-import Categories from "./pages/Categories";
-import Post from "./components/Blog/Post";
-import MonthYear from "./components/Blog/MonthYear";
-import Year from "./components/Blog/Year";
-import PostsByCategory from "./pages/PostsByCategory";
-import PostsByUser from "./pages/PostsByUser";
+import Blog from './pages/Blog'
+import Categories from './pages/Categories'
+import PostsByCategory from './pages/PostsByCategory'
+import PostsByUser from './pages/PostsByUser'
+import Post from './components/Blog/Post'
+import MonthYear from './components/Blog/MonthYear'
+import Year from './components/Blog/Year'
 /* Guide */
-import Guides from "./pages/Guides";
-import EditGuideForm from "./components/forms/EditGuideForm";
+import Guides from './pages/Guides'
+import EditGuideForm from './components/forms/EditGuideForm'
+/* MISC */
+import Home from './components/Home'
+import Profile from './pages/Profile'
 
 function App() {
   return (
@@ -44,7 +47,7 @@ function App() {
             {/* <Route path='/signup' element={<Signup />} /> */}
         </Routes>
     </Layout>
-  );
+  )
 }
 
-export default App;
+export default App

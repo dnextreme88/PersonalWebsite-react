@@ -1,46 +1,46 @@
-import { useRef, useState } from 'react';
+import { React, useRef, useState } from 'react'
 import {
     displayConditions,
     displaySizes,
     displayPaymentMethods,
     displaySellMethods,
-} from "../../helpers/PopulateContent";
-import { displayPaymentMethodLocation, displaySellMethodLocation } from "../../helpers/SoldItem";
-import classes from './AddSoldItemForm.module.css';
+} from '../../helpers/PopulateContent'
+import { displayPaymentMethodLocation, displaySellMethodLocation } from '../../helpers/SoldItem'
+import classes from './AddSoldItemForm.module.css'
 
 function AddSoldItemForm(props) {
-    const today = new Date().toISOString().split('T')[0]; // eg. 2021-12-29
-    const nameInputRef = useRef();
-    const priceInputRef = useRef();
-    const conditionInputRef = useRef();
-    const sizeInputRef = useRef();
-    const dateSoldInputRef = useRef();
+    const today = new Date().toISOString().split('T')[0] // eg. 2021-12-29
+    const nameInputRef = useRef()
+    const priceInputRef = useRef()
+    const conditionInputRef = useRef()
+    const sizeInputRef = useRef()
+    const dateSoldInputRef = useRef()
 
-    const paymentMethodInputRef = useRef();
-    const paymentLocationInputRef = useRef();
-    const sellMethodInputRef = useRef();
-    const sellLocationInputRef = useRef();
+    const paymentMethodInputRef = useRef()
+    const paymentLocationInputRef = useRef()
+    const sellMethodInputRef = useRef()
+    const sellLocationInputRef = useRef()
 
-    const [sellMethod, setSellMethod] = useState('dropping');
-    const [paymentMethod, setPaymentMethod] = useState('cash on-hand');
-    const [imageFile, setImageFile] = useState(); // Contains information on the currently picked file.
+    const [sellMethod, setSellMethod] = useState('dropping')
+    const [paymentMethod, setPaymentMethod] = useState('cash on-hand')
+    const [imageFile, setImageFile] = useState() // Contains information on the currently picked file.
 
     function handleOnSubmit(event) {
-        event.preventDefault(); // Prevent the browser from sending another request
+        event.preventDefault() // Prevent the browser from sending another request
 
         // Holds the actual current value
-        const itemName = nameInputRef.current.value;
-        const itemPrice = priceInputRef.current.value;
-        const itemCondition = conditionInputRef.current.value;
-        const itemSize = sizeInputRef.current.value;
-        const itemImage = imageFile;
-        const itemDateSold = dateSoldInputRef.current.value;
+        const itemName = nameInputRef.current.value
+        const itemPrice = priceInputRef.current.value
+        const itemCondition = conditionInputRef.current.value
+        const itemSize = sizeInputRef.current.value
+        const itemImage = imageFile
+        const itemDateSold = dateSoldInputRef.current.value
         // Payment method
-        const paymentMethodValue = paymentMethodInputRef.current.value;
-        const paymentLocationValue = paymentLocationInputRef.current.value;
+        const paymentMethodValue = paymentMethodInputRef.current.value
+        const paymentLocationValue = paymentLocationInputRef.current.value
         // Sell method
-        const sellMethodValue = sellMethodInputRef.current.value;
-        const sellLocationValue = sellLocationInputRef.current.value;
+        const sellMethodValue = sellMethodInputRef.current.value
+        const sellLocationValue = sellLocationInputRef.current.value
 
         const soldItemFormData = {
             name: itemName,
@@ -53,23 +53,23 @@ function AddSoldItemForm(props) {
             paymentLocation: paymentLocationValue,
             sellMethod: sellMethodValue,
             sellLocation: sellLocationValue,
-        };
+        }
 
-        props.onAddSoldItem(soldItemFormData);
+        props.onAddSoldItem(soldItemFormData)
     }
 
     // REF: https://www.pluralsight.com/guides/uploading-files-with-reactjs
     function handleChangeFile(event) {
-        console.log('LOG: File is chosen');
-		setImageFile(event.target.files[0]); // An object that contains the details of files selected to be uploaded in a form
-	};
+        console.log('LOG: File is chosen')
+		setImageFile(event.target.files[0]) // An object that contains the details of files selected to be uploaded in a form
+	}
 
     function handleSellMethod(event) {
-        setSellMethod(event.target.value);
+        setSellMethod(event.target.value)
     }
 
     function handlePaymentMethod(event) {
-        setPaymentMethod(event.target.value);
+        setPaymentMethod(event.target.value)
     }
 
     return (
@@ -121,7 +121,7 @@ function AddSoldItemForm(props) {
                 <button>Add Sold Item</button>
             </div>
         </form>
-    );
+    )
 }
 
-export default AddSoldItemForm;
+export default AddSoldItemForm

@@ -1,68 +1,68 @@
-import { React, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import moment from "moment";
-import Unauthorized from "../../ui/Alerts/Unauthorized";
-import Loading from "../../Spinners/Loading";
-import { openModal, closeModal } from "../../../features/Modal";
-import { SendGetRequest } from "../../../helpers/SendApiRequest";
-import classes from "./index.module.css";
+import { React, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import moment from 'moment'
+import Unauthorized from '../../ui/Alerts/Unauthorized'
+import Loading from '../../ui/Spinners/Loading'
+import { openModal, closeModal } from '../../../features/Modal'
+import { SendGetRequest } from '../../../helpers/SendApiRequest'
+import classes from './index.module.css'
 
 function Post(props) {
-    const dispatch = useDispatch();
-    const auth = useSelector((state) => state.auth.value);
-    const modal = useSelector((state) => state.modal.value);
-    const [isAuth, setIsAuth] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [post, setPost] = useState([]);
-    const [togglePostInfo, setTogglePostInfo] = useState(classes.hidden);
+    const dispatch = useDispatch()
+    const auth = useSelector((state) => state.auth.value)
+    const modal = useSelector((state) => state.modal.value)
+    const [isAuth, setIsAuth] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [post, setPost] = useState([])
+    const [togglePostInfo, setTogglePostInfo] = useState(classes.hidden)
     const [togglePostInfoMsg, setTogglePostInfoMsg] = useState('Show post information')
 
-    const params = useParams();
-    const postId = params.postId ? params.postId : props.id;
+    const params = useParams()
+    const postId = params.postId ? params.postId : props.id
     
     useEffect(() => {
         (async function fetchData() {
-            const response = await SendGetRequest(auth.bearerToken, `api/blog/posts/${postId}`);
+            const response = await SendGetRequest(auth.bearerToken, `api/blog/posts/${postId}`)
             if (!response.error) {
-                setPost(response);
+                setPost(response)
 
-                setIsAuth(true);
-                setIsLoading(false);
+                setIsAuth(true)
+                setIsLoading(false)
             }
-        })();
-    }, [auth.bearerToken, postId]);
+        })()
+    }, [auth.bearerToken, postId])
 
     function handleOnClickEdit() {
-        dispatch(openModal());
+        dispatch(openModal())
     }
 
     function handleOnClickDelete() {
-        dispatch(closeModal());
+        dispatch(closeModal())
     }
 
-    function handleShowPostInfo(event) {
+    function handleShowPostInfo() {
         if (togglePostInfo === classes.hidden) {
-            setTogglePostInfo(classes.show);
-            setTogglePostInfoMsg('Hide post information');
+            setTogglePostInfo(classes.show)
+            setTogglePostInfoMsg('Hide post information')
         } else {
-            setTogglePostInfo(classes.hidden);
-            setTogglePostInfoMsg('Show post information');
+            setTogglePostInfo(classes.hidden)
+            setTogglePostInfoMsg('Show post information')
         }
     }
 
     if (isLoading && isAuth) return <Loading />
     else if (!isAuth) return <Unauthorized />
 
-    const username = post.user ? post.user.username : '';
-    const email = post.user ? post.user.email : '';
-    const category = post.category ? post.category.name : '';
+    const username = post.user ? post.user.username : ''
+    const email = post.user ? post.user.email : ''
+    const category = post.category ? post.category.name : ''
 
     return (
         <div className={classes.card}>
             <p>Modal value: {modal.toString()}</p>
             <div className={classes.postDetails}>
-                <p className={classes.postDate}>Date: {moment(post.date).format("MMMM D, YYYY")}</p>
+                <p className={classes.postDate}>Date: {moment(post.date).format('MMMM D, YYYY')}</p>
                 <h1 className={classes.title}>{post.title}</h1>
             </div>
             <div className={classes.body}>
@@ -89,4 +89,4 @@ function Post(props) {
     )
 }
 
-export default Post;
+export default Post

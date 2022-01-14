@@ -1,6 +1,7 @@
-import { Alert } from "react-bootstrap";
+import React from 'react'
+import { Alert } from 'react-bootstrap'
 
-function Unauthorized(props) {
+function Unauthorized() {
     return (
         <Alert variant='danger'>
             <Alert.Heading>Error: Token not found in Authorization headers</Alert.Heading>
@@ -9,4 +10,4 @@ function Unauthorized(props) {
     )
 }
 
-export default Unauthorized;
+export default Unauthorized

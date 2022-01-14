@@ -1,53 +1,53 @@
-import { React, useRef, useState } from 'react';
-import { displayTypes, displayPlatforms } from "../../helpers/PopulateContent";
-import classes from './AddGuideForm.module.css';
+import { React, useRef, useState } from 'react'
+import { displayTypes, displayPlatforms } from '../../helpers/PopulateContent'
+import classes from './AddGuideForm.module.css'
 
 function AddGuideForm(props) {
-    const today = new Date().toISOString().split('T')[0]; // eg. 2022-01-13
-    const nameInputRef = useRef();
-    const gameInputRef = useRef();
-    const typeInputRef = useRef();
-    const dateCreatedInputRef = useRef();
-    const dateModifiedInputRef = useRef();
-    const urlInputRef = useRef();
+    const today = new Date().toISOString().split('T')[0] // eg. 2022-01-13
+    const nameInputRef = useRef()
+    const gameInputRef = useRef()
+    const typeInputRef = useRef()
+    const dateCreatedInputRef = useRef()
+    const dateModifiedInputRef = useRef()
+    const urlInputRef = useRef()
 
-    const [selectedPlatforms, setSelectedPlatforms] = useState(['Android']);
+    const [selectedPlatforms, setSelectedPlatforms] = useState(['Android'])
 
     function handleOnSubmit(event) {
-        event.preventDefault(); // Prevent the browser from sending another request
+        event.preventDefault() // Prevent the browser from sending another request
 
         // Holds the actual current value
-        const faqName = nameInputRef.current.value;
-        const faqGame = gameInputRef.current.value;
-        const faqType = typeInputRef.current.value;
-        const faqDateCreated = dateCreatedInputRef.current.value;
-        const faqDateModified = dateModifiedInputRef.current.value;
-        const faqUrl = urlInputRef.current.value;
+        const faqName = nameInputRef.current.value
+        const faqGame = gameInputRef.current.value
+        const faqType = typeInputRef.current.value
+        const faqDateCreated = dateCreatedInputRef.current.value
+        const faqDateModified = dateModifiedInputRef.current.value
+        const faqUrl = urlInputRef.current.value
 
         const addGuideFormData = {
             name: faqName,
             game: faqGame,
-            platforms: selectedPlatforms.join(", "), // Transforms array to string
+            platforms: selectedPlatforms.join(', '), // Transforms array to string
             type: faqType,
             dateCreated: faqDateCreated,
             dateModified: faqDateModified,
             url: faqUrl,
-        };
+        }
 
-        props.onAddGuide(addGuideFormData);
+        props.onAddGuide(addGuideFormData)
     }
 
     // REF: https://stackoverflow.com/a/28625477/2106309
     function handleChangePlatforms(event) {
-        const selectedValues = [];
-        const options = event.target.options;
+        const selectedValues = []
+        const options = event.target.options
         for (var i = 0; i < options.length; i++) {
             if (options[i].selected) {
-                selectedValues.push(options[i].value);
+                selectedValues.push(options[i].value)
             }
         }
 
-        setSelectedPlatforms(selectedValues);
+        setSelectedPlatforms(selectedValues)
     }
 
     return (
@@ -85,7 +85,7 @@ function AddGuideForm(props) {
                 <button>Add Guide</button>
             </div>
         </form>
-    );
+    )
 }
 
-export default AddGuideForm;
+export default AddGuideForm
