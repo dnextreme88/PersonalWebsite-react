@@ -4,12 +4,18 @@ import FAQs from "../components/FAQs/FAQs";
 import AddGuideForm from "../components/forms/AddGuideForm";
 import FilterGuideForm from '../components/forms/FilterGuideForm';
 import Loading from "../components/Spinners/Loading";
+import NoResults from '../components/ui/Alerts/NoResults';
+import Success from '../components/ui/Alerts/Success';
+import ValidationErrors from '../components/ui/Alerts/ValidationErrors';
 import { SendGetRequest, SendPostRequest } from "../helpers/SendApiRequest";
 import classes from "./Guides.module.css";
 
-function Guides(props) {
+function Guides() {
     const auth = useSelector((state) => state.auth.value);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [errorList, setErrorList] = useState([]);
     const [isGuideCreated, setIsGuideCreated] = useState(false);
     const [isGuideDeleted, setIsGuideDeleted] = useState(false);
     const [guides, setGuides] = useState([]);
@@ -31,17 +37,32 @@ function Guides(props) {
 
     async function handleAddGuide(guideData) {
         const response = await SendPostRequest(auth.bearerToken, 'api/guides', guideData);
-        console.log('LOG: Guide created', response);
-        guides.push(response);
-        setGuides(guides);
 
-        setIsGuideCreated(true);
+        if (response.error) {
+            const errors = [];
+            for (const [key, value] of Object.entries(response.errorList.errors)) {
+                errors.push(`${key} - ${value}`);
+            }
+            setErrorList(errors);
 
-        // Explicitly remove filter data
-        setGuidesFiltered([]);
-        setIsFilter(false);
+            setIsSuccess(false);
+            setIsError(true);
+        } else {
+            console.log('LOG: Guide created', response);
+            guides.push(response);
+            setGuides(guides);
+    
+            setIsGuideCreated(true);
+    
+            // Explicitly remove filter data
+            setGuidesFiltered([]);
+            setIsFilter(false);
+    
+            setIsSuccess(true);
+            setIsError(false);
 
-        setIsLoading(false);
+            setIsLoading(false);
+        }
     }
 
     async function handleDeleteGuide(guideId) {
@@ -53,6 +74,9 @@ function Guides(props) {
         // Explicitly remove filter data
         setGuidesFiltered([]);
         setIsFilter(false);
+
+        setIsSuccess(false);
+        setIsError(false);
     }
 
     async function handleFilterGuide(filterFormData) {
@@ -61,6 +85,9 @@ function Guides(props) {
 
         setGuidesFiltered(response);
         setIsFilter(true);
+
+        setIsSuccess(false);
+        setIsError(false);
 
         setIsLoading(false);
     }
@@ -72,13 +99,16 @@ function Guides(props) {
     return (
         <div>
             <h1>List of FAQs</h1>
-            {/* <AddGuideForm onAddGuide={handleAddGuide} />
-            <FilterGuideForm onFilterGuide={handleFilterGuide} />
-            <FAQs guides={guides} onDeleteGuide={handleDeleteGuide} /> */}
-
-            {/* TO EDIT */}
             <p>Total guides written: <strong>{guides.length}</strong></p>
 
+            {isError ?
+                <ValidationErrors errors={errorList} />
+                : ''
+            }
+            {isSuccess ?
+                <Success heading='Success!' message='Guide created successfully.' />
+                : ''
+            }
             <AddGuideForm onAddGuide={handleAddGuide} />
 
             {guides.length > 0 || isFilter ?
@@ -86,7 +116,7 @@ function Guides(props) {
                 : ''
             }
             {guidesFiltered.length > 0 && isFilter ?
-                <div className={classes.filteredGuides}>Your search criteria returned <strong>{guidesFiltered.length}</strong> results</div>
+                <Success heading='Search success!' message={`Your search criteria returned ${guidesFiltered.length === 1 ? `${guidesFiltered.length} result` : `${guidesFiltered.length} results`}.`} />
                 : ''
             }
 
@@ -97,11 +127,11 @@ function Guides(props) {
 
             {/* DISPLAY ERROR MESSAGES */}
             {guides.length < 1 && !isFilter ?
-                <div className={classes.noGuides}>You have no guides at the moment!</div>
+                <NoResults message='You have no guides at the moment!' />
                 : ''
             }
             {guidesFiltered.length < 1 && isFilter ?
-                <div className={classes.noGuides}>Your search criteria returned nothing!</div>
+                <NoResults heading='Search error!' message='Your search criteria returned nothing!' />
                 : ''
             }
         </div>
