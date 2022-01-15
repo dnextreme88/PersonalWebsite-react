@@ -6,16 +6,24 @@ import classes from './index.module.css'
 function UserInfo() {
     const auth = useSelector((state) => state.auth.value)
 
-    if (auth.bearerToken.length < 1) {
+    if (localStorage.getItem('token').length < 1) {
         console.log('LOG: Not logged in! Redirecting...')
+        localStorage.removeItem('user')
+        localStorage.removeItem('token')
+        localStorage.removeItem('tokenValidity')
         return <Navigate to='/login' />
     }
 
     return (
         <div className={classes.main}>
-            <p>User ID: {auth.userId}</p>
-            <p>Username: {auth.username}</p>
-            <p>Email: {auth.email}</p>
+            {auth.bearerToken.length > 0 ?
+                <>
+                <p>User ID: {auth.userId}</p>
+                <p>Username: {auth.username}</p>
+                <p>Email: {auth.email}</p>
+                </>
+                : <p>Cannot display user information because the auth payload is empty or the browser was refreshed. Please re-login again.</p>
+            }
         </div>
     )
 }

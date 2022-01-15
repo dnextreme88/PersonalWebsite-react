@@ -13,7 +13,7 @@ function PostsByUserLatest(props) {
     const [isLoading, setIsLoading] = useState(true)
     const [posts, setPosts] = useState([])
 
-    const userId = auth.userId ? auth.userId : props.userId
+    const userId = localStorage.getItem('userId') ? localStorage.getItem('userId') : props.userId
 
     useEffect(() => {
         (async function fetchData() {

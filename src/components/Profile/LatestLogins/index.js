@@ -12,9 +12,11 @@ function LatestLogins() {
     const [isLoading, setIsLoading] = useState(true)
     const [latestLogins, setLatestLogins] = useState([])
 
+    const userId = localStorage.getItem('userId')
+
     useEffect(() => {
         (async function fetchData() {
-            const response = await SendGetRequest(auth.bearerToken, `api/users/${auth.userId}/login/latest`)
+            const response = await SendGetRequest(auth.bearerToken, `api/users/${userId}/login/latest`)
             if (!response.error) {
                 setLatestLogins(response)
 
@@ -22,7 +24,7 @@ function LatestLogins() {
                 setIsLoading(false)
             }
         })()
-    }, [auth.bearerToken, auth.userId])
+    }, [auth.bearerToken, userId])
 
     if (isLoading && isAuth) return <Loading />
     else if (!isAuth) return <Unauthorized />
