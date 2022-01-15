@@ -7,13 +7,13 @@ import { login } from '../features/Auth'
 
 function Login() {
     const dispatch = useDispatch()
-
     const navigate = useNavigate()
 
     const emailInputRef = useRef()
     const passwordInputRef = useRef()
 
     const [bearerToken, setBearerToken] = useState('')
+    const [tokenValidity, setTokenValidity] = useState('')
     const [userId, setUserId] = useState('')
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
@@ -28,6 +28,7 @@ function Login() {
             .then((response) => {
                 // Set the states
                 setBearerToken(response.data.data.token)
+                setTokenValidity(response.data.data.tokenValidity)
                 setUserId(response.data.data.user.id)
                 setUsername(response.data.data.user.username)
                 setEmail(response.data.data.user.email)
@@ -43,12 +44,13 @@ function Login() {
         dispatch(
             login({
                 bearerToken: bearerToken,
+                tokenValidity: tokenValidity,
                 userId: userId,
                 username: username,
                 email: email,
             })
         )
-    }, [bearerToken, userId, username, email, dispatch])
+    }, [bearerToken, tokenValidity, userId, username, email, dispatch])
 
     return (
         <div>

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = { bearerToken: '', userId: '', username: '', email: '' }
+const initialState = { bearerToken: '', tokenValidity: '', userId: '', username: '', email: '' }
 
 export const authSlice = createSlice({
     name: 'auth',
