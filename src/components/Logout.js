@@ -21,7 +21,6 @@ function Logout() {
             })
             .catch((error) => {
                 console.log(error.response.data)
-                console.log(error)
             })
     }, [auth.bearerToken, dispatch, navigate])
 

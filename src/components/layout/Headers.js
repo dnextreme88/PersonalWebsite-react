@@ -4,7 +4,12 @@ import { Link } from 'react-router-dom'
 import classes from './Headers.module.css'
 
 function Headers() {
+    // Don't remove as for some reason, the condition on the navbar won't render properly if this was
+    // commented or removed
     const auth = useSelector((state) => state.auth.value)
+    console.log(Object.values(auth)[0].length > 0 ? `token validity: ${auth.tokenValidity}` : null)
+
+    const hasToken = localStorage.getItem('token') ? localStorage.getItem('token').length > 0 : ''
 
     return (
         <header className={classes.header}>
@@ -15,10 +20,10 @@ function Headers() {
                     <li><Link to="/archive">Archives</Link></li>
                     <li><Link to="/blog">Blog</Link></li>
                     <li><Link to="/guides">FAQs</Link></li>
-                    {auth.bearerToken.length > 0
+                    {hasToken
                         ?
                         <>
-                        <li>Hi, <Link to="/profile">{auth.username}</Link>!</li>
+                        <li>Hi, <Link to="/profile">{localStorage.getItem('user')}</Link>!</li>
                         <li><Link to="/logout">Logout</Link></li>
                         </>
                         :

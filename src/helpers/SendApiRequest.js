@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 export const SendGetRequest = (bearerToken, apiUrl) => {
+    const localStorageToken = localStorage.getItem('token')
     const response = axios.get(`http://localhost:3001/${apiUrl}`, {
-        headers: { Authorization: `Bearer ${bearerToken}` }
+        headers: { Authorization: `Bearer ${localStorageToken}` }
     })
         .then((response) => {
             return response.data.data
@@ -20,8 +21,9 @@ export const SendGetRequest = (bearerToken, apiUrl) => {
 }
 
 export const SendPostRequest = (bearerToken, apiUrl, data = null) => {
+    const localStorageToken = localStorage.getItem('token')
     const response = axios.post(`http://localhost:3001/${apiUrl}`, data, {
-        headers: { Authorization: `Bearer ${bearerToken}` }
+        headers: { Authorization: `Bearer ${localStorageToken}` }
     })
         .then((response) => {
             return response.data.data
@@ -35,8 +37,9 @@ export const SendPostRequest = (bearerToken, apiUrl, data = null) => {
 }
 
 export const SendPostMultipartRequest = (bearerToken, apiUrl, data = null) => {
+    const localStorageToken = localStorage.getItem('token')
     const response = axios.post(`http://localhost:3001/${apiUrl}`, data, {
-        headers: { Authorization: `Bearer ${bearerToken}`, 'Content-Type': 'multipart/form-data' }
+        headers: { Authorization: `Bearer ${localStorageToken}`, 'Content-Type': 'multipart/form-data' }
     })
         .then((response) => {
             return response.data.data

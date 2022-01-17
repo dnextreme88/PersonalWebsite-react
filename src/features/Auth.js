@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = { bearerToken: '', userId: '', username: '', email: '' }
+const initialState = { bearerToken: '', tokenValidity: '', userId: '', username: '', email: '' }
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -12,9 +12,21 @@ export const authSlice = createSlice({
             // always best practice to name the keys of the payload object to those contained in
             // the initialState
             state.value = action.payload
+
+            // Persist login
+            localStorage.setItem('user', action.payload.username)
+            localStorage.setItem('userId', action.payload.userId)
+            localStorage.setItem('token', action.payload.bearerToken)
+            localStorage.setItem('tokenValidity', action.payload.tokenValidity)
         },
         logout: (state) => {
             state.value = initialState
+
+            // Remove local storage data
+            localStorage.removeItem('user')
+            localStorage.removeItem('userId')
+            localStorage.removeItem('token')
+            localStorage.removeItem('tokenValidity')
         },
     },
 })
