@@ -7,6 +7,7 @@ function Headers() {
     // Don't remove as for some reason, the condition on the navbar won't render properly if this was
     // commented or removed
     const auth = useSelector((state) => state.auth.value)
+    console.log(Object.values(auth)[0].length > 0 ? `token validity: ${auth.tokenValidity}` : null)
 
     const hasToken = localStorage.getItem('token') ? localStorage.getItem('token').length > 0 : ''
 
