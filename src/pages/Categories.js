@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import NoResults from '../components/ui/Alerts/NoResults'
 import Success from '../components/ui/Alerts/Success'
 import ValidationErrors from '../components/ui/Alerts/ValidationErrors'
 import Categories from '../components/Blog/Categories'
@@ -12,6 +13,8 @@ function CategoriesPage() {
     const [isError, setIsError] = useState(false)
     const [errorList, setErrorList] = useState([])
     const [isCategoryCreated, setIsCategoryCreated] = useState(false)
+    const [isCategoryUpdated, setIsCategoryUpdated] = useState(false)
+    const [isCategoryDeleted, setIsCategoryDeleted] = useState(false)
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
@@ -20,11 +23,13 @@ function CategoriesPage() {
             if (!response.error) {
                 setCategories(response)
 
-                // Reset default state so that the page re-renders when a category is created
+                // Reset default state so that the page re-renders when a category is created, deleted, or updated
                 setIsCategoryCreated(false)
+                setIsCategoryUpdated(false)
+                setIsCategoryDeleted(false)
             }
         })()
-    }, [auth.bearerToken, isCategoryCreated])
+    }, [auth.bearerToken, isCategoryCreated, isCategoryUpdated, isCategoryDeleted])
 
     async function handleAddCategory(categoryData) {
         const response = await SendPostRequest(auth.bearerToken, 'api/blog/categories', categoryData)
@@ -50,6 +55,32 @@ function CategoriesPage() {
         }
     }
 
+    async function handleEditCategory(categoryData) {
+        await SendPostRequest(auth.bearerToken, `api/blog/categories/${categoryData.id}/update`, categoryData)
+        console.log('LOG: Category updated')
+
+        setIsCategoryUpdated(true)
+
+        setIsSuccess(false)
+        setIsError(false)
+    }
+
+    async function handleDeleteCategory(categoryId) {
+        await SendPostRequest(auth.bearerToken, `api/blog/categories/${categoryId}/delete`)
+        console.log('LOG: Category deleted')
+
+        categories.forEach((category) => {
+            if (category.id === categoryId) {
+                categories.splice(category, 1)        
+                setCategories(categories)
+            }
+        })
+        setIsCategoryDeleted(true)
+
+        setIsSuccess(false)
+        setIsError(false)
+    }
+
     return (
         <div>
             {isError ?
@@ -62,7 +93,11 @@ function CategoriesPage() {
             }
 
             <AddCategoryForm onAddCategory={handleAddCategory} />
-            <Categories categories={categories} />
+
+            {categories.length > 0 ?
+                <Categories categories={categories} onEditCategory={handleEditCategory} onDeleteCategory={handleDeleteCategory} />
+                : <NoResults message='You have no categories at the moment!' />
+            }
         </div>
     )
 }
