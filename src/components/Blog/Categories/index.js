@@ -1,36 +1,29 @@
 import { React, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import Unauthorized from '../../ui/Alerts/Unauthorized'
 import Loading from '../../ui/Spinners/Loading'
-import { SendGetRequest } from '../../../helpers/SendApiRequest'
+import classes from './index.module.css'
 
-function Categories() {
-    const auth = useSelector((state) => state.auth.value)
-    const [isAuth, setIsAuth] = useState(false)
+function Categories(props) {
     const [isLoading, setIsLoading] = useState(true)
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        (async function fetchData() {
-            const response = await SendGetRequest(auth.bearerToken, 'api/blog/categories')
-            if (!response.error) {
-                setCategories(response)
-
-                setIsAuth(true)
-                setIsLoading(false)
-            }
-        })()
-    }, [auth.bearerToken])
+        setCategories(props.categories)
+        setIsLoading(false)
+    }, [props.categories])
     
-    if (isLoading && isAuth) return <Loading />
-    else if (!isAuth) return <Unauthorized />
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <div>
-            {categories.map((category) =>
-                    <p key={category.id}>{category.name}</p>
-                )
-            }
+            <p>This blog contains the following categories:</p>
+                <ul className={classes.categoryList}>
+                {categories.map((category) =>
+                        <li className={classes.category} key={category.id}>{category.name}</li>
+                    )    
+                }
+                </ul>
         </div>
     )
 }

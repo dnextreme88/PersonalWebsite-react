@@ -1,0 +1,8 @@
+.categoryList {
+    list-style-type: none;
+}
+
+.category {
+    background-color: #ddd;
+    margin: 0.5rem 0;
+}
