@@ -14,7 +14,7 @@ function Headers() {
     return (
         <header className={classes.header}>
             <div className={classes.logo}><Link to="/">My Personal Website</Link></div>
-            <nav>
+            <nav className={classes.headerNav}>
                 <ul className={classes.list}>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/archive">Archives</Link></li>
