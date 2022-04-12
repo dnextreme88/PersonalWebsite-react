@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import SoldItem from '../SoldItem'
 import Loading from '../../ui/Spinners/Loading'
-import classes from './index.module.css'
+import classes from './index.module.scss'
 
 function SoldItems(props) {
     const [isLoading, setIsLoading] = useState(true)
@@ -21,7 +21,7 @@ function SoldItems(props) {
     }
 
     return (
-        <div className={classes.list}>
+        <div className={classes.soldItemsList}>
             {soldItems.map((soldItem) =>
                     <SoldItem
                         key={soldItem.id}

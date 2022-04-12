@@ -1,0 +1,30 @@
+.main {
+    position: fixed;
+    padding-right: 8%;
+    border-left: 4px solid black;
+    background-color: #CCC;
+    padding-bottom: 0.2em;
+    overflow: hidden;
+
+    .browse {
+        text-indent: 0.5em;
+    }
+
+    .item {
+        list-style: none;
+        text-indent: 1em;
+    }
+
+    .categories {
+        list-style: none;
+    }
+
+    .year a, .item a, .categories a {
+        color: black;
+    }
+
+    .year a:hover, .item a:hover, .categories a:hover {
+        color: white;
+        text-decoration: none;
+    }
+}

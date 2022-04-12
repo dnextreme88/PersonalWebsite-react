@@ -1,0 +1,33 @@
+.posts {
+    background-color: #CCC;
+    border: 1px solid white;
+    border-radius: 12px;
+
+    .recentPosts {
+        text-indent: 0.4em;
+    }
+
+    .post {
+        margin-left: 2%;
+        margin-bottom: 2%;
+    }
+
+    .userPosts {
+        margin-right: 2%;
+        text-align: right;
+    }
+
+    .userPosts a:hover {
+        text-decoration: none;
+    }
+
+    .noPosts {
+        font-size: 1.2em;
+        margin: 2%;
+        padding: 1em;
+        background-color: #df4759;
+        border: 2px solid #f8d7da;
+        border-radius: 8px;
+        color: white;
+    }
+}

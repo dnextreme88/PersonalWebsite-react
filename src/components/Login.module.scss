@@ -32,10 +32,9 @@
     border: 1px solid #bbb;
     border-radius: 4px;
     font-weight: bold;
-}
-  
-.actions button:hover,
-  .actions button:active {
-    background-color: #999;
-    border-color: #999;
+
+    button:hover, button:active {
+        background-color: #999;
+        border-color: #999;
+    }
 }

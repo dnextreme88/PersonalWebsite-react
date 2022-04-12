@@ -5,7 +5,7 @@ import Unauthorized from '../components/ui/Alerts/Unauthorized'
 import Loading from '../components/ui/Spinners/Loading'
 import Posts from '../components/Blog/Posts'
 import { SendGetRequest } from '../helpers/SendApiRequest'
-import classes from './PostsByUser.module.css'
+import classes from './PostsByUser.module.scss'
 
 function PostsByUserPage(props) {
     const auth = useSelector((state) => state.auth.value)

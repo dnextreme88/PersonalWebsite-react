@@ -1,0 +1,113 @@
+.title {
+    color: black;
+    transition: color 0.8s;
+    font-size: 2rem;
+    margin-top: 0;
+}
+
+.title:hover {
+    color: blue;
+}
+
+.postDate {
+    color: #999;
+    transition: color 0.8s;
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+.postDate:hover {
+    color: #CCC;
+}
+
+.body {
+    width: 100%;
+    margin: 1em 0;
+    background-color: #BBB;
+}
+
+.toggle {
+    display: inline-block;
+    text-decoration: underline;
+    transition: all 0.5s;
+    margin-bottom: 0.5em;
+}
+
+.toggle:hover {
+    transition: all 0.5s;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+    background-color: #DDD;
+    border: 1px solid white;
+    border-radius: 8px;
+    margin-bottom: 1.5em;
+    transition: all 0.8s;
+
+    h2 {
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    p {
+        text-indent: 1.5em;
+    }
+}
+
+.show:hover {
+    background-color: #BBB;
+    opacity: 0.8;
+}
+
+.actions {
+    width: 100%;
+    display: inline-block;
+    overflow: auto;
+
+    button {
+        font: inherit;
+        cursor: pointer;
+        color: white;
+        padding: 0.5em 1.5em;
+        border-radius: 4px;
+        font-weight: bold;
+        margin: 0 0.5em;
+    }
+
+    .left {
+        margin-left: 1em;
+        float: left;
+    }
+
+    .right {
+        margin-right: 1em;
+        float: right;
+    }
+
+    .edit {
+        background-color: #6e93f8;
+        border: 1px solid #6e93f8;
+    }
+
+    .edit:hover, .edit:active {
+        background-color: #465d9e;
+        border-color: #465d9e;
+    }
+
+    .delete {
+        background-color: #e92020;
+        border: 1px solid #e92020;
+    }
+
+    .delete:hover, .delete:active {
+        background-color: #bd5858;
+        border-color: #bd5858;
+    }
+}

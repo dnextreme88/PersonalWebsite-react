@@ -6,7 +6,7 @@ import AddSoldItemForm from '../components/forms/AddSoldItemForm'
 import FilterSoldItemForm from '../components/forms/FilterSoldItemForm'
 import SoldItems from '../components/Archive/SoldItems'
 import { SendGetRequest, SendPostRequest, SendPostMultipartRequest } from '../helpers/SendApiRequest'
-import classes from './Archive.module.css'
+import classes from './Archive.module.scss'
 
 function Archive() {
     const auth = useSelector((state) => state.auth.value)

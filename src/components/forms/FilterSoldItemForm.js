@@ -5,7 +5,7 @@ import {
     displayPaymentMethods,
     displaySellMethods,
 } from '../../helpers/PopulateContent'
-import classes from './FilterSoldItemForm.module.css'
+import classes from './FilterSoldItemForm.module.scss'
 
 function FilterSoldItemForm(props) {
     const brandInputRef = useRef()

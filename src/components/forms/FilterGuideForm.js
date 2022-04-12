@@ -1,6 +1,6 @@
 import { React, useRef, useState } from 'react'
 import { displayPlatforms, displayTypes, displayOps } from '../../helpers/PopulateContent'
-import classes from './FilterGuideForm.module.css'
+import classes from './FilterGuideForm.module.scss'
 
 function FilterGuideForm(props) {
     const nameInputRef = useRef()

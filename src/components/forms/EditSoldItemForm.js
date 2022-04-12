@@ -13,7 +13,7 @@ import {
     displayRemittanceCenters,
     displayShipmentCenters,
 } from '../../helpers/PopulateContent'
-import classes from './EditSoldItemForm.module.css'
+import classes from './EditSoldItemForm.module.scss'
 
 function EditSoldItemForm(props) {
     const auth = useSelector((state) => state.auth.value)
@@ -127,14 +127,14 @@ function EditSoldItemForm(props) {
 
     function displayPaymentMethodLocation (paymentMethod, paymentLocationInputRef, value = false) {
         let paymentLocationInput = ''
-    
+
         if (paymentMethod === 'cash on-hand') {
             const defValue = value ? value : ''
 
             paymentLocationInput = <input type='text' id='location' ref={paymentLocationInputRef} defaultValue={defValue} />
         } else if (paymentMethod === 'dropping area cashout') {
             const defValue = value ? value : 'GP Arcade Stall 4'
-    
+
             paymentLocationInput = (
                 <select id='paymentLocation' ref={paymentLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'paymentLocation')}>
                     {displayDroppingAreas()}
@@ -142,7 +142,7 @@ function EditSoldItemForm(props) {
             )
         } else if (paymentMethod === 'remittance') {
             const defValue = value ? value : 'Cebuana'
-    
+
             paymentLocationInput = (
                 <select id='paymentLocation' ref={paymentLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'paymentLocation')}>
                     {displayRemittanceCenters()}
@@ -154,14 +154,14 @@ function EditSoldItemForm(props) {
 
     function displaySellMethodLocation (sellMethod, sellLocationInputRef, value = false) {
         let sellLocationInput = ''
-    
+
         if (sellMethod === 'meetup') {
             const defValue = value ? value : ''
 
             sellLocationInput = <input type='text' id='location' ref={sellLocationInputRef} defaultValue={defValue} />
         } else if (sellMethod === 'dropping') {
             const defValue = value ? value : 'GP Arcade Stall 4'
-    
+
             sellLocationInput = (
                 <select id='sellLocation' ref={sellLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'sellLocation')}>
                     {displayDroppingAreas()}
@@ -169,14 +169,14 @@ function EditSoldItemForm(props) {
             )
         } else if (sellMethod === 'shipment') {
             const defValue = value ? value : 'ABest Express'
-    
+
             sellLocationInput = (
                 <select id='sellLocation' ref={sellLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'sellLocation')}>
                     {displayShipmentCenters()}
                 </select>
             )
         }
-    
+
         return sellLocationInput
     }
 

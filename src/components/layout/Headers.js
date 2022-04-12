@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import classes from './Headers.module.css'
+import classes from './Headers.module.scss'
 
 function Headers() {
     // Don't remove as for some reason, the condition on the navbar won't render properly if this was

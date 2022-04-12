@@ -1,0 +1,29 @@
+.main {
+    width: 100%;
+
+    .post {
+        background-color: #ddd;
+        margin-bottom: 2em;
+    }
+
+    .postHeader {
+        padding: 1em 0.4em;
+        background-color: #aaa;
+        font-size: 1.2rem;
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .postContent {
+        padding: 0.4em;
+        text-indent: 1em;
+    }
+
+    .right {
+        float: right;
+        overflow: auto;
+        clear: right;
+    }
+}

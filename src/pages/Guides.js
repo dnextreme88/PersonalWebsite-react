@@ -9,6 +9,7 @@ import FAQs from '../components/FAQs/FAQs'
 import AddGuideForm from '../components/forms/AddGuideForm'
 import FilterGuideForm from '../components/forms/FilterGuideForm'
 import { SendGetRequest, SendPostRequest } from '../helpers/SendApiRequest'
+import classes from './Guides.module.scss'
 
 function Guides() {
     const auth = useSelector((state) => state.auth.value)
@@ -102,7 +103,7 @@ function Guides() {
     return (
         <div>
             <h1>List of FAQs</h1>
-            <p>Total guides written: <strong>{guides.length}</strong></p>
+            <p>Total guides written: <span className={classes.guideLength}>{guides.length}</span></p>
 
             {isError ?
                 <ValidationErrors errors={errorList} />
