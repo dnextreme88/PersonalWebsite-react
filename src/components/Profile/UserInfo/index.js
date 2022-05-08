@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
-import classes from './index.module.css'
+import classes from './index.module.scss'
 
 function UserInfo() {
     const auth = useSelector((state) => state.auth.value)
@@ -15,7 +15,7 @@ function UserInfo() {
     }
 
     return (
-        <div className={classes.main}>
+        <div className={classes.userInfo}>
             {auth.bearerToken.length > 0 ?
                 <>
                 <p>User ID: {auth.userId}</p>

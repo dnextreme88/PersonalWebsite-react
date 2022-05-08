@@ -5,7 +5,7 @@ import Sidebar from '../components/Blog/Sidebar'
 import Unauthorized from '../components/ui/Alerts/Unauthorized'
 import Loading from '../components/ui/Spinners/Loading'
 import { SendGetRequest } from '../helpers/SendApiRequest'
-import classes from './Blog.module.css'
+import classes from './Blog.module.scss'
 
 function BlogPage() {
     const auth = useSelector((state) => state.auth.value)

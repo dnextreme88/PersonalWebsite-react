@@ -1,0 +1,52 @@
+$color-white: white; /* Example variable */
+
+.header {
+    width: 100%;
+    height: 4em;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo {
+        font-size: 2rem;
+        color: $color-white;
+        font-weight: bold;
+        padding-left: 1em;
+
+        a {
+            text-decoration: none;
+            color: #6e93f8;
+        }
+
+        a:hover {
+            color: $color-white;
+        }
+    }
+
+    .headerNav {
+        padding-right: 1em;
+    }
+
+    .list {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: baseline;
+        list-style: none;
+
+        li {
+            margin-left: 1.2em;
+        }
+
+        li, li a {
+            color: #6e93f8;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        li a:hover {
+            color: $color-white;
+        }
+    }
+}

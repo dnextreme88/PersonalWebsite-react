@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 import DeleteGuideModal from '../../ui/Modals/DeleteGuideModal'
 import Loading from '../../ui/Spinners/Loading'
-import classes from './index.module.css'
+import classes from './index.module.scss'
 
 function FAQs(props) {
     const [isLoading, setIsLoading] = useState(true)

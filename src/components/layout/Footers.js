@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './Footers.module.css'
+import classes from './Footers.module.scss'
 
 function Footers() {
     function goToGitHubHandler() {

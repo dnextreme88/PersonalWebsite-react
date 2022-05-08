@@ -5,7 +5,7 @@ import Unauthorized from '../ui/Alerts/Unauthorized'
 import Loading from '../ui/Spinners/Loading'
 import { SendGetRequest, SendPostRequest } from '../../helpers/SendApiRequest'
 import { displayTypes, displayPlatforms } from '../../helpers/PopulateContent'
-import classes from './EditGuideForm.module.css'
+import classes from './EditGuideForm.module.scss'
 
 function EditGuideForm(props) {
     const auth = useSelector((state) => state.auth.value)

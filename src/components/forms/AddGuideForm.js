@@ -1,6 +1,6 @@
 import { React, useRef, useState } from 'react'
 import { displayTypes, displayPlatforms } from '../../helpers/PopulateContent'
-import classes from './AddGuideForm.module.css'
+import classes from './AddGuideForm.module.scss'
 
 function AddGuideForm(props) {
     const today = new Date().toISOString().split('T')[0] // eg. 2022-01-13

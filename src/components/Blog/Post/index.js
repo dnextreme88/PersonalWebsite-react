@@ -6,7 +6,7 @@ import Unauthorized from '../../ui/Alerts/Unauthorized'
 import Loading from '../../ui/Spinners/Loading'
 import { openModal, closeModal } from '../../../features/Modal'
 import { SendGetRequest } from '../../../helpers/SendApiRequest'
-import classes from './index.module.css'
+import classes from './index.module.scss'
 
 function Post(props) {
     const dispatch = useDispatch()

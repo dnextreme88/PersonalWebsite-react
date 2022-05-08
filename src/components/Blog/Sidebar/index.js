@@ -6,7 +6,7 @@ import Loading from '../../ui/Spinners/Loading'
 import MonthYear from '../MonthYear'
 import Year from '../Year'
 import { SendGetRequest } from '../../../helpers/SendApiRequest'
-import classes from './index.module.css'
+import classes from './index.module.scss'
 
 function Sidebar() {
     const auth = useSelector((state) => state.auth.value)

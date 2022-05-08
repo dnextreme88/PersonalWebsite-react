@@ -6,7 +6,7 @@ import {
     displaySellMethods,
 } from '../../helpers/PopulateContent'
 import { displayPaymentMethodLocation, displaySellMethodLocation } from '../../helpers/SoldItem'
-import classes from './AddSoldItemForm.module.css'
+import classes from './AddSoldItemForm.module.scss'
 
 function AddSoldItemForm(props) {
     const today = new Date().toISOString().split('T')[0] // eg. 2021-12-29

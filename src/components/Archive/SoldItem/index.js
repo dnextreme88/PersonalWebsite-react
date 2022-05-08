@@ -6,7 +6,7 @@ import DeleteSoldItemModal from '../../ui/Modals/DeleteSoldItemModal'
 import Unauthorized from '../../ui/Alerts/Unauthorized'
 import Loading from '../../ui/Spinners/Loading'
 import { SendGetRequest, SendPostRequest } from '../../../helpers/SendApiRequest'
-import classes from './index.module.css'
+import classes from './index.module.scss'
 
 function SoldItem(props) {
     const auth = useSelector((state) => state.auth.value)

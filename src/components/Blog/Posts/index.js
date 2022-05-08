@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 import Loading from '../../ui/Spinners/Loading'
 import { stripHtmlTag } from '../../../helpers/Format'
-import classes from './index.module.css'
+import classes from './index.module.scss'
 
 function Posts(props) {
     const [isLoading, setIsLoading] = useState(true)
