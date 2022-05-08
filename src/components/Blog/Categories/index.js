@@ -1,36 +1,48 @@
 import { React, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import Unauthorized from '../../ui/Alerts/Unauthorized'
+import DeleteCategoryModal from '../../ui/Modals/DeleteCategoryModal'
+import EditCategoryModal from '../../ui/Modals/EditCategoryModal'
 import Loading from '../../ui/Spinners/Loading'
-import { SendGetRequest } from '../../../helpers/SendApiRequest'
+import classes from './index.module.scss'
 
-function Categories() {
-    const auth = useSelector((state) => state.auth.value)
-    const [isAuth, setIsAuth] = useState(false)
+function Categories(props) {
     const [isLoading, setIsLoading] = useState(true)
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        (async function fetchData() {
-            const response = await SendGetRequest(auth.bearerToken, 'api/blog/categories')
-            if (!response.error) {
-                setCategories(response)
+        setIsLoading(false)
+        setCategories(props.categories)
+    }, [props.categories])
 
-                setIsAuth(true)
-                setIsLoading(false)
-            }
-        })()
-    }, [auth.bearerToken])
-    
-    if (isLoading && isAuth) return <Loading />
-    else if (!isAuth) return <Unauthorized />
+    function handleEditCategory(categoryData) {
+        props.onEditCategory(categoryData)
+    }
+
+    function handleDeleteCategory(categoryId) {
+        props.onDeleteCategory(categoryId)
+    }
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <div>
-            {categories.map((category) =>
-                    <p key={category.id}>{category.name}</p>
-                )
-            }
+            <p>This blog contains the following categories:</p>
+                <ul className={classes.categoryList}>
+                {categories.map((category) =>
+                        <li className={classes.category} key={category.id}>
+                            <div className={classes.name}>
+                                {category.name}
+                            </div>
+                            <div className={classes.actions}>
+                                <EditCategoryModal categoryId={category.id} name={category.name} onEditCategory={handleEditCategory} />
+                                &nbsp;&nbsp;
+                                <DeleteCategoryModal categoryId={category.id} onDeleteCategory={handleDeleteCategory} />
+                            </div>
+                        </li>
+                    )
+                }
+                </ul>
         </div>
     )
 }

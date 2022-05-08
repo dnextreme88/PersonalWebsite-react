@@ -1,0 +1,24 @@
+.categoryList {
+    list-style-type: none;
+}
+
+.category {
+    background-color: #ddd;
+    margin: 0.5em 0;
+    clear: both;
+    padding: 0.5em 0;
+    overflow: auto;
+    border: 4px solid white;
+    border-radius: 12px;
+}
+
+.name {
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    float: left;
+}
+
+.actions {
+    margin-right: 0.5em;
+    float: right;
+}
