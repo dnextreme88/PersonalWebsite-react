@@ -17,6 +17,7 @@ function Headers() {
             <nav className={classes.headerNav}>
                 <ul className={classes.list}>
                     <li><Link to="/">Home</Link></li>
+                    <li><Link to="/about_me">About Me</Link></li>
                     <li><Link to="/archive">Archives</Link></li>
                     <li><Link to="/blog">Blog</Link></li>
                     <li><Link to="/guides">FAQs</Link></li>
