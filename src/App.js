@@ -5,6 +5,8 @@ import Layout from './components/layout/Layout'
 /* Auth */
 import Login from './components/Login'
 import Logout from './components/Logout'
+/* About Me */
+import AboutMe from './pages/AboutMe'
 /* Archive */
 import Archive from './pages/Archive'
 import SoldItem from './components/Archive/SoldItem'
@@ -30,6 +32,7 @@ function App() {
         <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/archive' element={<Archive />} />
+            <Route path='/about_me' element={<AboutMe />} />
             <Route path='/archive/:soldItemId' element={<SoldItem />} />
             <Route path='/archive/:soldItemId/update' element={<EditSoldItemForm />} />
             <Route path='/blog' element={<Blog />} />
