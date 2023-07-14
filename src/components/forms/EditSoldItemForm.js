@@ -1,4 +1,5 @@
 import { React, useEffect, useRef, useState } from 'react'
+import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import Unauthorized from '../ui/Alerts/Unauthorized'
@@ -131,22 +132,22 @@ function EditSoldItemForm(props) {
         if (paymentMethod === 'cash on-hand') {
             const defValue = value ? value : ''
 
-            paymentLocationInput = <input type='text' id='location' ref={paymentLocationInputRef} defaultValue={defValue} />
+            paymentLocationInput = <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='location' ref={paymentLocationInputRef} defaultValue={defValue} />
         } else if (paymentMethod === 'dropping area cashout') {
             const defValue = value ? value : 'GP Arcade Stall 4'
 
             paymentLocationInput = (
-                <select id='paymentLocation' ref={paymentLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'paymentLocation')}>
+                <Form.Select className='col-12 col-sm col-md col-lg' id='paymentLocation' ref={paymentLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'paymentLocation')}>
                     {displayDroppingAreas()}
-                </select>
+                </Form.Select>
             )
         } else if (paymentMethod === 'remittance') {
             const defValue = value ? value : 'Cebuana'
 
             paymentLocationInput = (
-                <select id='paymentLocation' ref={paymentLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'paymentLocation')}>
+                <Form.Select className='col-12 col-sm col-md col-lg' id='paymentLocation' ref={paymentLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'paymentLocation')}>
                     {displayRemittanceCenters()}
-                </select>
+                </Form.Select>
             )
         }
         return paymentLocationInput
@@ -158,22 +159,22 @@ function EditSoldItemForm(props) {
         if (sellMethod === 'meetup') {
             const defValue = value ? value : ''
 
-            sellLocationInput = <input type='text' id='location' ref={sellLocationInputRef} defaultValue={defValue} />
+            sellLocationInput = <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='location' ref={sellLocationInputRef} defaultValue={defValue} />
         } else if (sellMethod === 'dropping') {
             const defValue = value ? value : 'GP Arcade Stall 4'
 
             sellLocationInput = (
-                <select id='sellLocation' ref={sellLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'sellLocation')}>
+                <Form.Select className='col-12 col-sm col-md col-lg' id='sellLocation' ref={sellLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'sellLocation')}>
                     {displayDroppingAreas()}
-                </select>
+                </Form.Select>
             )
         } else if (sellMethod === 'shipment') {
             const defValue = value ? value : 'ABest Express'
 
             sellLocationInput = (
-                <select id='sellLocation' ref={sellLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'sellLocation')}>
+                <Form.Select className='col-12 col-sm col-md col-lg' id='sellLocation' ref={sellLocationInputRef} value={defValue} onChange={(e) => handleOnChange(e, 'sellLocation')}>
                     {displayShipmentCenters()}
-                </select>
+                </Form.Select>
             )
         }
 
@@ -184,55 +185,95 @@ function EditSoldItemForm(props) {
     else if (!isAuth) return <Unauthorized />
 
     return (
-        <form className={classes.form} onSubmit={handleOnSubmit} encType='multipart/form-data'>
+        <Form className={classes.form} onSubmit={handleOnSubmit} encType='multipart/form-data'>
             <p>You are editing: <strong>{soldItem.name}</strong></p>
-            <div className={classes.grid}>
-                <label htmlFor='title'>Name</label>
-                <input type='text' id='name' ref={nameInputRef} defaultValue={soldItem.name} />
+            <Row className='mb-3'>
+                <Col xs={12} sm={6}>
+                    <Row className='align-items-center'>
+                        <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='title'>Name</Form.Label>
+                        <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='name' ref={nameInputRef} defaultValue={soldItem.name} />
+                    </Row>
+                </Col>
 
-                <label htmlFor='price'>Price</label>
-                <input type='text' id='price' ref={priceInputRef} defaultValue={soldItem.price} />
-            </div>
-            <div className={classes.grid}>
-                <label htmlFor='condition'>Condition</label>
-                <select id='condition' ref={conditionInputRef} value={condition} onChange={(e) => handleOnChange(e, 'condition')}>
-                    {displayConditions()}
-                </select>
+                <Col xs={12} sm={6}>
+                    <Row className='align-items-center'>
+                        <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='price'>Price</Form.Label>
+                        <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='price' ref={priceInputRef} defaultValue={soldItem.price} />
+                    </Row>
+                </Col>
+            </Row>
+            <Row className='mb-3'>
+                <Col xs={12} sm={6}>
+                    <Row className='align-items-center'>
+                        <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='condition'>Condition</Form.Label>
+                        <Form.Select className='col-12 col-sm col-md col-lg' id='condition' ref={conditionInputRef} value={condition} onChange={(e) => handleOnChange(e, 'condition')}>
+                            {displayConditions()}
+                        </Form.Select>
+                    </Row>
+                </Col>
 
-                <label htmlFor='size'>Size</label>
-                <select id='size' ref={sizeInputRef} value={size} onChange={(e) => handleOnChange(e, 'size')}>
-                    {displaySizes()}
-                </select>
-            </div>
-            <div className={classes.grid}>
-                <label htmlFor='imageLocation'>Image</label>
-                <input type='file' id='imageLocation' name="imageFile" onChange={handleChangeFile} />
+                <Col xs={12} sm={6}>
+                    <Row className='align-items-center'>
+                        <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='size'>Size</Form.Label>
+                        <Form.Select className='col-12 col-sm col-md col-lg' id='size' ref={sizeInputRef} value={size} onChange={(e) => handleOnChange(e, 'size')}>
+                            {displaySizes()}
+                        </Form.Select>
+                    </Row>
+                </Col>
+            </Row>
+            <Row className='mb-3'>
+                <Col xs={12} sm={6}>
+                    <Row className='align-items-center'>
+                        <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='imageLocation'>Image</Form.Label>
+                        <Form.Control className='col-12 col-sm col-md col-lg' type='file' id='imageLocation' name="imageFile" onChange={handleChangeFile} />
+                    </Row>
+                </Col>
 
-                <label htmlFor='dateSold'>Date Sold</label>
-                <input type='date' id='dateSold' ref={dateSoldInputRef} defaultValue={soldItem.dateSold} />
-            </div>
-            <div className={classes.grid}>
-                <label htmlFor='paymentMethod'>Payment method</label>
-                <select id='paymentMethod' ref={paymentMethodInputRef} value={paymentMethod} onChange={(e) => handleOnChange(e, 'paymentMethod')}>
-                    {displayPaymentMethods()}
-                </select>
+                <Col xs={12} sm={6}>
+                    <Row className='align-items-center'>
+                        <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='dateSold'>Date Sold</Form.Label>
+                        <Form.Control className='col-12 col-sm col-md col-lg' type='date' id='dateSold' ref={dateSoldInputRef} defaultValue={soldItem.dateSold} />
+                    </Row>
+                </Col>
+            </Row>
+            <Row className='mb-3'>
+                <Col xs={12} sm={6}>
+                    <Row className='align-items-center'>
+                        <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='paymentMethod'>Payment method</Form.Label>
+                        <Form.Select className='col-12 col-sm col-md col-lg' id='paymentMethod' ref={paymentMethodInputRef} value={paymentMethod} onChange={(e) => handleOnChange(e, 'paymentMethod')}>
+                            {displayPaymentMethods()}
+                        </Form.Select>
+                    </Row>
+                </Col>
 
-                <label htmlFor='paymentLocation'>Payment location</label>
-                {displayPaymentMethodLocation(paymentMethod, paymentLocationInputRef, paymentLocation)}
-            </div>
-            <div className={classes.grid}>
-                <label htmlFor='sellMethod'>Sell method</label>
-                <select id='sellMethod' ref={sellMethodInputRef} value={sellMethod} onChange={(e) => handleOnChange(e, 'sellMethod')}>
-                    {displaySellMethods()}
-                </select>
+                <Col xs={12} sm={6}>
+                    <Row className='align-items-center'>
+                        <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='paymentLocation'>Payment location</Form.Label>
+                        {displayPaymentMethodLocation(paymentMethod, paymentLocationInputRef, paymentLocation)}
+                    </Row>
+                </Col>
+            </Row>
+            <Row className='mb-3'>
+                <Col xs={12} sm={6}>
+                    <Row className='align-items-center'>
+                        <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='sellMethod'>Sell method</Form.Label>
+                        <Form.Select className='col-12 col-sm col-md col-lg' id='sellMethod' ref={sellMethodInputRef} value={sellMethod} onChange={(e) => handleOnChange(e, 'sellMethod')}>
+                            {displaySellMethods()}
+                        </Form.Select>
+                    </Row>
+                </Col>
 
-                <label htmlFor='sellLocation'>Sell Location</label>
-                {displaySellMethodLocation(sellMethod, sellLocationInputRef, sellLocation)}
+                <Col xs={12} sm={6}>
+                    <Row className='align-items-center'>
+                        <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='sellLocation'>Sell Location</Form.Label>
+                        {displaySellMethodLocation(sellMethod, sellLocationInputRef, sellLocation)}
+                    </Row>
+                </Col>
+            </Row>
+            <div className={`text-end ${classes.actions}`}>
+                <Button className='fw-bold'>Edit Sold Item</Button>
             </div>
-            <div className={classes.actions}>
-                <button>Edit Sold Item</button>
-            </div>
-        </form>
+        </Form>
     )
 }
 

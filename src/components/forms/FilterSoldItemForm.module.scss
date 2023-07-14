@@ -1,57 +1,39 @@
 .form {
     padding: 1em;
 
-    .grid {
-        display: grid;
-        grid-template-columns: 15% 1fr 15% 1fr;
-        margin-bottom: 1em;
-
-        label {
-            font-weight: bold;
-            margin-bottom: 0.5em;
-        }
-
-        select, input {
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            margin-right: 2%;
-            padding: 0.25em;
-        }
+    input, select {
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        padding: 0.25em;
     }
 
     .actions {
-        margin-top: 1em;
-        text-align: center;
-        display: block;
+        gap: 0.5em;
 
         button {
             font: inherit;
-            cursor: pointer;
-            color: white;
             padding: 0.5em 1.5em;
-            border-radius: 4px;
-            font-weight: bold;
-            margin: 0 0.5em;
+            border-radius: 6px;
         }
-    }
 
-    .filter {
-        background-color: #6e93f8;
-        border: 1px solid #6e93f8;
-    }
+        .filter {
+            background-color: #6e93f8;
+            border: 1px solid #6e93f8;
+        }
 
-    .filter:hover, .filter:active {
-        background-color: #465d9e;
-        border-color: #465d9e;
-    }
+        .filter:hover, .filter:active {
+            background-color: #465d9e;
+            border-color: #465d9e;
+        }
 
-    .showAll {
-        background-color: #20e92a;
-        border: 1px solid #20e92a;
-    }
+        .showAll {
+            background-color: #20e92a;
+            border: 1px solid #20e92a;
+        }
 
-    .showAll:hover, .showAll:active {
-        background-color: #5bb367;
-        border-color: #5bb367;
+        .showAll:hover, .showAll:active {
+            background-color: #5bb367;
+            border-color: #5bb367;
+        }
     }
 }
