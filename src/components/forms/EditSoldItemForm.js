@@ -33,6 +33,7 @@ function EditSoldItemForm(props) {
     const [isAuth, setIsAuth] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [soldItem, setSoldItem] = useState([])
+    const [soldItemsUpdatedErrors, setSoldItemsUpdatedErrors] = useState({})
     const [paymentMethod, setPaymentMethod] = useState()
     const [paymentLocation, setPaymentLocation] = useState()
     const [sellMethod, setSellMethod] = useState()
@@ -64,7 +65,7 @@ function EditSoldItemForm(props) {
                 setIsLoading(false)
             }
         })()
-    }, [auth.bearerToken, soldItemId])
+    }, [auth.bearerToken, soldItemId, soldItemsUpdatedErrors])
 
     async function handleOnSubmit(event) {
         event.preventDefault() // Prevent the browser from sending another request
@@ -106,9 +107,14 @@ function EditSoldItemForm(props) {
         }
 
         const response = await SendPostMultipartRequest(auth.bearerToken, `api/soldItems/${soldItemId}/update`, formData)
-        console.log('LOG: Sold item updated', response)
+        if (response.error) {
+            setSoldItemsUpdatedErrors(response.errorList.errors)
+        } else {
+            console.log('LOG: Sold item updated', response)
+            setSoldItemsUpdatedErrors({})
 
-        navigate('/archive')
+            navigate('/archive')
+        }
     }
 
     // REF: https://www.pluralsight.com/guides/uploading-files-with-reactjs
@@ -192,6 +198,7 @@ function EditSoldItemForm(props) {
                     <Row className='align-items-center'>
                         <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='title'>Name</Form.Label>
                         <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='name' ref={nameInputRef} defaultValue={soldItem.name} />
+                        {soldItemsUpdatedErrors.name ? <small className='text-danger'>{soldItemsUpdatedErrors.name}</small> : ''}
                     </Row>
                 </Col>
 
@@ -199,6 +206,7 @@ function EditSoldItemForm(props) {
                     <Row className='align-items-center'>
                         <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='price'>Price</Form.Label>
                         <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='price' ref={priceInputRef} defaultValue={soldItem.price} />
+                        {soldItemsUpdatedErrors.price ? <small className='text-danger'>{soldItemsUpdatedErrors.price}</small> : ''}
                     </Row>
                 </Col>
             </Row>
@@ -271,7 +279,7 @@ function EditSoldItemForm(props) {
                 </Col>
             </Row>
             <div className={`text-end ${classes.actions}`}>
-                <Button className='fw-bold'>Edit Sold Item</Button>
+                <Button className='fw-bold' type='submit'>Edit Sold Item</Button>
             </div>
         </Form>
     )

@@ -80,6 +80,7 @@ function AddSoldItemForm(props) {
                     <Row className='align-items-center'>
                         <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='title'>Name</Form.Label>
                         <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='name' required ref={nameInputRef} />
+                        {props.errorList.name ? <small className='text-danger'>{props.errorList.name}</small> : ''}
                     </Row>
                 </Col>
 
@@ -87,6 +88,7 @@ function AddSoldItemForm(props) {
                     <Row className='align-items-center'>
                         <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='price'>Price</Form.Label>
                         <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='price' required ref={priceInputRef} />
+                        {props.errorList.price ? <small className='text-danger'>{props.errorList.price}</small> : ''}
                     </Row>
                 </Col>
             </Row>
@@ -159,7 +161,7 @@ function AddSoldItemForm(props) {
                 </Col>
             </Row>
             <div className={`text-end ${classes.actions}`}>
-                <Button className='fw-bold'>Add Sold Item</Button>
+                <Button className='fw-bold' type='submit'>Add Sold Item</Button>
             </div>
         </Form>
     )

@@ -13,6 +13,7 @@ function Archive() {
     const [isAuth, setIsAuth] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [isSoldItemCreated, setIsSoldItemCreated] = useState(false)
+    const [soldItemsCreatedErrors, setSoldItemsCreatedErrors] = useState({})
     const [isSoldItemDeleted, setIsSoldItemDeleted] = useState(false)
     const [soldItems, setSoldItems] = useState([])
     const [soldItemsFiltered, setSoldItemsFiltered] = useState([])
@@ -45,17 +46,22 @@ function Archive() {
         }
 
         const response = await SendPostMultipartRequest(auth.bearerToken, 'api/soldItems', formData)
-        console.log('LOG: Sold item created', response)
-        soldItems.push(response)
-        setSoldItems(soldItems)
+        if (response.error) {
+            setSoldItemsCreatedErrors(response.errorList.errors)
+        } else {
+            console.log('LOG: Sold items created', response)
+            soldItems.push(response)
+            setSoldItems(soldItems)
 
-        setIsSoldItemCreated(true)
+            setSoldItemsCreatedErrors({})
+            setIsSoldItemCreated(true)
 
-        // Explicitly remove filter data
-        setSoldItemsFiltered([])
-        setIsFilter(false)
+            // Explicitly remove filter data
+            setSoldItemsFiltered([])
+            setIsFilter(false)
 
-        setIsLoading(false)
+            setIsLoading(false)
+        }
     }
 
     function handleDeleteSoldItem() {
@@ -75,7 +81,7 @@ function Archive() {
 
         setIsLoading(false)
     }
-        
+
     if (isLoading && isAuth) return <Loading />
     else if (!isAuth) return <Unauthorized />
 
@@ -84,7 +90,7 @@ function Archive() {
             <p>A list of sold items will be shown here...</p>
             <p>Total items sold: <strong>{soldItems.length}</strong></p>
 
-            <AddSoldItemForm onAddSoldItem={handleAddSoldItem} />
+            <AddSoldItemForm onAddSoldItem={handleAddSoldItem} errorList={soldItemsCreatedErrors} />
 
             {soldItems.length > 0 || isFilter ?
                 <FilterSoldItemForm onFilterSoldItem={handleFilterSoldItem} />
