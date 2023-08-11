@@ -23,13 +23,22 @@ function SoldItems(props) {
     return (
         <div className={classes.soldItemsList}>
             {soldItems.map((soldItem) =>
-                    <SoldItem
-                        key={soldItem.id}
-                        id={soldItem.id}
-                        onHandleDeleteSoldItem={handleDeleteSoldItem}
-                    />
-                )
-            }
+                <SoldItem
+                    key={soldItem.id}
+                    id={soldItem.id}
+                    name={soldItem.name}
+                    price={soldItem.price}
+                    condition={soldItem.condition}
+                    size={soldItem.size}
+                    imageLocation={soldItem.imageLocation}
+                    dateSold={soldItem.dateSold}
+                    createdAt={soldItem.createdAt}
+                    updatedAt={soldItem.updatedAt}
+                    PaymentMethod={soldItem.PaymentMethod}
+                    SellMethod={soldItem.SellMethod}
+                    onHandleDeleteSoldItem={handleDeleteSoldItem}
+                />
+            )}
         </div>
     )
 }
