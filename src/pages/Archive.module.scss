@@ -21,4 +21,34 @@
         background-color: #df4759;
         border: 2px solid #f8d7da;
     }
+
+    .page {
+        color: black;
+        padding: 0.5em;
+        border: 1px solid #dcdcdc;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.25s linear;
+
+        a {
+            color: black;
+        }
+    }
+
+    .page:hover {
+        background-color: #465d9e;
+        border: 2px solid #465d9e;
+
+        a {
+            color: white;
+        }
+    }
+
+    .disabled {
+        cursor: not-allowed;
+    }
+
+    .break {
+        padding: 10px;
+    }
 }
