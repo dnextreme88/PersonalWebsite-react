@@ -1,24 +1,80 @@
 .list {
     margin: 0 auto;
 
-    p, .filteredSoldItems, .noSoldItems {
+    p, .filtered-sold-items, .no-sold-items {
         font-size: 1.2rem;
         margin-left: 2%;
     }
 
-    .filteredSoldItems, .noSoldItems {
+    .filtered-sold-items, .no-sold-items {
         padding: 1em;
         border-radius: 8px;
         color: white;
     }
 
-    .filteredSoldItems {
+    .filtered-sold-items {
         background-color: #5bb367;
         border: 2px solid #5bb367;
     }
 
-    .noSoldItems {
+    .no-sold-items {
         background-color: #df4759;
         border: 2px solid #f8d7da;
+    }
+
+    .archive-pagination {
+        gap: 0.25em;
+
+        .page {
+            color: black;
+            border: 1px solid #dcdcdc;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.25s linear;
+
+            a {
+                color: black;
+            }
+
+            &:hover {
+                background-color: #465d9e;
+                border: 2px solid #465d9e;
+
+                a {
+                    color: white;
+                }
+            }
+        }
+
+        .prev-and-next {
+            color: black;
+            border: 1px solid #dcdcdc;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.25s linear, color 0.25s linear;
+
+            &:hover {
+                background-color: #465d9e;
+                border: 2px solid #465d9e;
+                color: white;
+            }
+        }
+
+        .disabled {
+            cursor: not-allowed;
+        }
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .archive-pagination {
+        .page, .break {
+            display: none;
+        }
+
+        .prev-and-next::after {
+            text-transform: uppercase;
+            content: ' ' attr(rel);
+        }
     }
 }

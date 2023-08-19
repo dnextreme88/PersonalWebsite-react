@@ -1,4 +1,5 @@
 import React from 'react'
+import { Form } from 'react-bootstrap'
 import {
     displayDroppingAreas,
     displayRemittanceCenters,
@@ -9,18 +10,18 @@ export const displayPaymentMethodLocation = (paymentMethod, paymentLocationInput
     let paymentLocationInput = ''
 
     if (paymentMethod === 'cash on-hand') {
-        paymentLocationInput = <input type='text' id='location' ref={paymentLocationInputRef} />
+        paymentLocationInput = <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='location' ref={paymentLocationInputRef} />
     } else if (paymentMethod === 'dropping area cashout') {
         paymentLocationInput = (
-            <select id='paymentLocation' ref={paymentLocationInputRef} defaultValue='GP Arcade Stall 4'>
+            <Form.Select className='col-12 col-sm col-md col-lg' id='paymentLocation' ref={paymentLocationInputRef} defaultValue='GP Arcade Stall 4'>
                 {displayDroppingAreas()}
-            </select>
+            </Form.Select>
         )
     } else if (paymentMethod === 'remittance') {
         paymentLocationInput = (
-            <select id='paymentLocation' ref={paymentLocationInputRef} defaultValue='Cebuana'>
+            <Form.Select className='col-12 col-sm col-md col-lg' id='paymentLocation' ref={paymentLocationInputRef} defaultValue='Cebuana'>
                 {displayRemittanceCenters()}
-            </select>
+            </Form.Select>
         )
     }
     return paymentLocationInput
@@ -29,18 +30,18 @@ export const displayPaymentMethodLocation = (paymentMethod, paymentLocationInput
 export const displaySellMethodLocation = (sellMethod, sellLocationInputRef) => {
     let sellLocationInput = ''
     if (sellMethod === 'meetup') {
-        sellLocationInput = <input type='text' id='location' ref={sellLocationInputRef} />
+        sellLocationInput = <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='location' ref={sellLocationInputRef} />
     } else if (sellMethod === 'dropping') {
         sellLocationInput = (
-            <select id='sellLocation' ref={sellLocationInputRef} defaultValue='GP Arcade Stall 4'>
+            <Form.Select className='col-12 col-sm col-md col-lg' id='sellLocation' ref={sellLocationInputRef} defaultValue='GP Arcade Stall 4'>
                 {displayDroppingAreas()}
-            </select>
+            </Form.Select>
         )
     } else if (sellMethod === 'shipment') {
         sellLocationInput = (
-            <select id='sellLocation' ref={sellLocationInputRef} defaultValue='ABest Express'>
+            <Form.Select className='col-12 col-sm col-md col-lg' id='sellLocation' ref={sellLocationInputRef} defaultValue='ABest Express'>
                 {displayShipmentCenters()}
-            </select>
+            </Form.Select>
         )
     }
 

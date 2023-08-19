@@ -13,11 +13,22 @@ export const displayConditions = () => {
 export const displaySizes = () => {
     return (
         <>
+        <option value='11 US or 12 US'>11 US or 12 US</option>
+        <option value='12'>12</option>
+        <option value='15.6'>15.6</option>
+        <option value='33'>33</option>
+        <option value='34'>34</option>
+        <option value='36'>36</option>
+        <option value='38'>38</option>
+        <option value='8 US or 9 US'>8 US or 9 US</option>
         <option value='S'>Small</option>
         <option value='M'>Medium</option>
         <option value='L'>Large</option>
         <option value='XL'>XL</option>
         <option value='XXL'>XXL</option>
+        <option value='L or XL'>L or XL</option>
+        <option value='M or L'>M or L</option>
+        <option value='XL or XXL'>XL or XXL</option>
         <option value='N/A'>Not applicable</option>
         </>
     )
@@ -46,8 +57,12 @@ export const displaySellMethods = () => {
 export const displayDroppingAreas = () => {
     return (
         <>
+        <option value="Buyer's dropping area">Buyer&apos;s Dropping Area</option>
         <option value='GP Arcade Stall 4'>GP Arcade Stall 4</option>
         <option value='GP Arcade Stall 6'>GP Arcade Stall 6</option>
+        <option value='Mabini Shopping Center Room 212'>Mabini Shopping Center Room 212</option>
+        <option value='Olympian Building Room 211'>Olympian Building Room 211</option>
+        <option value='Olympian Building Room K-01'>Olympian Building Room K-01</option>
         </>
     )
 }
@@ -55,11 +70,13 @@ export const displayDroppingAreas = () => {
 export const displayRemittanceCenters = () => {
     return (
         <>
+        <option value="Buyer's dropping area">Buyer&apos;s Dropping Area</option>
         <option value='Cebuana'>Cebuana</option>
         <option value='GCash'>GCash</option>
         <option value='LBC'>LBC</option>
+        <option value='M Lhuillier'>M Lhuillier</option>
         <option value='Palawan Express'>Palawan Express</option>
-        <option value='Western Union'>Western Union</option>
+        <option value='Smart Padala'>Smart Padala</option>
         </>
     )
 }
@@ -68,6 +85,7 @@ export const displayShipmentCenters = () => {
     return (
         <>
         <option value='ABest Express'>ABest Express</option>
+        <option value='J&T Express'>J&T Express</option>
         <option value='JRS'>JRS</option>
         <option value='LBC'>LBC</option>
         <option value='Partas Waybill'>Partas Waybill</option>

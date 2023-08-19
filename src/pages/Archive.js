@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import ReactPaginate from 'react-paginate'
 import Unauthorized from '../components/ui/Alerts/Unauthorized'
 import Loading from '../components/ui/Spinners/Loading'
 import AddSoldItemForm from '../components/forms/AddSoldItemForm'
@@ -13,16 +14,32 @@ function Archive() {
     const [isAuth, setIsAuth] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
     const [isSoldItemCreated, setIsSoldItemCreated] = useState(false)
+    const [soldItemsCreatedErrors, setSoldItemsCreatedErrors] = useState({})
     const [isSoldItemDeleted, setIsSoldItemDeleted] = useState(false)
     const [soldItems, setSoldItems] = useState([])
     const [soldItemsFiltered, setSoldItemsFiltered] = useState([])
     const [isFilter, setIsFilter] = useState(false)
+
+    // Pagination
+    const [itemOffset, setItemOffset] = useState(0)
+    const [pageCount, setPageCount] = useState(0)
+    const [currentPage, setCurrentPage] = useState(0)
+    const [paginatedSoldItems, setPaginatedSoldItems] = useState([])
+    const [paginatedSoldItemsFiltered, setPaginatedSoldItemsFiltered] = useState([])
+
+    const itemsPerPage = 3
 
     useEffect(() => {
         (async function fetchData() {
             const response = await SendGetRequest(auth.bearerToken, 'api/soldItems')
             if (!response.error) {
                 setSoldItems(response)
+
+                const endOffset = itemOffset + itemsPerPage
+                const paginatedItems = response.slice(itemOffset, endOffset)
+                const getPageCount = Math.ceil(response.length / itemsPerPage)
+                setPaginatedSoldItems(paginatedItems)
+                setPageCount(getPageCount)
 
                 // Reset default state so that the page re-renders when a sold item is created or deleted
                 setIsSoldItemCreated(false)
@@ -33,6 +50,30 @@ function Archive() {
             }
         })()
     }, [auth.bearerToken, isSoldItemCreated, isSoldItemDeleted])
+
+    useEffect(() => {
+        (async function paginateData() {
+            const endOffset = itemOffset + itemsPerPage
+            let paginatedItems = ''
+            let getPageCount = 0
+
+            if (!isFilter) {
+                paginatedItems = soldItems.slice(itemOffset, endOffset)
+                setPaginatedSoldItems(paginatedItems)
+
+                getPageCount = Math.ceil(soldItems.length / itemsPerPage)
+            } else {
+                paginatedItems = soldItemsFiltered.slice(itemOffset, endOffset)
+                setPaginatedSoldItemsFiltered(paginatedItems)
+
+                getPageCount = Math.ceil(soldItemsFiltered.length / itemsPerPage)
+            }
+
+            setPageCount(getPageCount)
+
+            console.log(`LOG: Loading items from offset ${itemOffset} to ${endOffset}`)
+        })()
+    }, [itemOffset])
 
     async function handleAddSoldItem(addFormData) {
         const formData = new FormData()
@@ -45,17 +86,22 @@ function Archive() {
         }
 
         const response = await SendPostMultipartRequest(auth.bearerToken, 'api/soldItems', formData)
-        console.log('LOG: Sold item created', response)
-        soldItems.push(response)
-        setSoldItems(soldItems)
+        if (response.error) {
+            setSoldItemsCreatedErrors(response.errorList.errors)
+        } else {
+            console.log('LOG: Sold items created', response)
+            soldItems.push(response)
+            setSoldItems(soldItems)
 
-        setIsSoldItemCreated(true)
+            setSoldItemsCreatedErrors({})
+            setIsSoldItemCreated(true)
 
-        // Explicitly remove filter data
-        setSoldItemsFiltered([])
-        setIsFilter(false)
+            // Explicitly remove filter data
+            setSoldItemsFiltered([])
+            setIsFilter(false)
 
-        setIsLoading(false)
+            setIsLoading(false)
+        }
     }
 
     function handleDeleteSoldItem() {
@@ -73,9 +119,26 @@ function Archive() {
         setSoldItemsFiltered(response)
         setIsFilter(true)
 
+        const endOffset = itemOffset + itemsPerPage
+        const paginatedItems = response.slice(itemOffset, endOffset)
+        const getPageCount = Math.ceil(response.length / itemsPerPage)
+        setPaginatedSoldItemsFiltered(paginatedItems)
+        setPageCount(getPageCount)
+        setCurrentPage(0)
+        setItemOffset(0)
+
         setIsLoading(false)
     }
-        
+
+    async function handlePageClick(event) {
+        const newOffset = (event.selected * itemsPerPage) % soldItems.length
+        const newEndOffset = newOffset + itemsPerPage
+        setCurrentPage(event.selected)
+        setItemOffset(newOffset)
+
+        console.log(`LOG: Current page: ${event.selected + 1}, starting offset (0-based): ${newOffset} - ${newEndOffset}`)
+    }
+
     if (isLoading && isAuth) return <Loading />
     else if (!isAuth) return <Unauthorized />
 
@@ -84,29 +147,49 @@ function Archive() {
             <p>A list of sold items will be shown here...</p>
             <p>Total items sold: <strong>{soldItems.length}</strong></p>
 
-            <AddSoldItemForm onAddSoldItem={handleAddSoldItem} />
+            <AddSoldItemForm onAddSoldItem={handleAddSoldItem} errorList={soldItemsCreatedErrors} />
 
             {soldItems.length > 0 || isFilter ?
                 <FilterSoldItemForm onFilterSoldItem={handleFilterSoldItem} />
                 : ''
             }
             {soldItemsFiltered.length > 0 && isFilter ?
-                <div className={classes.filteredSoldItems}>Your search criteria returned <strong>{soldItemsFiltered.length}</strong> results</div>
+                <div className={classes['filtered-sold-items']}>Your search criteria returned <strong>{soldItemsFiltered.length}</strong> results</div>
                 : ''
             }
 
+            <ReactPaginate
+                pageCount={pageCount}
+                onPageChange={handlePageClick}
+                forcePage={currentPage}
+                breakLabel="..."
+                nextLabel=">>"
+                previousLabel="<<"
+                pageRangeDisplayed={2}
+                renderOnZeroPageCount={null}
+                containerClassName={`d-flex align-items-center justify-content-center list-unstyled mx-auto ${classes['archive-pagination']}`}
+                previousLinkClassName={`px-3 py-1 me-2 text-decoration-none ${classes['prev-and-next']}`}
+                breakClassName={`${classes.break}`}
+                breakLinkClassName={'p-1 text-decoration-none text-dark'}
+                nextLinkClassName={`px-3 py-1 ms-2 text-decoration-none ${classes['prev-and-next']}`}
+                pageClassName={classes.page}
+                pageLinkClassName={'px-3 py-1 text-decoration-none'}
+                disabledClassName={classes.disabled}
+                activeClassName={'border border-2 border-dark fw-bold'}
+            />
+
             {soldItems.length > 0 && soldItemsFiltered.length === 0 && !isFilter ?
-                <SoldItems soldItems={soldItems} onHandleDeleteSoldItem={handleDeleteSoldItem} /> :
-                <SoldItems soldItems={soldItemsFiltered} onHandleDeleteSoldItem={handleDeleteSoldItem} />
+                <SoldItems soldItems={paginatedSoldItems} onHandleDeleteSoldItem={handleDeleteSoldItem} /> :
+                <SoldItems soldItems={paginatedSoldItemsFiltered} onHandleDeleteSoldItem={handleDeleteSoldItem} />
             }
 
             {/* DISPLAY ERROR MESSAGES */}
             {soldItems.length < 1 && !isFilter ?
-                <div className={classes.noSoldItems}>You have no sold items at the moment!</div>
+                <div className={classes['no-sold-items']}>You have no sold items at the moment!</div>
                 : ''
             }
             {soldItemsFiltered.length < 1 && isFilter ?
-                <div className={classes.noSoldItems}>Your search criteria returned nothing!</div>
+                <div className={classes['no-sold-items']}>Your search criteria returned nothing!</div>
                 : ''
             }
         </div>

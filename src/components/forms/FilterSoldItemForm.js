@@ -1,4 +1,5 @@
 import { React, useRef, useState } from 'react'
+import { Button, Col, Form, Row } from 'react-bootstrap'
 import {
     displayConditions,
     displaySizes,
@@ -74,77 +75,110 @@ function FilterSoldItemForm(props) {
     return (
         <div>
             <p>Filter sold items based on the following parameters:</p>
-            <form className={classes.form} onSubmit={handleOnSubmit}>
-                <div className={classes.grid}>
-                    <label htmlFor='brand'>Brand</label>
-                    <input type='text' id='brand' ref={brandInputRef} />
+            <Form className={classes.form} onSubmit={handleOnSubmit}>
+                <Row className='mb-3'>
+                    <Col xs={12} sm={6}>
+                        <Row className='align-items-center'>
+                            <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='brand'>Brand</Form.Label>
+                            <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='brand' ref={brandInputRef} />
+                        </Row>
+                    </Col>
 
-                    <label htmlFor='type'>Type</label>
-                    <input type='text' id='type' ref={typeInputRef} />
-                </div>
-                <div className={classes.grid}>
-                    <label htmlFor='month'>Month</label>
-                    <select id='month' ref={monthInputRef} defaultValue={monthValue} onChange={handleOnChange('month')}>
-                        <option value='01'>January</option>
-                        <option value='02'>February</option>
-                        <option value='03'>March</option>
-                        <option value='04'>April</option>
-                        <option value='05'>May</option>
-                        <option value='06'>June</option>
-                        <option value='07'>July</option>
-                        <option value='08'>August</option>
-                        <option value='09'>September</option>
-                        <option value='10'>October</option>
-                        <option value='11'>November</option>
-                        <option value='12'>December</option>
-                        <option value=''>SHOW ALL</option>
-                    </select>
+                    <Col xs={12} sm={6}>
+                        <Row className='align-items-center'>
+                            <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='type'>Type</Form.Label>
+                            <Form.Control className='col-12 col-sm col-md col-lg' type='text' id='type' ref={typeInputRef} />
+                        </Row>
+                    </Col>
+                </Row>
+                <Row className='mb-3'>
+                    <Col xs={12} sm={6}>
+                        <Row className='align-items-center'>
+                            <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='month'>Month</Form.Label>
+                            <Form.Select className='col-12 col-sm col-md col-lg' id='month' ref={monthInputRef} defaultValue={monthValue} onChange={handleOnChange('month')}>
+                                <option value='01'>January</option>
+                                <option value='02'>February</option>
+                                <option value='03'>March</option>
+                                <option value='04'>April</option>
+                                <option value='05'>May</option>
+                                <option value='06'>June</option>
+                                <option value='07'>July</option>
+                                <option value='08'>August</option>
+                                <option value='09'>September</option>
+                                <option value='10'>October</option>
+                                <option value='11'>November</option>
+                                <option value='12'>December</option>
+                                <option value=''>SHOW ALL</option>
+                            </Form.Select>
+                        </Row>
+                    </Col>
 
-                    <label htmlFor='year'>Year</label>
-                    <select id='year' ref={yearInputRef} defaultValue={yearValue} onChange={handleOnChange('year')}>
-                        <option value='2014'>2014</option>
-                        <option value='2015'>2015</option>
-                        <option value='2016'>2016</option>
-                        <option value='2017'>2017</option>
-                        <option value='2018'>2018</option>
-                        <option value='2019'>2019</option>
-                        <option value='2020'>2020</option>
-                        <option value='2021'>2021</option>
-                        <option value='2022'>2022</option>
-                        <option value=''>SHOW ALL</option>
-                    </select>
-                </div>
-                <div className={classes.grid}>
-                    <label htmlFor='condition'>Condition</label>
-                    <select id='condition' ref={conditionInputRef} defaultValue={conditionValue} onChange={handleOnChange('condition')}>
-                        {displayConditions()}
-                        <option value=''>SHOW ALL</option>
-                    </select>
+                    <Col xs={12} sm={6}>
+                        <Row className='align-items-center'>
+                            <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='year'>Year</Form.Label>
+                            <Form.Select className='col-12 col-sm col-md col-lg' id='year' ref={yearInputRef} defaultValue={yearValue} onChange={handleOnChange('year')}>
+                                <option value='2014'>2014</option>
+                                <option value='2015'>2015</option>
+                                <option value='2016'>2016</option>
+                                <option value='2017'>2017</option>
+                                <option value='2018'>2018</option>
+                                <option value='2019'>2019</option>
+                                <option value='2020'>2020</option>
+                                <option value='2021'>2021</option>
+                                <option value='2022'>2022</option>
+                                <option value='2023'>2023</option>
+                                <option value=''>SHOW ALL</option>
+                            </Form.Select>
+                        </Row>
+                    </Col>
+                </Row>
+                <Row className='mb-3'>
+                    <Col xs={12} sm={6}>
+                        <Row className='align-items-center'>
+                            <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='condition'>Condition</Form.Label>
+                            <Form.Select className='col-12 col-sm col-md col-lg' id='condition' ref={conditionInputRef} defaultValue={conditionValue} onChange={handleOnChange('condition')}>
+                                {displayConditions()}
+                                <option value=''>SHOW ALL</option>
+                            </Form.Select>
+                        </Row>
+                    </Col>
 
-                    <label htmlFor='size'>Size</label>
-                    <select id='size' ref={sizeInputRef} defaultValue={sizeValue} onChange={handleOnChange('size')}>
-                        {displaySizes()}
-                        <option value=''>SHOW ALL</option>
-                    </select>
-                </div>
-                <div className={classes.grid}>
-                    <label htmlFor='paymentMethod'>Payment method</label>
-                    <select id='paymentMethod' ref={paymentMethodInputRef} defaultValue={paymentMethodValue} onChange={handleOnChange('paymentMethod')}>
-                        {displayPaymentMethods()}
-                        <option value=''>SHOW ALL</option>
-                    </select>
+                    <Col xs={12} sm={6}>
+                        <Row className='align-items-center'>
+                            <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='size'>Size</Form.Label>
+                            <Form.Select className='col-12 col-sm col-md col-lg' id='size' ref={sizeInputRef} defaultValue={sizeValue} onChange={handleOnChange('size')}>
+                                {displaySizes()}
+                                <option value=''>SHOW ALL</option>
+                            </Form.Select>
+                        </Row>
+                    </Col>
+                </Row>
+                <Row className='mb-3'>
+                    <Col xs={12} sm={6}>
+                        <Row className='align-items-center'>
+                            <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='paymentMethod'>Payment method</Form.Label>
+                            <Form.Select className='col-12 col-sm col-md col-lg' id='paymentMethod' ref={paymentMethodInputRef} defaultValue={paymentMethodValue} onChange={handleOnChange('paymentMethod')}>
+                                {displayPaymentMethods()}
+                                <option value=''>SHOW ALL</option>
+                            </Form.Select>
+                        </Row>
+                    </Col>
 
-                    <label htmlFor='sellMethod'>Sell method</label>
-                    <select id='sellMethod' ref={sellMethodInputRef} defaultValue={sellMethodValue} onChange={handleOnChange('sellMethod')}>
-                        {displaySellMethods()}
-                        <option value=''>SHOW ALL</option>
-                    </select>
+                    <Col xs={12} sm={6}>
+                        <Row className='align-items-center'>
+                            <Form.Label className='col-12 col-sm-7 col-md-6 col-lg-5 fw-bold' htmlFor='sellMethod'>Sell method</Form.Label>
+                            <Form.Select className='col-12 col-sm col-md col-lg' id='sellMethod' ref={sellMethodInputRef} defaultValue={sellMethodValue} onChange={handleOnChange('sellMethod')}>
+                                {displaySellMethods()}
+                                <option value=''>SHOW ALL</option>
+                            </Form.Select>
+                        </Row>
+                    </Col>
+                </Row>
+                <div className={`d-flex justify-content-center text-center ${classes.actions}`}>
+                    <Button className={`fw-bold ${classes.filter}`} onClick={handleFilterResults}>Filter Results</Button>
+                    <Button className={`fw-bold ${classes.showAll}`} onClick={handleShowAllResults}>Show ALL Results</Button>
                 </div>
-                <div className={classes.actions}>
-                    <button className={classes.filter} onClick={handleFilterResults}>Filter Results</button>
-                    <button className={classes.showAll} onClick={handleShowAllResults}>Show ALL Results</button>
-                </div>
-            </form>
+            </Form>
         </div>
     )
 }
