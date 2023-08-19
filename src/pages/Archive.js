@@ -154,7 +154,7 @@ function Archive() {
                 : ''
             }
             {soldItemsFiltered.length > 0 && isFilter ?
-                <div className={classes.filteredSoldItems}>Your search criteria returned <strong>{soldItemsFiltered.length}</strong> results</div>
+                <div className={classes['filtered-sold-items']}>Your search criteria returned <strong>{soldItemsFiltered.length}</strong> results</div>
                 : ''
             }
 
@@ -167,12 +167,13 @@ function Archive() {
                 previousLabel="<<"
                 pageRangeDisplayed={2}
                 renderOnZeroPageCount={null}
-                containerClassName={'d-flex align-items-center justify-content-center list-unstyled mx-auto'}
-                previousLinkClassName={`text-decoration-none me-2 ${classes.page}`}
-                breakClassName={classes.break}
-                nextLinkClassName={`text-decoration-none ms-2 ${classes.page}`}
+                containerClassName={`d-flex align-items-center justify-content-center list-unstyled mx-auto ${classes['archive-pagination']}`}
+                previousLinkClassName={`px-3 py-1 me-2 text-decoration-none ${classes['prev-and-next']}`}
+                breakClassName={`${classes.break}`}
+                breakLinkClassName={'p-1 text-decoration-none text-dark'}
+                nextLinkClassName={`px-3 py-1 ms-2 text-decoration-none ${classes['prev-and-next']}`}
                 pageClassName={classes.page}
-                pageLinkClassName={'py-2 px-3 text-decoration-none'}
+                pageLinkClassName={'px-3 py-1 text-decoration-none'}
                 disabledClassName={classes.disabled}
                 activeClassName={'border border-2 border-dark fw-bold'}
             />
@@ -184,11 +185,11 @@ function Archive() {
 
             {/* DISPLAY ERROR MESSAGES */}
             {soldItems.length < 1 && !isFilter ?
-                <div className={classes.noSoldItems}>You have no sold items at the moment!</div>
+                <div className={classes['no-sold-items']}>You have no sold items at the moment!</div>
                 : ''
             }
             {soldItemsFiltered.length < 1 && isFilter ?
-                <div className={classes.noSoldItems}>Your search criteria returned nothing!</div>
+                <div className={classes['no-sold-items']}>Your search criteria returned nothing!</div>
                 : ''
             }
         </div>

@@ -25,11 +25,11 @@ function SoldItem(props) {
                 <span>Created: {moment(props.createdAt).format('MMMM D, YYYY h:mm:ss A')}</span>
                 <span className={classes.right}>Updated: {moment(props.updatedAt).format('MMMM D, YYYY h:mm:ss A')}</span>
             </div>
-            <div className={classes.titleImage}>
+            <div className={`text-center ${classes['title-image']}`}>
                 <span className={classes.title}>{props.name}</span>
                 <img className={classes.image} src={props.imageLocation} alt={props.name} />
             </div>
-            <div className={classes.soldItemDetails}>
+            <div className={classes['sold-item-details']}>
                 <div>
                     <p>Price: P{props.price}</p>
                     <p>Condition: {props.condition}</p>

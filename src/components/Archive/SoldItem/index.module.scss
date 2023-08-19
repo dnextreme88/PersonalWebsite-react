@@ -21,9 +21,7 @@
         }
     }
 
-    .titleImage {
-        text-align: center;
-
+    .title-image {
         .title {
             font-size: 2rem;
         }
@@ -52,7 +50,7 @@
         }
     }
 
-    .soldItemDetails {
+    .sold-item-details {
         display: grid;
         margin: 1.2em;
         grid-template-columns: 1fr 1fr;
