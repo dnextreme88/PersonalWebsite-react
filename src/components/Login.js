@@ -17,6 +17,7 @@ function Login() {
     const [userId, setUserId] = useState('')
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     function handleOnSubmit(event) {
         event.preventDefault()
@@ -33,7 +34,7 @@ function Login() {
                 setUsername(response.data.data.user.username)
                 setEmail(response.data.data.user.email)
 
-                navigate('/profile', { replace: true })
+                setIsLoggedIn(true)
             })
             .catch((error) => {
                 console.log(error)
@@ -51,6 +52,10 @@ function Login() {
             })
         )
     }, [bearerToken, tokenValidity, userId, username, email, dispatch])
+
+    useEffect(() => {
+        isLoggedIn && navigate('/profile', { replace: true })
+    }, [isLoggedIn])
 
     return (
         <div>
