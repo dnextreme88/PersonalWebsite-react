@@ -20,7 +20,7 @@ function Footers() {
             </div>
             <div className={classes.copyright}>
                 <p>All rights reserved.</p>
-                <p>Copyright &copy; 2021 by Kevin Decena</p>
+                <p>Copyright &copy; 2021-{new Date().getFullYear()} by Kevin Decena</p>
                 <p>Per DTI-NCR Permit No. 12232021, Series of 2021.</p>
             </div>
         </footer>
